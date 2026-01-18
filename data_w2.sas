@@ -1,0 +1,1986 @@
+libname a 'C:\Users\HajinJang\OneDrive - University of Pittsburgh\Windows\0_230201_screen_diet\KCYPS2018_all';
+data kcyps18_e4;
+set a. kcyps2018e4yw1;run;
+data kcyps18_e4p;
+set a. kcyps2018e4pw1;run;
+data kcyps18_m1;
+set a. kcyps2018m1yw1;run;
+data kcyps18_m1p;
+set a. kcyps2018m1pw1;run;
+
+data kcyps19_e4;
+set a. kcyps2018e4yw2;run;
+data kcyps19_e4p;
+set a. kcyps2018e4pw2;run;
+data kcyps19_m1;
+set a. kcyps2018m1yw2;run;
+data kcyps19_m1p;
+set a. kcyps2018m1pw2;run;
+
+data kcyps20_e4;
+set a. kcyps2018e4yw3;run;
+data kcyps20_e4p;
+set a. kcyps2018e4pw3;run;
+data kcyps20_m1;
+set a. kcyps2018m1yw3;run;
+data kcyps20_m1p;
+set a. kcyps2018m1pw3;run;
+
+data kcyps21_e4;
+set a. kcyps2018e4yw4;run;
+data kcyps21_e4p;
+set a. kcyps2018e4pw4;run;
+data kcyps21_m1;
+set a. kcyps2018m1yw4;run;
+data kcyps21_m1p;
+set a. kcyps2018m1pw4;run;
+
+proc sort data=kcyps18_e4; by hid pid;run;
+proc sort data=kcyps18_e4p; by hid pid;run;
+proc sort data=kcyps18_m1; by hid pid;run;
+proc sort data=kcyps18_m1p; by hid pid;run;
+
+proc sort data=kcyps19_e4; by hid pid;run;
+proc sort data=kcyps19_e4p; by hid pid;run;
+proc sort data=kcyps19_m1; by hid pid;run;
+proc sort data=kcyps19_m1p; by hid pid;run;
+
+proc sort data=kcyps20_e4; by hid pid;run;
+proc sort data=kcyps20_e4p; by hid pid;run;
+proc sort data=kcyps20_m1; by hid pid;run;
+proc sort data=kcyps20_m1p; by hid pid;run;
+
+proc sort data=kcyps21_e4; by hid pid;run;
+proc sort data=kcyps21_e4p; by hid pid;run;
+proc sort data=kcyps21_m1; by hid pid;run;
+proc sort data=kcyps21_m1p; by hid pid;run;
+
+data element;
+merge kcyps18_e4 kcyps18_e4p kcyps19_e4 kcyps19_e4p kcyps20_e4 kcyps20_e4p kcyps21_e4 kcyps21_e4p; by hid pid; run;
+data middle; 
+merge kcyps18_m1 kcyps18_m1p kcyps19_m1 kcyps19_m1p kcyps20_m1 kcyps20_m1p kcyps21_m1 kcyps21_m1p; by hid pid; run;
+
+
+/*****/
+/*초4*/
+/*****/
+
+data e4;
+set element;
+
+/*월연령*/
+birth_d=15; *생년월일 중 '일' 고정;
+surveydayw1=mdy(9,15,2018); *조사날짜 2018년 9월 15일로 간주;
+surveydayw4=mdy(9,15,2021); *조사날짜 2021년 9월 15일로 간주;
+birth=mdy(ybrt1bw1, birth_d, ybrt1aw1); *출생일;
+age_mw1=intck('month' , birth, surveydayw1); *1차조사 월_연령. range 113-139;
+age_mw4=intck('month' , birth, surveydayw4);
+
+/*성별*/
+sexw1=ygenderw2;
+
+/*학년*/
+schoolw2=1;
+
+
+/*스마트폰 이용시간*/
+*평일;
+if ytim1k01w2=1 then sp_use_wdw2=0;
+else if ytim1k01w2=2 then sp_use_wdw2=15;
+else if ytim1k01w2=3 then sp_use_wdw2=45;
+else if ytim1k01w2=4 then sp_use_wdw2=90;
+else if ytim1k01w2=5 then sp_use_wdw2=150;
+else if ytim1k01w2=6 then sp_use_wdw2=210;
+else if ytim1k01w2=7 then sp_use_wdw2=270;
+sp_use_wdw2h=sp_use_wdw2/60; *단위를 시간으로변환;
+*주말;
+if ytim1k02w2=1 then sp_use_wkw2=0;
+else if ytim1k02w2=2 then sp_use_wkw2=15;
+else if ytim1k02w2=3 then sp_use_wkw2=45;
+else if ytim1k02w2=4 then sp_use_wkw2=90;
+else if ytim1k02w2=5 then sp_use_wkw2=150;
+else if ytim1k02w2=6 then sp_use_wkw2=210;
+else if ytim1k02w2=7 then sp_use_wkw2=270;
+sp_use_wkw2h=sp_use_wkw2/60; *단위를 시간으로변환;
+*일주일평균;
+sp_usew2=sum(sp_use_wdw2*5, sp_use_wkw2*2)/7;
+sp_usew2h=sp_usew2/60;
+
+
+/*수면시간*/
+*평일;
+wake_wd=hms(ytim1a01w2, ytim1a02w2, 0);
+bed_wd=hms(ytim1b01w2, ytim1b02w2, 0);
+sleep_wd_raw=intck('second', bed_wd, wake_wd);
+if sleep_wd_raw<0 then sleep_wd=sleep_wd_raw+86400; /*24*60*60=86400 sec*/
+else if sleep_wd_raw>=0 then sleep_wd=sleep_wd_raw;
+sleep_wd_m=sleep_wd/60;
+sleep_wd_h=sleep_wd/3600;
+*주말;
+wake_wk=hms(ytim1a03w2, ytim1a04w2, 0);
+bed_wk=hms(ytim1b03w2, ytim1b04w2, 0);
+sleep_wk_raw=intck('second', bed_wk, wake_wk);
+if sleep_wk_raw<0 then sleep_wk=sleep_wk_raw+86400;
+else if sleep_wk_raw>=0 then sleep_wk=sleep_wk_raw;
+sleep_wk_m=sleep_wk/60;
+sleep_wk_h=sleep_wk/3600;
+*일주일평균;
+sleep_all_m=((sleep_wd_m*5)+(sleep_wk_m*2))/7;
+sleep_all_h=((sleep_wd_h*5)+(sleep_wk_h*2))/7;
+
+
+/*부모님 대화시간*/
+*평일;
+if ytim1d01w2=1 then dayuse2_wdw2=0;
+else if ytim1d01w2=2 then dayuse2_wdw2=15;
+else if ytim1d01w2=3 then dayuse2_wdw2=45;
+else if ytim1d01w2=4 then dayuse2_wdw2=90;
+else if ytim1d01w2=5 then dayuse2_wdw2=150;
+else if ytim1d01w2=6 then dayuse2_wdw2=210;
+else if ytim1d01w2=7 then dayuse2_wdw2=270;
+dayuse2_wdw2h=dayuse2_wdw2/60;
+*주말;
+if ytim1d02w2=1 then dayuse2_wkw2=0;
+else if ytim1d02w2=2 then dayuse2_wkw2=15;
+else if ytim1d02w2=3 then dayuse2_wkw2=45;
+else if ytim1d02w2=4 then dayuse2_wkw2=90;
+else if ytim1d02w2=5 then dayuse2_wkw2=150;
+else if ytim1d02w2=6 then dayuse2_wkw2=210;
+else if ytim1d02w2=7 then dayuse2_wkw2=270;
+dayuse2_wkw2h=dayuse2_wkw2/60;
+*일주일평균;
+dayuse2w2=sum(dayuse2_wdw2*5, dayuse2_wkw2*2)/7;
+dayuse2w2h=dayuse2w2/60;
+
+
+/*학원 및 과외시간*/
+*평일;
+if ytim1e01w2=1 then dayuse3_wdw2=0;
+else if ytim1e01w2=2 then dayuse3_wdw2=15;
+else if ytim1e01w2=3 then dayuse3_wdw2=45;
+else if ytim1e01w2=4 then dayuse3_wdw2=90;
+else if ytim1e01w2=5 then dayuse3_wdw2=150;
+else if ytim1e01w2=6 then dayuse3_wdw2=210;
+else if ytim1e01w2=7 then dayuse3_wdw2=270;
+dayuse3_wdw2h=dayuse3_wdw2/60;
+*주말;
+if ytim1e02w2=1 then dayuse3_wkw2=0;
+else if ytim1e02w2=2 then dayuse3_wkw2=15;
+else if ytim1e02w2=3 then dayuse3_wkw2=45;
+else if ytim1e02w2=4 then dayuse3_wkw2=90;
+else if ytim1e02w2=5 then dayuse3_wkw2=150;
+else if ytim1e02w2=6 then dayuse3_wkw2=210;
+else if ytim1e02w2=7 then dayuse3_wkw2=270;
+dayuse3_wkw2h=dayuse3_wkw2/60;
+*일주일평균;
+dayuse3w2=sum(dayuse3_wdw2*5, dayuse3_wkw2*2)/7;
+dayuse3w2h=dayuse3w2/60;
+
+
+/*인터넷 및 TV강의 시간*/
+*평일;
+if ytim1f01w2=1 then dayuse4_wdw2=0;
+else if ytim1f01w2=2 then dayuse4_wdw2=15;
+else if ytim1f01w2=3 then dayuse4_wdw2=45;
+else if ytim1f01w2=4 then dayuse4_wdw2=90;
+else if ytim1f01w2=5 then dayuse4_wdw2=150;
+else if ytim1f01w2=6 then dayuse4_wdw2=210;
+else if ytim1f01w2=7 then dayuse4_wdw2=270;
+dayuse4_wdw2h=dayuse4_wdw2/60;
+*주말;
+if ytim1f02w2=1 then dayuse4_wkw2=0;
+else if ytim1f02w2=2 then dayuse4_wkw2=15;
+else if ytim1f02w2=3 then dayuse4_wkw2=45;
+else if ytim1f02w2=4 then dayuse4_wkw2=90;
+else if ytim1f02w2=5 then dayuse4_wkw2=150;
+else if ytim1f02w2=6 then dayuse4_wkw2=210;
+else if ytim1f02w2=7 then dayuse4_wkw2=270;
+dayuse4_wkw2h=dayuse4_wkw2/60;
+*일주일평균;
+dayuse4w2=sum(dayuse4_wdw2*5, dayuse4_wkw2*2)/7;
+dayuse4w2h=dayuse4w2/60;
+
+
+/*방과 후 학교*/
+*평일;
+if ytim1g01w2=1 then dayuse5_wdw2=0;
+else if ytim1g01w2=2 then dayuse5_wdw2=15;
+else if ytim1g01w2=3 then dayuse5_wdw2=45;
+else if ytim1g01w2=4 then dayuse5_wdw2=90;
+else if ytim1g01w2=5 then dayuse5_wdw2=150;
+else if ytim1g01w2=6 then dayuse5_wdw2=210;
+else if ytim1g01w2=7 then dayuse5_wdw2=270;
+dayuse5_wdw2h=dayuse5_wdw2/60;
+*주말;
+if ytim1g02w2=1 then dayuse5_wkw2=0;
+else if ytim1g02w2=2 then dayuse5_wkw2=15;
+else if ytim1g02w2=3 then dayuse5_wkw2=45;
+else if ytim1g02w2=4 then dayuse5_wkw2=90;
+else if ytim1g02w2=5 then dayuse5_wkw2=150;
+else if ytim1g02w2=6 then dayuse5_wkw2=210;
+else if ytim1g02w2=7 then dayuse5_wkw2=270;
+dayuse5_wkw2h=dayuse5_wkw2/60;
+*일주일평균;
+dayuse5w2=sum(dayuse5_wdw2*5, dayuse5_wkw2*2)/7;
+dayuse5w2h=dayuse5w2/60;
+
+
+/*스스로 공부하는 시간*/
+*평일;
+if ytim1h01w2=1 then dayuse6_wdw2=0;
+else if ytim1h01w2=2 then dayuse6_wdw2=15;
+else if ytim1h01w2=3 then dayuse6_wdw2=45;
+else if ytim1h01w2=4 then dayuse6_wdw2=90;
+else if ytim1h01w2=5 then dayuse6_wdw2=150;
+else if ytim1h01w2=6 then dayuse6_wdw2=210;
+else if ytim1h01w2=7 then dayuse6_wdw2=270;
+dayuse6_wdw2h=dayuse6_wdw2/60;
+*주말;
+if ytim1h02w2=1 then dayuse6_wkw2=0;
+else if ytim1h02w2=2 then dayuse6_wkw2=15;
+else if ytim1h02w2=3 then dayuse6_wkw2=45;
+else if ytim1h02w2=4 then dayuse6_wkw2=90;
+else if ytim1h02w2=5 then dayuse6_wkw2=150;
+else if ytim1h02w2=6 then dayuse6_wkw2=210;
+else if ytim1h02w2=7 then dayuse6_wkw2=270;
+dayuse6_wkw2h=dayuse6_wkw2/60;
+*일주일평균;
+dayuse6w2=sum(dayuse6_wdw2*5, dayuse6_wkw2*2)/7;
+dayuse6w2h=dayuse6w2/60;
+
+
+/*독서시간*/
+*평일;
+if ytim1i01w2=1 then dayuse7_wdw2=0;
+else if ytim1i01w2=2 then dayuse7_wdw2=15;
+else if ytim1i01w2=3 then dayuse7_wdw2=45;
+else if ytim1i01w2=4 then dayuse7_wdw2=90;
+else if ytim1i01w2=5 then dayuse7_wdw2=150;
+else if ytim1i01w2=6 then dayuse7_wdw2=210;
+else if ytim1i01w2=7 then dayuse7_wdw2=270;
+dayuse7_wdw2h=dayuse7_wdw2/60;
+*주말;
+if ytim1i02w2=1 then dayuse7_wkw2=0;
+else if ytim1i02w2=2 then dayuse7_wkw2=15;
+else if ytim1i02w2=3 then dayuse7_wkw2=45;
+else if ytim1i02w2=4 then dayuse7_wkw2=90;
+else if ytim1i02w2=5 then dayuse7_wkw2=150;
+else if ytim1i02w2=6 then dayuse7_wkw2=210;
+else if ytim1i02w2=7 then dayuse7_wkw2=270;
+dayuse7_wkw2h=dayuse7_wkw2/60;
+*일주일평균;
+dayuse7w2=sum(dayuse7_wdw2*5, dayuse7_wkw2*2)/7;
+dayuse7w2h=dayuse7w2/60;
+
+
+/*운동 및 신체활동시간*/
+*평일;
+if ytim1j01w2=1 then dayuse8_wdw2=0;
+else if ytim1j01w2=2 then dayuse8_wdw2=15;
+else if ytim1j01w2=3 then dayuse8_wdw2=45;
+else if ytim1j01w2=4 then dayuse8_wdw2=90;
+else if ytim1j01w2=5 then dayuse8_wdw2=150;
+else if ytim1j01w2=6 then dayuse8_wdw2=210;
+else if ytim1j01w2=7 then dayuse8_wdw2=270;
+dayuse8_wdw2h=dayuse8_wdw2/60;
+*주말;
+if ytim1j02w2=1 then dayuse8_wkw2=0;
+else if ytim1j02w2=2 then dayuse8_wkw2=15;
+else if ytim1j02w2=3 then dayuse8_wkw2=45;
+else if ytim1j02w2=4 then dayuse8_wkw2=90;
+else if ytim1j02w2=5 then dayuse8_wkw2=150;
+else if ytim1j02w2=6 then dayuse8_wkw2=210;
+else if ytim1j02w2=7 then dayuse8_wkw2=270;
+dayuse8_wkw2h=dayuse8_wkw2/60;
+*일주일평균;
+dayuse8w2=sum(dayuse8_wdw2*5, dayuse8_wkw2*2)/7;
+dayuse8w2h=dayuse8w2/60;
+
+
+/*컴퓨터를 가지고노는시간*/
+*평일;
+if ytim1l01w2=1 then dayuse9_wdw2=0;
+else if ytim1l01w2=2 then dayuse9_wdw2=15;
+else if ytim1l01w2=3 then dayuse9_wdw2=45;
+else if ytim1l01w2=4 then dayuse9_wdw2=90;
+else if ytim1l01w2=5 then dayuse9_wdw2=150;
+else if ytim1l01w2=6 then dayuse9_wdw2=210;
+else if ytim1l01w2=7 then dayuse9_wdw2=270;
+dayuse9_wdw2h=dayuse9_wdw2/60;
+*주말;
+if ytim1l02w2=1 then dayuse9_wkw2=0;
+else if ytim1l02w2=2 then dayuse9_wkw2=15;
+else if ytim1l02w2=3 then dayuse9_wkw2=45;
+else if ytim1l02w2=4 then dayuse9_wkw2=90;
+else if ytim1l02w2=5 then dayuse9_wkw2=150;
+else if ytim1l02w2=6 then dayuse9_wkw2=210;
+else if ytim1l02w2=7 then dayuse9_wkw2=270;
+dayuse9_wkw2h=dayuse9_wkw2/60;
+*일주일평균;
+dayuse9w2=sum(dayuse9_wdw2*5, dayuse9_wkw2*2)/7;
+dayuse9w2h=dayuse9w2/60;
+
+
+/*TV시청*/
+*평일;
+if ytim1m01w2=1 then dayuse10_wdw2=0;
+else if ytim1m01w2=2 then dayuse10_wdw2=15;
+else if ytim1m01w2=3 then dayuse10_wdw2=45;
+else if ytim1m01w2=4 then dayuse10_wdw2=90;
+else if ytim1m01w2=5 then dayuse10_wdw2=150;
+else if ytim1m01w2=6 then dayuse10_wdw2=210;
+else if ytim1m01w2=7 then dayuse10_wdw2=270;
+dayuse10_wdw2h=dayuse10_wdw2/60;
+*주말;
+if ytim1m02w2=1 then dayuse10_wkw2=0;
+else if ytim1m02w2=2 then dayuse10_wkw2=15;
+else if ytim1m02w2=3 then dayuse10_wkw2=45;
+else if ytim1m02w2=4 then dayuse10_wkw2=90;
+else if ytim1m02w2=5 then dayuse10_wkw2=150;
+else if ytim1m02w2=6 then dayuse10_wkw2=210;
+else if ytim1m02w2=7 then dayuse10_wkw2=270;
+dayuse10_wkw2h=dayuse10_wkw2/60;
+*일주일평균;
+dayuse10w2=sum(dayuse10_wdw2*5, dayuse10_wkw2*2)/7;
+dayuse10w2h=dayuse10w2/60;
+
+
+/*친구들과 노는시간*/
+*평일;
+if ytim1n01w2=1 then dayuse11_wdw2=0;
+else if ytim1n01w2=2 then dayuse11_wdw2=15;
+else if ytim1n01w2=3 then dayuse11_wdw2=45;
+else if ytim1n01w2=4 then dayuse11_wdw2=90;
+else if ytim1n01w2=5 then dayuse11_wdw2=150;
+else if ytim1n01w2=6 then dayuse11_wdw2=210;
+else if ytim1n01w2=7 then dayuse11_wdw2=270;
+dayuse11_wdw2h=dayuse11_wdw2/60;
+*주말;
+if ytim1n02w2=1 then dayuse11_wkw2=0;
+else if ytim1n02w2=2 then dayuse11_wkw2=15;
+else if ytim1n02w2=3 then dayuse11_wkw2=45;
+else if ytim1n02w2=4 then dayuse11_wkw2=90;
+else if ytim1n02w2=5 then dayuse11_wkw2=150;
+else if ytim1n02w2=6 then dayuse11_wkw2=210;
+else if ytim1n02w2=7 then dayuse11_wkw2=270;
+dayuse11_wkw2h=dayuse11_wkw2/60;
+*일주일평균;
+dayuse11w2=sum(dayuse11_wdw2*5, dayuse11_wkw2*2)/7;
+dayuse11w2h=dayuse11w2/60;
+
+
+/*학업성적*/
+*1-6 categories: 매우 못함 - 매우 잘함 - 잘 모르겠음;
+if yint1a00w2 in (1,2,3) then gradew2=1;
+else if yint1a00w2 in (4,5) then gradew2=2;
+else gradew2=3;
+
+
+/*부모의양육태도*/
+*강요;
+parcare1dw2=yfam2d01w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+parcare2dw2=yfam2d02w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+parcare3dw2=yfam2d03w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+parcare4dw2=yfam2d04w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+parcaresumw2=sum(parcare1dw2, parcare2dw2, parcare3dw2, parcare4dw2); *range 4-16;
+
+
+/*부모님 동거여부*/
+if pfam1a00w2 in(1,4) then famnumw2=2;
+else famnumw2=1;
+
+
+/*부모님학력*/
+if pschool1w2 in (5,6,7) or pschool2w2 in (5,6,7) then pschoolw2=2;
+else if pschool1w2 in (1:4) or pschool2w2 in (1:4) then pschoolw2=1;
+else pschoolw2=2;
+
+
+/*월평균가구소득*/
+if pincomew2 in(1:3) then incomew2=1;
+else if pincomew2 in(4,5) then incomew2=2;
+else if pincomew2 in(6,7) then incomew2=3;
+else if pincomew2=. then incomew2=3;
+else if pincomew2 in(8,9) then incomew2=4;
+else incomew2=5;
+
+/*층화분석용 가구소득*/
+if incomew2 in (1,2) then incomew2r=1;
+else if incomew2=3 then incomew2r=2;
+else if incomew2 in (4,5) then incomew2r=3;
+
+
+/*아버지 직업*/
+if pjob1w2 in (1,2,3) then fjobw2=1;
+else if pjob1w2 in (4,5) then fjobw2=2;
+else if pjob1w2 in (6:11) then fjobw2=3;
+else fjobw2=4;
+
+
+/*어머니 직업*/
+if pjob2w2 in (1,2,3) then mjobw2=1;
+else if pjob2w2 in (4,5) then mjobw2=2;
+else if pjob2w2 in (6:11) then mjobw2=3;
+else mjobw2=4;
+
+
+
+/*학습시간(학원 및 과외, 인터넷 및 TV강의, 방과 후 학교, 스스로 공부하는 시간의 합)*/;
+daystudy_wdw2=sum(dayuse3_wdw2h, dayuse4_wdw2h, dayuse5_wdw2h, dayuse6_wdw2h);
+daystudy_wkw2=sum(dayuse3_wkw2h, dayuse4_wkw2h, dayuse5_wkw2h, dayuse6_wkw2h);
+daystudyw2=sum(daystudy_wdw2*5, daystudy_wkw2*2)/7;
+
+/*시간변수 24시간 단위로 변환*/
+*일주일평균;
+atimew2=24-sleep_all_h-25/7;
+btimew2=sum(dayuse2w2h, daystudyw2, dayuse7w2h, dayuse8w2h, dayuse9w2h, dayuse10w2h, dayuse11w2h, sp_usew2h);
+ctime2w2=(dayuse2w2h/btimew2)*atimew2;
+ctimestudyw2=(daystudyw2/btimew2)*atimew2;
+ctime7w2=(dayuse7w2h/btimew2)*atimew2;
+ctime8w2=(dayuse8w2h/btimew2)*atimew2;
+ctime9w2=(dayuse9w2h/btimew2)*atimew2;
+ctime10w2=(dayuse10w2h/btimew2)*atimew2;
+ctime11w2=(dayuse11w2h/btimew2)*atimew2;
+ctimespw2=(sp_usew2h/btimew2)*atimew2;
+ctimetstw2=sum(ctimespw2, ctime9w2, ctime10w2);
+
+
+
+
+/***************/
+/*screentime cat*/
+/***************/
+
+/* smartphone */
+*sp_new;
+if sp_usew2=. or sp_usew2=0 then sp_new=1;
+else if 0<sp_usew2<60 then sp_new=2;
+else if 60<=sp_usew2<120 then sp_new=3;
+else if 120<=sp_usew2<180 then sp_new=4;
+else if sp_usew2>=180 then sp_new=5;
+*sp_re;
+if sp_usew2=. or 0<=sp_usew2<60 then sp_re=2;
+else if 60<=sp_usew2<120 then sp_re=3;
+else if 120<=sp_usew2<180 then sp_re=4;
+else if sp_usew2>=180 then sp_re=5;
+
+
+*com_new;
+if dayuse9w2=. or dayuse9w2=0 then com_new=1;
+else if 0<dayuse9w2<60 then com_new=2;
+else if 60<=dayuse9w2<120 then com_new=3;
+else if dayuse9w2>=120 then com_new=4;
+*com_re;
+if dayuse9w2=. or 0<=dayuse9w2<60 then com_re=2;
+else if 60<=dayuse9w2<120 then com_re=3;
+else if dayuse9w2>=120 then com_re=4;
+
+
+*tv_new;
+if dayuse10w2=. or dayuse10w2=0 then tv_new=1;
+else if 0<dayuse10w2<60 then tv_new=2;
+else if 60<=dayuse10w2<120 then tv_new=3;
+else if dayuse10w2>=120 then tv_new=4;
+*tv_re;
+if dayuse10w2=. or 0<=dayuse10w2<60 then tv_re=2;
+else if 60<=dayuse10w2<120 then tv_re=3;
+else if dayuse10w2>=120 then tv_re=4;
+
+
+*total_new;
+tstw2=sum(sp_usew2, dayuse9w2, dayuse10w2);
+if tstw2=. or tstw2=0 then total_new=1;
+else if 0<tstw2<120 then total_new=2;
+else if 120<=tstw2<180 then total_new=3;
+else if 180<=tstw2<240 then total_new=4;
+else if tstw2>=240 then total_new=5;
+*total_re;
+if tstw2=. or 0<=tstw2<120 then total_re=2;
+else if 120<=tstw2<180 then total_re=3;
+else if 180<=tstw2<240 then total_re=4;
+else if tstw2>=240 then total_re=5;
+*total_60;
+if tstw2=. or 0<=tstw2<60 then total_60=2;
+else if 60<=tstw2<120 then total_60=3;
+else if 120<=tstw2<180 then total_60=4;
+else if 180<=tstw2<240 then total_60=5;
+else if tstw2>=240 then total_60=6;
+*total_60a;
+if tstw2=. or tstw2=0 then total_60a=1;
+else if 0<tstw2<60 then total_60a=2;
+else if 60<=tstw2<120 then total_60a=3;
+else if 120<=tstw2<180 then total_60a=4;
+else if 180<=tstw2<240 then total_60a=5;
+else if tstw2>=240 then total_60a=6;
+
+
+
+
+
+/**********/
+/* obesity */
+/**********/
+surveydayw2=mdy(9,15,2019); *조사날짜 2019년 9월 15일로 간주;
+surveydayw3=mdy(9,15,2020); *조사날짜 2020년 9월 15일로 간주;
+surveydayw4=mdy(9,15,2021); *조사날짜 2021년 9월 15일로 간주;
+age_mw2=intck('month' , birth, surveydayw2); 
+age_mw3=intck('month' , birth, surveydayw3);
+age_mw4=intck('month' , birth, surveydayw4);
+
+
+/********************************************** w1 *************************************************/
+*BMI;
+heightw1=yphy2a00w1/100;
+weightw1=yphy2b00w1;
+if heightw1^=. and weightw1^=. then bmiw1=weightw1/(heightw1*heightw1);
+
+/*남자*/
+if sexw1=1 then do; 
+
+if age_mw1=113 then do; pct05w1=14.6; pct85w1=20.6; pct95w1=22.5; end;
+
+if age_mw1=115 then do; pct05w1=14.6; pct85w1=20.8; pct95w1=22.7; end;
+if age_mw1=116 then do; pct05w1=14.6; pct85w1=20.9; pct95w1=22.8; end;
+if age_mw1=117 then do; pct05w1=14.7; pct85w1=21.0; pct95w1=22.9; end;
+if age_mw1=118 then do; pct05w1=14.7; pct85w1=21.1; pct95w1=23.0; end;
+if age_mw1=119 then do; pct05w1=14.7; pct85w1=21.1; pct95w1=23.1; end;
+if age_mw1=120 then do; pct05w1=14.7; pct85w1=21.2; pct95w1=23.1; end;
+if age_mw1=121 then do; pct05w1=14.8; pct85w1=21.3; pct95w1=23.2; end;
+if age_mw1=122 then do; pct05w1=14.8; pct85w1=21.4; pct95w1=23.3; end;
+if age_mw1=123 then do; pct05w1=14.8; pct85w1=21.5; pct95w1=23.4; end;
+if age_mw1=124 then do; pct05w1=14.9; pct85w1=21.6; pct95w1=23.5; end;
+if age_mw1=125 then do; pct05w1=14.9; pct85w1=21.6; pct95w1=23.6; end;
+if age_mw1=126 then do; pct05w1=14.9; pct85w1=21.7; pct95w1=23.7; end;
+if age_mw1=127 then do; pct05w1=15.0; pct85w1=21.8; pct95w1=23.8; end;
+if age_mw1=128 then do; pct05w1=15.0; pct85w1=21.9; pct95w1=23.9; end;
+if age_mw1=129 then do; pct05w1=15.0; pct85w1=22.0; pct95w1=24.0; end;
+if age_mw1=130 then do; pct05w1=15.0; pct85w1=22.0; pct95w1=24.0; end;
+
+if age_mw1=132 then do; pct05w1=15.1; pct85w1=22.2; pct95w1=24.2; end;
+
+if age_mw1=134 then do; pct05w1=15.2; pct85w1=22.3; pct95w1=24.4; end;
+if age_mw1=135 then do; pct05w1=15.2; pct85w1=22.4; pct95w1=24.4; end;
+
+if age_mw1=137 then do; pct05w1=15.3; pct85w1=22.5; pct95w1=24.6; end;
+if age_mw1=138 then do; pct05w1=15.3; pct85w1=22.6; pct95w1=24.7; end;
+if age_mw1=139 then do; pct05w1=15.4; pct85w1=22.7; pct95w1=24.7; end;
+end;
+
+/*여자*/
+if sexw1=2 then do; 
+
+if age_mw1=113 then do; pct05w1=14.2; pct85w1=20.1; pct95w1=21.9; end;
+
+if age_mw1=115 then do; pct05w1=14.2; pct85w1=20.2; pct95w1=22.0; end;
+if age_mw1=116 then do; pct05w1=14.3; pct85w1=20.3; pct95w1=22.1; end;
+if age_mw1=117 then do; pct05w1=14.3; pct85w1=20.3; pct95w1=22.2; end;
+if age_mw1=118 then do; pct05w1=14.3; pct85w1=20.4; pct95w1=22.3; end;
+if age_mw1=119 then do; pct05w1=14.3; pct85w1=20.5; pct95w1=22.4; end;
+if age_mw1=120 then do; pct05w1=14.4; pct85w1=20.6; pct95w1=22.4; end;
+if age_mw1=121 then do; pct05w1=14.4; pct85w1=20.6; pct95w1=22.5; end;
+if age_mw1=122 then do; pct05w1=14.4; pct85w1=20.7; pct95w1=22.6; end;
+if age_mw1=123 then do; pct05w1=14.5; pct85w1=20.8; pct95w1=22.7; end;
+if age_mw1=124 then do; pct05w1=14.5; pct85w1=20.8; pct95w1=22.7; end;
+if age_mw1=125 then do; pct05w1=14.5; pct85w1=20.9; pct95w1=22.8; end;
+if age_mw1=126 then do; pct05w1=14.6; pct85w1=21.0; pct95w1=22.9; end;
+if age_mw1=127 then do; pct05w1=14.6; pct85w1=21.0; pct95w1=23.0; end;
+if age_mw1=128 then do; pct05w1=14.6; pct85w1=21.1; pct95w1=23.0; end;
+if age_mw1=129 then do; pct05w1=14.7; pct85w1=21.2; pct95w1=23.1; end;
+if age_mw1=130 then do; pct05w1=14.7; pct85w1=21.2; pct95w1=23.2; end;
+
+if age_mw1=132 then do; pct05w1=14.8; pct85w1=21.4; pct95w1=23.3; end;
+
+if age_mw1=134 then do; pct05w1=14.9; pct85w1=21.5; pct95w1=23.5; end;
+if age_mw1=135 then do; pct05w1=14.9; pct85w1=21.6; pct95w1=23.5; end;
+
+if age_mw1=137 then do; pct05w1=15.0; pct85w1=21.7; pct95w1=23.7; end;
+if age_mw1=138 then do; pct05w1=15.0; pct85w1=21.8; pct95w1=23.7; end;
+if age_mw1=139 then do; pct05w1=15.1; pct85w1=21.8; pct95w1=23.8; end;
+end;
+
+*BMI 카테고리;
+if bmiw1^=. then do;
+if bmiw1<pct05w1 then bmi_cw1=1;
+else if pct05w1<=bmiw1<pct85w1 then bmi_cw1=2;
+else if pct85w1<=bmiw1<pct95w1 then bmi_cw1=3;
+else bmi_cw1=4;
+end;
+
+*비만;
+if bmi_cw1^=. then do;
+if bmi_cw1 in (1:3) then obesityw1=0;
+else obesityw1=1;
+end;
+
+/********************************************** w2 *************************************************/
+*BMI;
+heightw2=yphy2a00w2/100;
+weightw2=yphy2b00w2;
+if yphy2a00w2^=. and yphy2b00w2^=. then bmiw2=weightw2/(heightw2*heightw2);
+
+/*남자 125-150*/
+if sexw1=1 then do; 
+
+if age_mw2=125 then do; pct05w2=14.9; pct85w2=21.6; pct95w2=23.6; end;
+if age_mw2=126 then do; pct05w2=14.9; pct85w2=21.7; pct95w2=23.7; end;
+if age_mw2=127 then do; pct05w2=15.0; pct85w2=21.8; pct95w2=23.8; end;
+if age_mw2=128 then do; pct05w2=15.0; pct85w2=21.9; pct95w2=23.9; end;
+if age_mw2=129 then do; pct05w2=15.0; pct85w2=22.0; pct95w2=24.0; end;
+if age_mw2=130 then do; pct05w2=15.0; pct85w2=22.0; pct95w2=24.0; end;
+if age_mw2=131 then do; pct05w2=15.1; pct85w2=22.1; pct95w2=24.1; end;
+if age_mw2=132 then do; pct05w2=15.1; pct85w2=22.2; pct95w2=24.2; end;
+if age_mw2=133 then do; pct05w2=15.1; pct85w2=22.3; pct95w2=24.3; end;
+if age_mw2=134 then do; pct05w2=15.2; pct85w2=22.3; pct95w2=24.4; end;
+if age_mw2=135 then do; pct05w2=15.2; pct85w2=22.4; pct95w2=24.4; end;
+if age_mw2=136 then do; pct05w2=15.3; pct85w2=22.5; pct95w2=24.5; end;
+if age_mw2=137 then do; pct05w2=15.3; pct85w2=22.5; pct95w2=24.6; end;
+if age_mw2=138 then do; pct05w2=15.3; pct85w2=22.6; pct95w2=24.7; end;
+if age_mw2=139 then do; pct05w2=15.4; pct85w2=22.7; pct95w2=24.7; end;
+if age_mw2=140 then do; pct05w2=15.4; pct85w2=22.7; pct95w2=24.8; end;
+if age_mw2=141 then do; pct05w2=15.4; pct85w2=22.8; pct95w2=24.9; end;
+if age_mw2=142 then do; pct05w2=15.5; pct85w2=22.9; pct95w2=24.9; end;
+if age_mw2=143 then do; pct05w2=15.5; pct85w2=22.9; pct95w2=25.0; end;
+if age_mw2=144 then do; pct05w2=15.5; pct85w2=23.0; pct95w2=25.1; end;
+if age_mw2=145 then do; pct05w2=15.6; pct85w2=23.0; pct95w2=25.1; end;
+if age_mw2=146 then do; pct05w2=15.6; pct85w2=23.1; pct95w2=25.2; end;
+if age_mw2=147 then do; pct05w2=15.7; pct85w2=23.1; pct95w2=25.2; end;
+if age_mw2=148 then do; pct05w2=15.7; pct85w2=23.2; pct95w2=25.3; end;
+if age_mw2=149 then do; pct05w2=15.7; pct85w2=23.2; pct95w2=25.3; end;
+if age_mw2=150 then do; pct05w2=15.8; pct85w2=23.3; pct95w2=25.4; end;
+end;
+
+/*여자 125-150*/
+if sexw1=2 then do; 
+
+if age_mw2=125 then do; pct05w2=14.5; pct85w2=20.9; pct95w2=22.8; end;
+if age_mw2=126 then do; pct05w2=14.6; pct85w2=21.0; pct95w2=22.9; end;
+if age_mw2=127 then do; pct05w2=14.6; pct85w2=21.0; pct95w2=23.0; end;
+if age_mw2=128 then do; pct05w2=14.6; pct85w2=21.1; pct95w2=23.0; end;
+if age_mw2=129 then do; pct05w2=14.7; pct85w2=21.2; pct95w2=23.1; end;
+if age_mw2=130 then do; pct05w2=14.7; pct85w2=21.2; pct95w2=23.2; end;
+if age_mw2=131 then do; pct05w2=14.7; pct85w2=21.3; pct95w2=23.3; end;
+if age_mw2=132 then do; pct05w2=14.8; pct85w2=21.4; pct95w2=23.3; end;
+if age_mw2=133 then do; pct05w2=14.8; pct85w2=21.4; pct95w2=23.4; end;
+if age_mw2=134 then do; pct05w2=14.9; pct85w2=21.5; pct95w2=23.5; end;
+if age_mw2=135 then do; pct05w2=14.9; pct85w2=21.6; pct95w2=23.5; end;
+if age_mw2=136 then do; pct05w2=14.9; pct85w2=21.6; pct95w2=23.6; end;
+if age_mw2=137 then do; pct05w2=14.0; pct85w2=21.7; pct95w2=23.7; end;
+if age_mw2=138 then do; pct05w2=15.0; pct85w2=21.8; pct95w2=23.7; end;
+if age_mw2=139 then do; pct05w2=15.1; pct85w2=21.8; pct95w2=23.8; end;
+if age_mw2=140 then do; pct05w2=15.1; pct85w2=21.9; pct95w2=23.9; end;
+if age_mw2=141 then do; pct05w2=15.2; pct85w2=21.9; pct95w2=23.9; end;
+if age_mw2=142 then do; pct05w2=15.2; pct85w2=22.0; pct95w2=24.0; end;
+if age_mw2=143 then do; pct05w2=15.2; pct85w2=22.1; pct95w2=24.1; end;
+if age_mw2=144 then do; pct05w2=15.3; pct85w2=22.1; pct95w2=24.1; end;
+if age_mw2=145 then do; pct05w2=15.3; pct85w2=22.2; pct95w2=24.2; end;
+if age_mw2=146 then do; pct05w2=15.4; pct85w2=22.2; pct95w2=24.2; end;
+if age_mw2=147 then do; pct05w2=15.4; pct85w2=22.3; pct95w2=24.3; end;
+if age_mw2=148 then do; pct05w2=15.5; pct85w2=22.3; pct95w2=24.4; end;
+if age_mw2=149 then do; pct05w2=15.5; pct85w2=22.4; pct95w2=24.4; end;
+if age_mw2=150 then do; pct05w2=15.6; pct85w2=22.4; pct95w2=24.5; end;
+end;
+
+*BMI 카테고리;
+if bmiw2^=. then do;
+if bmiw2<pct05w2 then bmi_cw2=1;
+else if pct05w2<=bmiw2<pct85w2 then bmi_cw2=2;
+else if pct85w2<=bmiw2<pct95w2 then bmi_cw2=3;
+else bmi_cw2=4;
+end;
+
+*비만;
+if bmi_cw2^=. then do;
+if bmi_cw2 in (1:3) then obesityw2=0;
+else obesityw2=1;
+end;
+
+
+/********************************************** w3 *************************************************/
+*BMI;
+heightw3=yphy2a00w3/100;
+weightw3=yphy2b00w3;
+if yphy2a00w3^=. and yphy2b00w3^=. then bmiw3=weightw3/(heightw3*heightw3);
+
+
+/*남자 137-162*/
+if sexw1=1 then do; 
+
+if age_mw3=137 then do; pct05w3=15.3; pct85w3=22.5; pct95w3=24.6; end;
+if age_mw3=138 then do; pct05w3=15.3; pct85w3=22.6; pct95w3=24.7; end;
+if age_mw3=139 then do; pct05w3=15.4; pct85w3=22.7; pct95w3=24.7; end;
+if age_mw3=140 then do; pct05w3=15.4; pct85w3=22.7; pct95w3=24.8; end;
+if age_mw3=141 then do; pct05w3=15.4; pct85w3=22.8; pct95w3=24.9; end;
+if age_mw3=142 then do; pct05w3=15.5; pct85w3=22.9; pct95w3=24.9; end;
+if age_mw3=143 then do; pct05w3=15.5; pct85w3=22.9; pct95w3=25.0; end;
+if age_mw3=144 then do; pct05w3=15.5; pct85w3=23.0; pct95w3=25.1; end;
+if age_mw3=145 then do; pct05w3=15.6; pct85w3=23.0; pct95w3=25.1; end;
+if age_mw3=146 then do; pct05w3=15.6; pct85w3=23.1; pct95w3=25.2; end;
+if age_mw3=147 then do; pct05w3=15.7; pct85w3=23.1; pct95w3=25.2; end;
+if age_mw3=148 then do; pct05w3=15.7; pct85w3=23.2; pct95w3=25.3; end;
+if age_mw3=149 then do; pct05w3=15.7; pct85w3=23.2; pct95w3=25.3; end;
+if age_mw3=150 then do; pct05w3=15.8; pct85w3=23.3; pct95w3=25.4; end;
+if age_mw3=151 then do; pct05w3=15.8; pct85w3=23.3; pct95w3=25.4; end;
+if age_mw3=152 then do; pct05w3=15.8; pct85w3=23.4; pct95w3=25.5; end;
+if age_mw3=153 then do; pct05w3=15.9; pct85w3=23.4; pct95w3=25.5; end;
+if age_mw3=154 then do; pct05w3=15.9; pct85w3=23.5; pct95w3=25.6; end;
+if age_mw3=155 then do; pct05w3=16.0; pct85w3=23.5; pct95w3=25.6; end;
+if age_mw3=156 then do; pct05w3=16.0; pct85w3=23.6; pct95w3=25.7; end;
+if age_mw3=157 then do; pct05w3=16.1; pct85w3=23.6; pct95w3=25.7; end;
+if age_mw3=158 then do; pct05w3=16.1; pct85w3=23.6; pct95w3=25.7; end;
+if age_mw3=159 then do; pct05w3=16.1; pct85w3=23.7; pct95w3=25.8; end;
+if age_mw3=160 then do; pct05w3=16.2; pct85w3=23.7; pct95w3=25.8; end;
+if age_mw3=161 then do; pct05w3=16.2; pct85w3=23.7; pct95w3=25.8; end;
+if age_mw3=162 then do; pct05w3=16.3; pct85w3=23.8; pct95w3=25.8; end;
+end;
+
+/*여자 137-162*/
+if sexw1=2 then do; 
+
+if age_mw3=137 then do; pct05w3=15.0; pct85w3=21.7; pct95w3=23.7; end;
+if age_mw3=138 then do; pct05w3=15.0; pct85w3=21.8; pct95w3=23.7; end;
+if age_mw3=139 then do; pct05w3=15.1; pct85w3=21.8; pct95w3=23.8; end;
+if age_mw3=140 then do; pct05w3=15.1; pct85w3=21.9; pct95w3=23.9; end;
+if age_mw3=141 then do; pct05w3=15.2; pct85w3=21.9; pct95w3=23.9; end;
+if age_mw3=142 then do; pct05w3=15.2; pct85w3=22.0; pct95w3=24.0; end;
+if age_mw3=143 then do; pct05w3=15.2; pct85w3=22.1; pct95w3=24.1; end;
+if age_mw3=144 then do; pct05w3=15.3; pct85w3=22.1; pct95w3=24.1; end;
+if age_mw3=145 then do; pct05w3=15.3; pct85w3=22.2; pct95w3=24.2; end;
+if age_mw3=146 then do; pct05w3=15.4; pct85w3=22.2; pct95w3=24.2; end;
+if age_mw3=147 then do; pct05w3=15.4; pct85w3=22.3; pct95w3=24.3; end;
+if age_mw3=148 then do; pct05w3=15.5; pct85w3=22.3; pct95w3=24.4; end;
+if age_mw3=149 then do; pct05w3=15.5; pct85w3=22.4; pct95w3=24.4; end;
+if age_mw3=150 then do; pct05w3=15.6; pct85w3=22.4; pct95w3=24.5; end;
+if age_mw3=151 then do; pct05w3=15.6; pct85w3=22.5; pct95w3=24.5; end;
+if age_mw3=152 then do; pct05w3=15.7; pct85w3=22.5; pct95w3=24.6; end;
+if age_mw3=153 then do; pct05w3=15.7; pct85w3=22.6; pct95w3=24.6; end;
+if age_mw3=154 then do; pct05w3=15.8; pct85w3=22.7; pct95w3=24.7; end;
+if age_mw3=155 then do; pct05w3=15.8; pct85w3=22.7; pct95w3=24.7; end;
+if age_mw3=156 then do; pct05w3=15.9; pct85w3=22.8; pct95w3=24.8; end;
+if age_mw3=157 then do; pct05w3=15.9; pct85w3=22.8; pct95w3=24.8; end;
+if age_mw3=158 then do; pct05w3=16.0; pct85w3=22.8; pct95w3=24.8; end;
+if age_mw3=159 then do; pct05w3=16.0; pct85w3=22.9; pct95w3=24.9; end;
+if age_mw3=160 then do; pct05w3=16.0; pct85w3=22.9; pct95w3=24.9; end;
+if age_mw3=161 then do; pct05w3=16.1; pct85w3=23.0; pct95w3=25.0; end;
+if age_mw3=162 then do; pct05w3=16.1; pct85w3=23.0; pct95w3=25.0; end;
+end;
+
+*BMI 카테고리;
+if bmiw3^=. then do;
+if bmiw3<pct05w3 then bmi_cw3=1;
+else if pct05w3<=bmiw3<pct85w3 then bmi_cw3=2;
+else if pct85w3<=bmiw3<pct95w3 then bmi_cw3=3;
+else bmi_cw3=4;
+end;
+
+*비만;
+if bmi_cw3^=. then do;
+if bmi_cw3 in (1:3) then obesityw3=0;
+else obesityw3=1;
+end;
+
+
+/********************************************** w4 *************************************************/
+*BMI;
+heightw4=yphy2a00w4/100;
+weightw4=yphy2b00w4;
+if yphy2a00w4^=. and yphy2b00w4^=. then bmiw4=weightw4/(heightw4*heightw4);
+
+/*남자: 149-174*/
+if sexw1=1 then do; 
+
+if age_mw4=149 then do; pct05w4=15.7; pct85w4=23.2; pct95w4=25.3; end;
+if age_mw4=150 then do; pct05w4=15.8; pct85w4=23.3; pct95w4=25.4; end;
+if age_mw4=151 then do; pct05w4=15.8; pct85w4=23.3; pct95w4=25.4; end;
+if age_mw4=152 then do; pct05w4=15.8; pct85w4=23.4; pct95w4=25.5; end;
+if age_mw4=153 then do; pct05w4=15.9; pct85w4=23.4; pct95w4=25.5; end;
+if age_mw4=154 then do; pct05w4=15.9; pct85w4=23.5; pct95w4=25.6; end;
+if age_mw4=155 then do; pct05w4=16.0; pct85w4=23.5; pct95w4=25.6; end;
+if age_mw4=156 then do; pct05w4=16.0; pct85w4=23.6; pct95w4=25.7; end;
+if age_mw4=157 then do; pct05w4=16.1; pct85w4=23.6; pct95w4=25.7; end;
+if age_mw4=158 then do; pct05w4=16.1; pct85w4=23.6; pct95w4=25.7; end;
+if age_mw4=159 then do; pct05w4=16.1; pct85w4=23.7; pct95w4=25.8; end;
+if age_mw4=160 then do; pct05w4=16.2; pct85w4=23.7; pct95w4=25.8; end;
+if age_mw4=161 then do; pct05w4=16.2; pct85w4=23.7; pct95w4=25.8; end;
+if age_mw4=162 then do; pct05w4=16.3; pct85w4=23.8; pct95w4=25.8; end;
+if age_mw4=163 then do; pct05w4=16.3; pct85w4=23.8; pct95w4=25.9; end;
+if age_mw4=164 then do; pct05w4=16.3; pct85w4=23.8; pct95w4=25.9; end;
+if age_mw4=165 then do; pct05w4=16.4; pct85w4=23.9; pct95w4=25.9; end;
+if age_mw4=166 then do; pct05w4=16.4; pct85w4=23.9; pct95w4=26.0; end;
+if age_mw4=167 then do; pct05w4=16.5; pct85w4=23.9; pct95w4=26.0; end;
+if age_mw4=168 then do; pct05w4=16.5; pct85w4=23.9; pct95w4=26.0; end;
+if age_mw4=169 then do; pct05w4=16.6; pct85w4=24.0; pct95w4=26.0; end;
+if age_mw4=170 then do; pct05w4=16.6; pct85w4=24.0; pct95w4=26.1; end;
+if age_mw4=171 then do; pct05w4=16.7; pct85w4=24.0; pct95w4=26.1; end;
+if age_mw4=172 then do; pct05w4=16.7; pct85w4=24.0; pct95w4=26.1; end;
+if age_mw4=173 then do; pct05w4=16.7; pct85w4=24.1; pct95w4=26.1; end;
+if age_mw4=174 then do; pct05w4=16.8; pct85w4=24.1; pct95w4=26.1; end;
+end;
+
+/*여자 149-174*/
+if sexw1=2 then do; 
+
+if age_mw4=149 then do; pct05w4=15.5; pct85w4=22.4; pct95w4=24.4; end;
+if age_mw4=150 then do; pct05w4=15.6; pct85w4=22.4; pct95w4=24.5; end;
+if age_mw4=151 then do; pct05w4=15.6; pct85w4=22.5; pct95w4=24.5; end;
+if age_mw4=152 then do; pct05w4=15.7; pct85w4=22.5; pct95w4=24.6; end;
+if age_mw4=153 then do; pct05w4=15.7; pct85w4=22.6; pct95w4=24.6; end;
+if age_mw4=154 then do; pct05w4=15.8; pct85w4=22.7; pct95w4=24.7; end;
+if age_mw4=155 then do; pct05w4=15.8; pct85w4=22.7; pct95w4=24.7; end;
+if age_mw4=156 then do; pct05w4=15.9; pct85w4=22.8; pct95w4=24.8; end;
+if age_mw4=157 then do; pct05w4=15.9; pct85w4=22.8; pct95w4=24.8; end;
+if age_mw4=158 then do; pct05w4=16.0; pct85w4=22.8; pct95w4=24.8; end;
+if age_mw4=159 then do; pct05w4=16.0; pct85w4=22.9; pct95w4=24.9; end;
+if age_mw4=160 then do; pct05w4=16.0; pct85w4=22.9; pct95w4=24.9; end;
+if age_mw4=161 then do; pct05w4=16.1; pct85w4=23.0; pct95w4=25.0; end;
+if age_mw4=162 then do; pct05w4=16.1; pct85w4=23.0; pct95w4=25.0; end;
+if age_mw4=163 then do; pct05w4=16.2; pct85w4=23.0; pct95w4=25.0; end;
+if age_mw4=164 then do; pct05w4=16.2; pct85w4=23.1; pct95w4=25.1; end;
+if age_mw4=165 then do; pct05w4=16.3; pct85w4=23.1; pct95w4=25.1; end;
+if age_mw4=166 then do; pct05w4=16.3; pct85w4=23.2; pct95w4=25.1; end;
+if age_mw4=167 then do; pct05w4=16.4; pct85w4=23.2; pct95w4=25.2; end;
+if age_mw4=168 then do; pct05w4=16.4; pct85w4=23.3; pct95w4=25.2; end;
+if age_mw4=169 then do; pct05w4=16.5; pct85w4=23.3; pct95w4=25.2; end;
+if age_mw4=170 then do; pct05w4=16.5; pct85w4=23.3; pct95w4=25.2; end;
+if age_mw4=171 then do; pct05w4=16.6; pct85w4=23.3; pct95w4=25.3; end;
+if age_mw4=172 then do; pct05w4=16.6; pct85w4=23.4; pct95w4=25.3; end;
+if age_mw4=173 then do; pct05w4=16.6; pct85w4=23.4; pct95w4=25.3; end;
+if age_mw4=174 then do; pct05w4=16.7; pct85w4=23.4; pct95w4=25.3; end;
+end;
+
+*BMI 카테고리;
+if bmiw4^=. then do;
+if bmiw4<pct05w4 then bmi_cw4=1;
+else if pct05w4<=bmiw4<pct85w4 then bmi_cw4=2;
+else if pct85w4<=bmiw4<pct95w4 then bmi_cw4=3;
+else bmi_cw4=4;
+end;
+
+*비만;
+if bmi_cw4^=. then do;
+if bmi_cw4 in (1:3) then obesityw4=0;
+else obesityw4=1;
+end;
+
+
+
+/*************/
+/* depression */
+/*************/
+
+/********************************************** w1 (baseline) *************************************************/
+depress1w1=ypsy4e01w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress2w1=ypsy4e02w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress3w1=ypsy4e03w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress4w1=ypsy4e04w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress5w1=ypsy4e05w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress6w1=ypsy4e06w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress7w1=ypsy4e07w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress8w1=ypsy4e08w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress9w1=ypsy4e09w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress10w1=ypsy4e10w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+
+depsumw1=sum(depress1w1, depress2w1, depress3w1, depress4w1, depress5w1, depress6w1, depress7w1, depress8w1, depress9w1, depress10w1); *range 10-40;
+
+
+/********************************************** w2 *************************************************/
+depress1w2=ypsy4e01w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress2w2=ypsy4e02w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress3w2=ypsy4e03w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress4w2=ypsy4e04w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress5w2=ypsy4e05w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress6w2=ypsy4e06w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress7w2=ypsy4e07w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress8w2=ypsy4e08w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress9w2=ypsy4e09w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress10w2=ypsy4e10w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+
+depsumw2=sum(depress1w2, depress2w2, depress3w2, depress4w2, depress5w2, depress6w2, depress7w2, depress8w2, depress9w2, depress10w2); 
+*range 10-40;
+
+
+/********************************************** w3 *************************************************/
+depress1w3=ypsy4e01w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress2w3=ypsy4e02w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress3w3=ypsy4e03w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress4w3=ypsy4e04w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress5w3=ypsy4e05w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress6w3=ypsy4e06w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress7w3=ypsy4e07w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress8w3=ypsy4e08w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress9w3=ypsy4e09w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress10w3=ypsy4e10w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+
+depsumw3=sum(depress1w3, depress2w3, depress3w3, depress4w3, depress5w3, depress6w3, depress7w3, depress8w3, depress9w3, depress10w3); 
+*range 10-40;
+
+
+/********************************************** w4 *************************************************/
+depress1w4=ypsy4e01w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress2w4=ypsy4e02w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress3w4=ypsy4e03w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress4w4=ypsy4e04w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress5w4=ypsy4e05w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress6w4=ypsy4e06w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress7w4=ypsy4e07w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress8w4=ypsy4e08w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress9w4=ypsy4e09w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress10w4=ypsy4e10w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+
+depsumw4=sum(depress1w4, depress2w4, depress3w4, depress4w4, depress5w4, depress6w4, depress7w4, depress8w4, depress9w4, depress10w4); 
+*range 10-40;
+
+
+run;
+
+
+
+
+
+/*********************************************************************************************************************************************************************************/
+/*********************************************************************************************************************************************************************************/
+/*********************************************************************************************************************************************************************************/
+
+
+
+
+
+/*중1*/
+data m1;
+set middle;
+
+*월연령;
+birth_d=15; *생년월일 중 '일' 고정;
+surveydayw1=mdy(9,15,2018); *조사날짜 2018년 9월 15일로 간주;
+surveydayw4=mdy(9,15,2021); *조사날짜 2021년 9월 15일로 간주;
+birth=mdy(ybrt1bw1, birth_d, ybrt1aw1); *출생일;
+age_mw1=intck('month' , birth, surveydayw1); *1차조사 월_연령. range 150-170;
+age_mw4=intck('month' , birth, surveydayw4);
+
+
+*성별;
+sexw1=ygenderw2; *M=1405 F=1185, no missing;
+
+*학년;
+schoolw2=2;
+
+
+/*스마트폰 이용시간*/
+*평일;
+if ytim1k01w2=1 then sp_use_wdw2=0;
+else if ytim1k01w2=2 then sp_use_wdw2=15;
+else if ytim1k01w2=3 then sp_use_wdw2=45;
+else if ytim1k01w2=4 then sp_use_wdw2=90;
+else if ytim1k01w2=5 then sp_use_wdw2=150;
+else if ytim1k01w2=6 then sp_use_wdw2=210;
+else if ytim1k01w2=7 then sp_use_wdw2=270;
+sp_use_wdw2h=sp_use_wdw2/60; *단위를 시간으로변환;
+*주말;
+if ytim1k02w2=1 then sp_use_wkw2=0;
+else if ytim1k02w2=2 then sp_use_wkw2=15;
+else if ytim1k02w2=3 then sp_use_wkw2=45;
+else if ytim1k02w2=4 then sp_use_wkw2=90;
+else if ytim1k02w2=5 then sp_use_wkw2=150;
+else if ytim1k02w2=6 then sp_use_wkw2=210;
+else if ytim1k02w2=7 then sp_use_wkw2=270;
+sp_use_wkw2h=sp_use_wkw2/60; *단위를 시간으로변환;
+*일주일평균;
+sp_usew2=sum(sp_use_wdw2*5, sp_use_wkw2*2)/7;
+sp_usew2h=sp_usew2/60;
+
+
+
+
+/*수면시간*/
+*평일;
+wake_wd=hms(ytim1a01w2, ytim1a02w2, 0);
+bed_wd=hms(ytim1b01w2, ytim1b02w2, 0);
+sleep_wd_raw=intck('second', bed_wd, wake_wd);
+if sleep_wd_raw<0 then sleep_wd=sleep_wd_raw+86400; /*24*60*60=86400 sec*/
+else if sleep_wd_raw>=0 then sleep_wd=sleep_wd_raw;
+sleep_wd_m=sleep_wd/60;
+sleep_wd_h=sleep_wd/3600;
+*주말;
+wake_wk=hms(ytim1a03w2, ytim1a04w2, 0);
+bed_wk=hms(ytim1b03w2, ytim1b04w2, 0);
+sleep_wk_raw=intck('second', bed_wk, wake_wk);
+if sleep_wk_raw<0 then sleep_wk=sleep_wk_raw+86400;
+else if sleep_wk_raw>=0 then sleep_wk=sleep_wk_raw;
+sleep_wk_m=sleep_wk/60;
+sleep_wk_h=sleep_wk/3600;
+*일주일평균;
+sleep_all_m=((sleep_wd_m*5)+(sleep_wk_m*2))/7;
+sleep_all_h=((sleep_wd_h*5)+(sleep_wk_h*2))/7;
+
+
+/*부모님 대화시간*/
+*평일;
+if ytim1d01w2=1 then dayuse2_wdw2=0;
+else if ytim1d01w2=2 then dayuse2_wdw2=15;
+else if ytim1d01w2=3 then dayuse2_wdw2=45;
+else if ytim1d01w2=4 then dayuse2_wdw2=90;
+else if ytim1d01w2=5 then dayuse2_wdw2=150;
+else if ytim1d01w2=6 then dayuse2_wdw2=210;
+else if ytim1d01w2=7 then dayuse2_wdw2=270;
+dayuse2_wdw2h=dayuse2_wdw2/60;
+*주말;
+if ytim1d02w2=1 then dayuse2_wkw2=0;
+else if ytim1d02w2=2 then dayuse2_wkw2=15;
+else if ytim1d02w2=3 then dayuse2_wkw2=45;
+else if ytim1d02w2=4 then dayuse2_wkw2=90;
+else if ytim1d02w2=5 then dayuse2_wkw2=150;
+else if ytim1d02w2=6 then dayuse2_wkw2=210;
+else if ytim1d02w2=7 then dayuse2_wkw2=270;
+dayuse2_wkw2h=dayuse2_wkw2/60;
+*일주일평균;
+dayuse2w2=sum(dayuse2_wdw2*5, dayuse2_wkw2*2)/7;
+dayuse2w2h=dayuse2w2/60;
+
+
+/*학원 및 과외시간*/
+*평일;
+if ytim1e01w2=1 then dayuse3_wdw2=0;
+else if ytim1e01w2=2 then dayuse3_wdw2=15;
+else if ytim1e01w2=3 then dayuse3_wdw2=45;
+else if ytim1e01w2=4 then dayuse3_wdw2=90;
+else if ytim1e01w2=5 then dayuse3_wdw2=150;
+else if ytim1e01w2=6 then dayuse3_wdw2=210;
+else if ytim1e01w2=7 then dayuse3_wdw2=270;
+dayuse3_wdw2h=dayuse3_wdw2/60;
+*주말;
+if ytim1e02w2=1 then dayuse3_wkw2=0;
+else if ytim1e02w2=2 then dayuse3_wkw2=15;
+else if ytim1e02w2=3 then dayuse3_wkw2=45;
+else if ytim1e02w2=4 then dayuse3_wkw2=90;
+else if ytim1e02w2=5 then dayuse3_wkw2=150;
+else if ytim1e02w2=6 then dayuse3_wkw2=210;
+else if ytim1e02w2=7 then dayuse3_wkw2=270;
+dayuse3_wkw2h=dayuse3_wkw2/60;
+*일주일평균;
+dayuse3w2=sum(dayuse3_wdw2*5, dayuse3_wkw2*2)/7;
+dayuse3w2h=dayuse3w2/60;
+
+
+/*인터넷 및 TV강의 시간*/
+*평일;
+if ytim1f01w2=1 then dayuse4_wdw2=0;
+else if ytim1f01w2=2 then dayuse4_wdw2=15;
+else if ytim1f01w2=3 then dayuse4_wdw2=45;
+else if ytim1f01w2=4 then dayuse4_wdw2=90;
+else if ytim1f01w2=5 then dayuse4_wdw2=150;
+else if ytim1f01w2=6 then dayuse4_wdw2=210;
+else if ytim1f01w2=7 then dayuse4_wdw2=270;
+dayuse4_wdw2h=dayuse4_wdw2/60;
+*주말;
+if ytim1f02w2=1 then dayuse4_wkw2=0;
+else if ytim1f02w2=2 then dayuse4_wkw2=15;
+else if ytim1f02w2=3 then dayuse4_wkw2=45;
+else if ytim1f02w2=4 then dayuse4_wkw2=90;
+else if ytim1f02w2=5 then dayuse4_wkw2=150;
+else if ytim1f02w2=6 then dayuse4_wkw2=210;
+else if ytim1f02w2=7 then dayuse4_wkw2=270;
+dayuse4_wkw2h=dayuse4_wkw2/60;
+*일주일평균;
+dayuse4w2=sum(dayuse4_wdw2*5, dayuse4_wkw2*2)/7;
+dayuse4w2h=dayuse4w2/60;
+
+
+/*방과 후 학교*/
+*평일;
+if ytim1g01w2=1 then dayuse5_wdw2=0;
+else if ytim1g01w2=2 then dayuse5_wdw2=15;
+else if ytim1g01w2=3 then dayuse5_wdw2=45;
+else if ytim1g01w2=4 then dayuse5_wdw2=90;
+else if ytim1g01w2=5 then dayuse5_wdw2=150;
+else if ytim1g01w2=6 then dayuse5_wdw2=210;
+else if ytim1g01w2=7 then dayuse5_wdw2=270;
+dayuse5_wdw2h=dayuse5_wdw2/60;
+*주말;
+if ytim1g02w2=1 then dayuse5_wkw2=0;
+else if ytim1g02w2=2 then dayuse5_wkw2=15;
+else if ytim1g02w2=3 then dayuse5_wkw2=45;
+else if ytim1g02w2=4 then dayuse5_wkw2=90;
+else if ytim1g02w2=5 then dayuse5_wkw2=150;
+else if ytim1g02w2=6 then dayuse5_wkw2=210;
+else if ytim1g02w2=7 then dayuse5_wkw2=270;
+dayuse5_wkw2h=dayuse5_wkw2/60;
+*일주일평균;
+dayuse5w2=sum(dayuse5_wdw2*5, dayuse5_wkw2*2)/7;
+dayuse5w2h=dayuse5w2/60;
+
+
+/*스스로 공부하는 시간*/
+*평일;
+if ytim1h01w2=1 then dayuse6_wdw2=0;
+else if ytim1h01w2=2 then dayuse6_wdw2=15;
+else if ytim1h01w2=3 then dayuse6_wdw2=45;
+else if ytim1h01w2=4 then dayuse6_wdw2=90;
+else if ytim1h01w2=5 then dayuse6_wdw2=150;
+else if ytim1h01w2=6 then dayuse6_wdw2=210;
+else if ytim1h01w2=7 then dayuse6_wdw2=270;
+dayuse6_wdw2h=dayuse6_wdw2/60;
+*주말;
+if ytim1h02w2=1 then dayuse6_wkw2=0;
+else if ytim1h02w2=2 then dayuse6_wkw2=15;
+else if ytim1h02w2=3 then dayuse6_wkw2=45;
+else if ytim1h02w2=4 then dayuse6_wkw2=90;
+else if ytim1h02w2=5 then dayuse6_wkw2=150;
+else if ytim1h02w2=6 then dayuse6_wkw2=210;
+else if ytim1h02w2=7 then dayuse6_wkw2=270;
+dayuse6_wkw2h=dayuse6_wkw2/60;
+*일주일평균;
+dayuse6w2=sum(dayuse6_wdw2*5, dayuse6_wkw2*2)/7;
+dayuse6w2h=dayuse6w2/60;
+
+
+/*독서시간*/
+*평일;
+if ytim1i01w2=1 then dayuse7_wdw2=0;
+else if ytim1i01w2=2 then dayuse7_wdw2=15;
+else if ytim1i01w2=3 then dayuse7_wdw2=45;
+else if ytim1i01w2=4 then dayuse7_wdw2=90;
+else if ytim1i01w2=5 then dayuse7_wdw2=150;
+else if ytim1i01w2=6 then dayuse7_wdw2=210;
+else if ytim1i01w2=7 then dayuse7_wdw2=270;
+dayuse7_wdw2h=dayuse7_wdw2/60;
+*주말;
+if ytim1i02w2=1 then dayuse7_wkw2=0;
+else if ytim1i02w2=2 then dayuse7_wkw2=15;
+else if ytim1i02w2=3 then dayuse7_wkw2=45;
+else if ytim1i02w2=4 then dayuse7_wkw2=90;
+else if ytim1i02w2=5 then dayuse7_wkw2=150;
+else if ytim1i02w2=6 then dayuse7_wkw2=210;
+else if ytim1i02w2=7 then dayuse7_wkw2=270;
+dayuse7_wkw2h=dayuse7_wkw2/60;
+*일주일평균;
+dayuse7w2=sum(dayuse7_wdw2*5, dayuse7_wkw2*2)/7;
+dayuse7w2h=dayuse7w2/60;
+
+
+/*운동 및 신체활동시간*/
+*평일;
+if ytim1j01w2=1 then dayuse8_wdw2=0;
+else if ytim1j01w2=2 then dayuse8_wdw2=15;
+else if ytim1j01w2=3 then dayuse8_wdw2=45;
+else if ytim1j01w2=4 then dayuse8_wdw2=90;
+else if ytim1j01w2=5 then dayuse8_wdw2=150;
+else if ytim1j01w2=6 then dayuse8_wdw2=210;
+else if ytim1j01w2=7 then dayuse8_wdw2=270;
+dayuse8_wdw2h=dayuse8_wdw2/60;
+*주말;
+if ytim1j02w2=1 then dayuse8_wkw2=0;
+else if ytim1j02w2=2 then dayuse8_wkw2=15;
+else if ytim1j02w2=3 then dayuse8_wkw2=45;
+else if ytim1j02w2=4 then dayuse8_wkw2=90;
+else if ytim1j02w2=5 then dayuse8_wkw2=150;
+else if ytim1j02w2=6 then dayuse8_wkw2=210;
+else if ytim1j02w2=7 then dayuse8_wkw2=270;
+dayuse8_wkw2h=dayuse8_wkw2/60;
+*일주일평균;
+dayuse8w2=sum(dayuse8_wdw2*5, dayuse8_wkw2*2)/7;
+dayuse8w2h=dayuse8w2/60;
+
+
+/*컴퓨터를 가지고노는시간*/
+*평일;
+if ytim1l01w2=1 then dayuse9_wdw2=0;
+else if ytim1l01w2=2 then dayuse9_wdw2=15;
+else if ytim1l01w2=3 then dayuse9_wdw2=45;
+else if ytim1l01w2=4 then dayuse9_wdw2=90;
+else if ytim1l01w2=5 then dayuse9_wdw2=150;
+else if ytim1l01w2=6 then dayuse9_wdw2=210;
+else if ytim1l01w2=7 then dayuse9_wdw2=270;
+dayuse9_wdw2h=dayuse9_wdw2/60;
+*주말;
+if ytim1l02w2=1 then dayuse9_wkw2=0;
+else if ytim1l02w2=2 then dayuse9_wkw2=15;
+else if ytim1l02w2=3 then dayuse9_wkw2=45;
+else if ytim1l02w2=4 then dayuse9_wkw2=90;
+else if ytim1l02w2=5 then dayuse9_wkw2=150;
+else if ytim1l02w2=6 then dayuse9_wkw2=210;
+else if ytim1l02w2=7 then dayuse9_wkw2=270;
+dayuse9_wkw2h=dayuse9_wkw2/60;
+*일주일평균;
+dayuse9w2=sum(dayuse9_wdw2*5, dayuse9_wkw2*2)/7;
+dayuse9w2h=dayuse9w2/60;
+
+
+/*TV시청*/
+*평일;
+if ytim1m01w2=1 then dayuse10_wdw2=0;
+else if ytim1m01w2=2 then dayuse10_wdw2=15;
+else if ytim1m01w2=3 then dayuse10_wdw2=45;
+else if ytim1m01w2=4 then dayuse10_wdw2=90;
+else if ytim1m01w2=5 then dayuse10_wdw2=150;
+else if ytim1m01w2=6 then dayuse10_wdw2=210;
+else if ytim1m01w2=7 then dayuse10_wdw2=270;
+dayuse10_wdw2h=dayuse10_wdw2/60;
+*주말;
+if ytim1m02w2=1 then dayuse10_wkw2=0;
+else if ytim1m02w2=2 then dayuse10_wkw2=15;
+else if ytim1m02w2=3 then dayuse10_wkw2=45;
+else if ytim1m02w2=4 then dayuse10_wkw2=90;
+else if ytim1m02w2=5 then dayuse10_wkw2=150;
+else if ytim1m02w2=6 then dayuse10_wkw2=210;
+else if ytim1m02w2=7 then dayuse10_wkw2=270;
+dayuse10_wkw2h=dayuse10_wkw2/60;
+*일주일평균;
+dayuse10w2=sum(dayuse10_wdw2*5, dayuse10_wkw2*2)/7;
+dayuse10w2h=dayuse10w2/60;
+
+
+/*친구들과 노는시간*/
+*평일;
+if ytim1n01w2=1 then dayuse11_wdw2=0;
+else if ytim1n01w2=2 then dayuse11_wdw2=15;
+else if ytim1n01w2=3 then dayuse11_wdw2=45;
+else if ytim1n01w2=4 then dayuse11_wdw2=90;
+else if ytim1n01w2=5 then dayuse11_wdw2=150;
+else if ytim1n01w2=6 then dayuse11_wdw2=210;
+else if ytim1n01w2=7 then dayuse11_wdw2=270;
+dayuse11_wdw2h=dayuse11_wdw2/60;
+*주말;
+if ytim1n02w2=1 then dayuse11_wkw2=0;
+else if ytim1n02w2=2 then dayuse11_wkw2=15;
+else if ytim1n02w2=3 then dayuse11_wkw2=45;
+else if ytim1n02w2=4 then dayuse11_wkw2=90;
+else if ytim1n02w2=5 then dayuse11_wkw2=150;
+else if ytim1n02w2=6 then dayuse11_wkw2=210;
+else if ytim1n02w2=7 then dayuse11_wkw2=270;
+dayuse11_wkw2h=dayuse11_wkw2/60;
+*일주일평균;
+dayuse11w2=sum(dayuse11_wdw2*5, dayuse11_wkw2*2)/7;
+dayuse11w2h=dayuse11w2/60;
+
+
+/*학업성적*/
+*1-6 categories: 매우 못함 - 매우 잘함 - 잘 모르겠음;
+if yint1a00w2 in (1,2,3) then gradew2=1;
+else if yint1a00w2 in (4,5) then gradew2=2;
+else gradew2=3;
+
+
+/*부모의양육태도*/
+*강요;
+parcare1dw2=yfam2d01w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+parcare2dw2=yfam2d02w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+parcare3dw2=yfam2d03w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+parcare4dw2=yfam2d04w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+parcaresumw2=sum(parcare1dw2, parcare2dw2, parcare3dw2, parcare4dw2); *range 4-16;
+
+
+/*부모님 동거여부*/
+if pfam1a00w2 in(1,4) then famnumw2=2;
+else famnumw2=1;
+
+
+/*부모님학력*/
+if pschool1w2 in (5,6,7) or pschool2w2 in (5,6,7) then pschoolw2=2;
+else if pschool1w2 in (1:4) or pschool2w2 in (1:4) then pschoolw2=1;
+else pschoolw2=2;
+
+
+/*월평균가구소득*/
+if pincomew2 in(1:3) then incomew2=1;
+else if pincomew2 in(4,5) then incomew2=2;
+else if pincomew2 in(6,7) then incomew2=3;
+else if pincomew2=. then incomew2=3;
+else if pincomew2 in(8,9) then incomew2=4;
+else incomew2=5;
+
+/*층화분석용 가구소득*/
+if incomew2 in (1,2) then incomew2r=1;
+else if incomew2=3 then incomew2r=2;
+else if incomew2 in (4,5) then incomew2r=3;
+
+
+/*아버지 직업*/
+if pjob1w2 in (1,2,3) then fjobw2=1;
+else if pjob1w2 in (4,5) then fjobw2=2;
+else if pjob1w2 in (6:11) then fjobw2=3;
+else fjobw2=4;
+
+
+/*어머니 직업*/
+if pjob2w2 in (1,2,3) then mjobw2=1;
+else if pjob2w2 in (4,5) then mjobw2=2;
+else if pjob2w2 in (6:11) then mjobw2=3;
+else mjobw2=4;
+
+
+
+/*학습시간(학원 및 과외, 인터넷 및 TV강의, 방과 후 학교, 스스로 공부하는 시간의 합)*/;
+daystudy_wdw2=sum(dayuse3_wdw2h, dayuse4_wdw2h, dayuse5_wdw2h, dayuse6_wdw2h);
+daystudy_wkw2=sum(dayuse3_wkw2h, dayuse4_wkw2h, dayuse5_wkw2h, dayuse6_wkw2h);
+daystudyw2=sum(daystudy_wdw2*5, daystudy_wkw2*2)/7;
+
+/*시간변수 24시간 단위로 변환*/
+*일주일평균;
+atimew2=24-sleep_all_h-5;
+btimew2=sum(dayuse2w2h, daystudyw2, dayuse7w2h, dayuse8w2h, dayuse9w2h, dayuse10w2h, dayuse11w2h, sp_usew2h);
+ctime2w2=(dayuse2w2h/btimew2)*atimew2;
+ctimestudyw2=(daystudyw2/btimew2)*atimew2;
+ctime7w2=(dayuse7w2h/btimew2)*atimew2;
+ctime8w2=(dayuse8w2h/btimew2)*atimew2;
+ctime9w2=(dayuse9w2h/btimew2)*atimew2;
+ctime10w2=(dayuse10w2h/btimew2)*atimew2;
+ctime11w2=(dayuse11w2h/btimew2)*atimew2;
+ctimespw2=(sp_usew2h/btimew2)*atimew2;
+ctimetstw2=sum(ctimespw2, ctime9w2, ctime10w2);
+
+
+
+
+/***************/
+/*screentime cat*/
+/***************/
+
+/* smartphone */
+*sp_new;
+if sp_usew2=. or sp_usew2=0 then sp_new=1;
+else if 0<sp_usew2<60 then sp_new=2;
+else if 60<=sp_usew2<120 then sp_new=3;
+else if 120<=sp_usew2<180 then sp_new=4;
+else if sp_usew2>=180 then sp_new=5;
+*sp_re;
+if sp_usew2=. or 0<=sp_usew2<60 then sp_re=2;
+else if 60<=sp_usew2<120 then sp_re=3;
+else if 120<=sp_usew2<180 then sp_re=4;
+else if sp_usew2>=180 then sp_re=5;
+
+
+*com_new;
+if dayuse9w2=. or dayuse9w2=0 then com_new=1;
+else if 0<dayuse9w2<60 then com_new=2;
+else if 60<=dayuse9w2<120 then com_new=3;
+else if dayuse9w2>=120 then com_new=4;
+*com_re;
+if dayuse9w2=. or 0<=dayuse9w2<60 then com_re=2;
+else if 60<=dayuse9w2<120 then com_re=3;
+else if dayuse9w2>=120 then com_re=4;
+
+
+*tv_new;
+if dayuse10w2=. or dayuse10w2=0 then tv_new=1;
+else if 0<dayuse10w2<60 then tv_new=2;
+else if 60<=dayuse10w2<120 then tv_new=3;
+else if dayuse10w2>=120 then tv_new=4;
+*tv_re;
+if dayuse10w2=. or 0<=dayuse10w2<60 then tv_re=2;
+else if 60<=dayuse10w2<120 then tv_re=3;
+else if dayuse10w2>=120 then tv_re=4;
+
+
+*total_new;
+tstw2=sum(sp_usew2, dayuse9w2, dayuse10w2);
+if tstw2=. or tstw2=0 then total_new=1;
+else if 0<tstw2<120 then total_new=2;
+else if 120<=tstw2<180 then total_new=3;
+else if 180<=tstw2<240 then total_new=4;
+else if tstw2>=240 then total_new=5;
+*total_re;
+if tstw2=. or 0<=tstw2<120 then total_re=2;
+else if 120<=tstw2<180 then total_re=3;
+else if 180<=tstw2<240 then total_re=4;
+else if tstw2>=240 then total_re=5;
+*total_60;
+if tstw2=. or 0<=tstw2<60 then total_60=2;
+else if 60<=tstw2<120 then total_60=3;
+else if 120<=tstw2<180 then total_60=4;
+else if 180<=tstw2<240 then total_60=5;
+else if tstw2>=240 then total_60=6;
+*total_60a;
+if tstw2=. or tstw2=0 then total_60a=1;
+else if 0<tstw2<60 then total_60a=2;
+else if 60<=tstw2<120 then total_60a=3;
+else if 120<=tstw2<180 then total_60a=4;
+else if 180<=tstw2<240 then total_60a=5;
+else if tstw2>=240 then total_60a=6;
+
+
+
+
+/**********/
+/* obesity */
+/**********/
+surveydayw2=mdy(9,15,2019); *조사날짜 2019년 9월 15일로 간주;
+surveydayw3=mdy(9,15,2020); *조사날짜 2020년 9월 15일로 간주;
+surveydayw4=mdy(9,15,2021); *조사날짜 2021년 9월 15일로 간주;
+age_mw2=intck('month' , birth, surveydayw2); 
+age_mw3=intck('month' , birth, surveydayw3);
+age_mw4=intck('month' , birth, surveydayw4);
+
+/********************************************** w1 *************************************************/
+*BMI;
+heightw1=yphy2a00w1/100;
+weightw1=yphy2b00w1;
+if yphy2a00w1^=. and yphy2b00w1^=. then bmiw1=weightw1/(heightw1*heightw1);
+
+/*남자*/
+
+if sexw1=1 then do; 
+
+if age_mw1=150 then do; pct05w1=15.8; pct85w1=23.3; pct95w1=25.4; end;
+if age_mw1=151 then do; pct05w1=15.8; pct85w1=23.3; pct95w1=25.4; end;
+if age_mw1=152 then do; pct05w1=15.8; pct85w1=23.4; pct95w1=25.5; end;
+if age_mw1=153 then do; pct05w1=15.9; pct85w1=23.4; pct95w1=25.5; end;
+if age_mw1=154 then do; pct05w1=15.9; pct85w1=23.5; pct95w1=25.6; end;
+if age_mw1=155 then do; pct05w1=16.0; pct85w1=23.5; pct95w1=25.6; end;
+if age_mw1=156 then do; pct05w1=16.0; pct85w1=23.6; pct95w1=25.7; end;
+if age_mw1=157 then do; pct05w1=16.1; pct85w1=23.6; pct95w1=25.7; end;
+if age_mw1=158 then do; pct05w1=16.1; pct85w1=23.6; pct95w1=25.7; end;
+if age_mw1=159 then do; pct05w1=16.1; pct85w1=23.7; pct95w1=25.8; end;
+if age_mw1=160 then do; pct05w1=16.2; pct85w1=23.7; pct95w1=25.8; end;
+if age_mw1=161 then do; pct05w1=16.2; pct85w1=23.7; pct95w1=25.8; end;
+if age_mw1=162 then do; pct05w1=16.3; pct85w1=23.8; pct95w1=25.8; end;
+if age_mw1=163 then do; pct05w1=16.3; pct85w1=23.8; pct95w1=25.9; end;
+if age_mw1=164 then do; pct05w1=16.3; pct85w1=23.8; pct95w1=25.9; end;
+if age_mw1=165 then do; pct05w1=16.4; pct85w1=23.9; pct95w1=25.9; end;
+if age_mw1=166 then do; pct05w1=16.4; pct85w1=23.9; pct95w1=26.0; end;
+if age_mw1=169 then do; pct05w1=16.6; pct85w1=24.0; pct95w1=26.0; end;
+if age_mw1=170 then do; pct05w1=16.6; pct85w1=24.0; pct95w1=26.1; end;
+end;
+
+/*여자*/
+if sexw1=2 then do; 
+
+if age_mw1=150 then do; pct05w1=15.6; pct85w1=22.4; pct95w1=24.5; end;
+if age_mw1=151 then do; pct05w1=15.6; pct85w1=22.5; pct95w1=24.5; end;
+if age_mw1=152 then do; pct05w1=15.7; pct85w1=22.5; pct95w1=24.6; end;
+if age_mw1=153 then do; pct05w1=15.7; pct85w1=22.6; pct95w1=24.6; end;
+if age_mw1=154 then do; pct05w1=15.8; pct85w1=22.7; pct95w1=24.7; end;
+if age_mw1=155 then do; pct05w1=15.8; pct85w1=22.7; pct95w1=24.7; end;
+if age_mw1=156 then do; pct05w1=15.9; pct85w1=22.8; pct95w1=24.8; end;
+if age_mw1=157 then do; pct05w1=15.9; pct85w1=22.8; pct95w1=24.8; end;
+if age_mw1=158 then do; pct05w1=16.0; pct85w1=22.8; pct95w1=24.8; end;
+if age_mw1=159 then do; pct05w1=16.0; pct85w1=22.9; pct95w1=24.9; end;
+if age_mw1=160 then do; pct05w1=16.0; pct85w1=22.9; pct95w1=24.9; end;
+if age_mw1=161 then do; pct05w1=16.1; pct85w1=23.0; pct95w1=25.0; end;
+if age_mw1=162 then do; pct05w1=16.1; pct85w1=23.0; pct95w1=25.0; end;
+if age_mw1=163 then do; pct05w1=16.2; pct85w1=23.0; pct95w1=25.0; end;
+if age_mw1=164 then do; pct05w1=16.2; pct85w1=23.1; pct95w1=25.1; end;
+if age_mw1=165 then do; pct05w1=16.3; pct85w1=23.1; pct95w1=25.1; end;
+if age_mw1=166 then do; pct05w1=16.3; pct85w1=23.2; pct95w1=25.1; end;
+if age_mw1=169 then do; pct05w1=16.5; pct85w1=23.3; pct95w1=25.2; end;
+if age_mw1=170 then do; pct05w1=16.5; pct85w1=23.3; pct95w1=25.2; end;
+end;
+
+*BMI 카테고리;
+if bmiw1^=. then do;
+if bmiw1<pct05w1 then bmi_cw1=1;
+else if pct05w1<=bmiw1<pct85w1 then bmi_cw1=2;
+else if pct85w1<=bmiw1<pct95w1 then bmi_cw1=3;
+else bmi_cw1=4;
+end;
+
+*비만;
+if bmi_cw1^=. then do;
+if bmi_cw1 in (1:3) then obesityw1=0;
+else obesityw1=1;
+end;
+
+/********************************************** w2 *************************************************/
+*BMI;
+heightw2=yphy2a00w2/100;
+weightw2=yphy2b00w2;
+if yphy2a00w2^=. and yphy2b00w2^=. then bmiw2=weightw2/(heightw2*heightw2);
+
+/*남자 162-182*/
+
+if sexw1=1 then do; 
+
+if age_mw2=162 then do; pct05w2=16.3; pct85w2=23.8; pct95w2=25.8; end;
+if age_mw2=163 then do; pct05w2=16.3; pct85w2=23.8; pct95w2=25.9; end;
+if age_mw2=164 then do; pct05w2=16.3; pct85w2=23.8; pct95w2=25.9; end;
+if age_mw2=165 then do; pct05w2=16.4; pct85w2=23.9; pct95w2=25.9; end;
+if age_mw2=166 then do; pct05w2=16.4; pct85w2=23.9; pct95w2=26.0; end;
+if age_mw2=167 then do; pct05w2=16.5; pct85w2=23.9; pct95w2=26.0; end;
+if age_mw2=168 then do; pct05w2=16.5; pct85w2=23.9; pct95w2=26.0; end;
+if age_mw2=169 then do; pct05w2=16.6; pct85w2=24.0; pct95w2=26.0; end;
+if age_mw2=170 then do; pct05w2=16.6; pct85w2=24.0; pct95w2=26.1; end;
+if age_mw2=171 then do; pct05w2=16.7; pct85w2=24.0; pct95w2=26.1; end;
+if age_mw2=172 then do; pct05w2=16.7; pct85w2=24.0; pct95w2=26.1; end;
+if age_mw2=173 then do; pct05w2=16.7; pct85w2=24.1; pct95w2=26.1; end;
+if age_mw2=174 then do; pct05w2=16.8; pct85w2=24.1; pct95w2=26.1; end;
+if age_mw2=175 then do; pct05w2=16.8; pct85w2=24.1; pct95w2=26.1; end;
+if age_mw2=176 then do; pct05w2=16.9; pct85w2=24.1; pct95w2=26.2; end;
+if age_mw2=177 then do; pct05w2=16.9; pct85w2=24.2; pct95w2=26.2; end;
+if age_mw2=178 then do; pct05w2=17.0; pct85w2=24.2; pct95w2=26.2; end;
+if age_mw2=179 then do; pct05w2=17.0; pct85w2=24.2; pct95w2=26.2; end;
+if age_mw2=180 then do; pct05w2=17.0; pct85w2=24.2; pct95w2=26.2; end;
+if age_mw2=181 then do; pct05w2=17.1; pct85w2=24.3; pct95w2=26.2; end;
+if age_mw2=182 then do; pct05w2=17.1; pct85w2=24.3; pct95w2=26.3; end;
+end;
+
+/*여자 162-182*/
+if sexw1=2 then do; 
+
+if age_mw2=162 then do; pct05w2=16.1; pct85w2=23.0; pct95w2=25.0; end;
+if age_mw2=163 then do; pct05w2=16.2; pct85w2=23.0; pct95w2=25.0; end;
+if age_mw2=164 then do; pct05w2=16.2; pct85w2=23.1; pct95w2=25.1; end;
+if age_mw2=165 then do; pct05w2=16.3; pct85w2=23.1; pct95w2=25.1; end;
+if age_mw2=166 then do; pct05w2=16.3; pct85w2=23.2; pct95w2=25.1; end;
+if age_mw2=167 then do; pct05w2=16.4; pct85w2=23.2; pct95w2=25.2; end;
+if age_mw2=168 then do; pct05w2=16.4; pct85w2=23.3; pct95w2=25.2; end;
+if age_mw2=169 then do; pct05w2=16.5; pct85w2=23.3; pct95w2=25.2; end;
+if age_mw2=170 then do; pct05w2=16.5; pct85w2=23.3; pct95w2=25.2; end;
+if age_mw2=171 then do; pct05w2=16.6; pct85w2=23.3; pct95w2=25.3; end;
+if age_mw2=172 then do; pct05w2=16.6; pct85w2=23.4; pct95w2=25.3; end;
+if age_mw2=173 then do; pct05w2=16.6; pct85w2=23.4; pct95w2=25.3; end;
+if age_mw2=174 then do; pct05w2=16.7; pct85w2=23.4; pct95w2=25.3; end;
+if age_mw2=175 then do; pct05w2=16.7; pct85w2=23.5; pct95w2=25.3; end;
+if age_mw2=176 then do; pct05w2=16.8; pct85w2=23.5; pct95w2=25.4; end;
+if age_mw2=177 then do; pct05w2=16.8; pct85w2=23.5; pct95w2=25.4; end;
+if age_mw2=178 then do; pct05w2=16.9; pct85w2=23.6; pct95w2=25.4; end;
+if age_mw2=179 then do; pct05w2=16.9; pct85w2=23.6; pct95w2=25.4; end;
+if age_mw2=180 then do; pct05w2=16.9; pct85w2=23.6; pct95w2=25.4; end;
+if age_mw2=181 then do; pct05w2=17.0; pct85w2=23.6; pct95w2=25.4; end;
+if age_mw2=182 then do; pct05w2=17.0; pct85w2=23.6; pct95w2=25.5; end;
+end;
+
+*BMI 카테고리;
+if bmiw2^=. then do;
+if bmiw2<pct05w2 then bmi_cw2=1;
+else if pct05w2<=bmiw2<pct85w2 then bmi_cw2=2;
+else if pct85w2<=bmiw2<pct95w2 then bmi_cw2=3;
+else bmi_cw2=4;
+end;
+
+*비만;
+if bmi_cw2^=. then do;
+if bmi_cw2 in (1:3) then obesityw2=0;
+else obesityw2=1;
+end;
+
+
+/********************************************** w3 *************************************************/
+*BMI;
+heightw3=yphy2a00w3/100;
+weightw3=yphy2b00w3;
+if yphy2a00w3^=. and yphy2b00w3^=. then bmiw3=weightw3/(heightw3*heightw3);
+
+/*남자 174-194*/
+
+if sexw1=1 then do; 
+
+if age_mw3=174 then do; pct05w3=16.8; pct85w3=24.1; pct95w3=26.1; end;
+if age_mw3=175 then do; pct05w3=16.8; pct85w3=24.1; pct95w3=26.1; end;
+if age_mw3=176 then do; pct05w3=16.9; pct85w3=24.1; pct95w3=26.2; end;
+if age_mw3=177 then do; pct05w3=16.9; pct85w3=24.2; pct95w3=26.2; end;
+if age_mw3=178 then do; pct05w3=17.0; pct85w3=24.2; pct95w3=26.2; end;
+if age_mw3=179 then do; pct05w3=17.0; pct85w3=24.2; pct95w3=26.2; end;
+if age_mw3=180 then do; pct05w3=17.0; pct85w3=24.2; pct95w3=26.2; end;
+if age_mw3=181 then do; pct05w3=17.1; pct85w3=24.3; pct95w3=26.2; end;
+if age_mw3=182 then do; pct05w3=17.1; pct85w3=24.3; pct95w3=26.3; end;
+if age_mw3=183 then do; pct05w3=17.2; pct85w3=24.3; pct95w3=26.3; end;
+if age_mw3=184 then do; pct05w3=17.2; pct85w3=24.3; pct95w3=26.3; end;
+if age_mw3=185 then do; pct05w3=17.2; pct85w3=24.4; pct95w3=26.3; end;
+if age_mw3=186 then do; pct05w3=17.3; pct85w3=24.4; pct95w3=26.3; end;
+if age_mw3=187 then do; pct05w3=17.3; pct85w3=24.4; pct95w3=26.3; end;
+if age_mw3=188 then do; pct05w3=17.4; pct85w3=24.4; pct95w3=26.4; end;
+if age_mw3=189 then do; pct05w3=17.4; pct85w3=24.5; pct95w3=26.4; end;
+if age_mw3=190 then do; pct05w3=17.4; pct85w3=24.5; pct95w3=26.4; end;
+if age_mw3=191 then do; pct05w3=17.5; pct85w3=24.5; pct95w3=26.4; end;
+if age_mw3=192 then do; pct05w3=17.5; pct85w3=24.5; pct95w3=26.4; end;
+if age_mw3=193 then do; pct05w3=17.5; pct85w3=24.6; pct95w3=26.4; end;
+if age_mw3=194 then do; pct05w3=17.6; pct85w3=24.6; pct95w3=26.5; end;
+end;
+
+/*여자 174-194*/
+if sexw1=2 then do; 
+
+if age_mw3=174 then do; pct05w3=16.7; pct85w3=23.4; pct95w3=25.3; end;
+if age_mw3=175 then do; pct05w3=16.7; pct85w3=23.5; pct95w3=25.3; end;
+if age_mw3=176 then do; pct05w3=16.8; pct85w3=23.5; pct95w3=25.4; end;
+if age_mw3=177 then do; pct05w3=16.8; pct85w3=23.5; pct95w3=25.4; end;
+if age_mw3=178 then do; pct05w3=16.9; pct85w3=23.6; pct95w3=25.4; end;
+if age_mw3=179 then do; pct05w3=16.9; pct85w3=23.6; pct95w3=25.4; end;
+if age_mw3=180 then do; pct05w3=16.9; pct85w3=23.6; pct95w3=25.4; end;
+if age_mw3=181 then do; pct05w3=17.0; pct85w3=23.6; pct95w3=25.4; end;
+if age_mw3=182 then do; pct05w3=17.0; pct85w3=23.6; pct95w3=25.5; end;
+if age_mw3=183 then do; pct05w3=17.0; pct85w3=23.7; pct95w3=25.5; end;
+if age_mw3=184 then do; pct05w3=17.1; pct85w3=23.7; pct95w3=25.5; end;
+if age_mw3=185 then do; pct05w3=17.1; pct85w3=23.7; pct95w3=25.5; end;
+if age_mw3=186 then do; pct05w3=17.1; pct85w3=23.7; pct95w3=25.5; end;
+if age_mw3=187 then do; pct05w3=17.2; pct85w3=23.7; pct95w3=25.5; end;
+if age_mw3=188 then do; pct05w3=17.2; pct85w3=23.7; pct95w3=25.5; end;
+if age_mw3=189 then do; pct05w3=17.2; pct85w3=23.7; pct95w3=25.5; end;
+if age_mw3=190 then do; pct05w3=17.3; pct85w3=23.8; pct95w3=25.5; end;
+if age_mw3=191 then do; pct05w3=17.3; pct85w3=23.8; pct95w3=25.5; end;
+if age_mw3=192 then do; pct05w3=17.3; pct85w3=23.8; pct95w3=25.5; end;
+if age_mw3=193 then do; pct05w3=17.3; pct85w3=23.8; pct95w3=25.5; end;
+if age_mw3=194 then do; pct05w3=17.3; pct85w3=23.8; pct95w3=25.5; end;
+end;
+
+*BMI 카테고리;
+if bmiw3^=. then do;
+if bmiw3<pct05w3 then bmi_cw3=1;
+else if pct05w3<=bmiw3<pct85w3 then bmi_cw3=2;
+else if pct85w3<=bmiw3<pct95w3 then bmi_cw3=3;
+else bmi_cw3=4;
+end;
+
+*비만;
+if bmi_cw3^=. then do;
+if bmi_cw3 in (1:3) then obesityw3=0;
+else obesityw3=1;
+end;
+
+
+/********************************************** w4 *************************************************/
+*BMI;
+heightw4=yphy2a00w4/100;
+weightw4=yphy2b00w4;
+if yphy2a00w4^=. and yphy2b00w4^=. then bmiw4=weightw4/(heightw4*heightw4);
+
+/*남자 186-206 */
+
+if sexw1=1 then do; 
+
+if age_mw4=186 then do; pct05w4=17.3; pct85w4=24.4; pct95w4=26.3; end;
+if age_mw4=187 then do; pct05w4=17.3; pct85w4=24.4; pct95w4=26.3; end;
+if age_mw4=188 then do; pct05w4=17.4; pct85w4=24.4; pct95w4=26.4; end;
+if age_mw4=189 then do; pct05w4=17.4; pct85w4=24.5; pct95w4=26.4; end;
+if age_mw4=190 then do; pct05w4=17.4; pct85w4=24.5; pct95w4=26.4; end;
+if age_mw4=191 then do; pct05w4=17.5; pct85w4=24.5; pct95w4=26.4; end;
+if age_mw4=192 then do; pct05w4=17.5; pct85w4=24.5; pct95w4=26.4; end;
+if age_mw4=193 then do; pct05w4=17.5; pct85w4=24.6; pct95w4=26.4; end;
+if age_mw4=194 then do; pct05w4=17.6; pct85w4=24.6; pct95w4=26.5; end;
+if age_mw4=195 then do; pct05w4=17.6; pct85w4=24.6; pct95w4=26.5; end;
+if age_mw4=196 then do; pct05w4=17.6; pct85w4=24.6; pct95w4=26.5; end;
+if age_mw4=197 then do; pct05w4=17.7; pct85w4=24.7; pct95w4=26.5; end;
+if age_mw4=198 then do; pct05w4=17.7; pct85w4=24.7; pct95w4=26.5; end;
+if age_mw4=199 then do; pct05w4=17.7; pct85w4=24.7; pct95w4=26.6; end;
+if age_mw4=200 then do; pct05w4=17.8; pct85w4=24.7; pct95w4=26.6; end;
+if age_mw4=201 then do; pct05w4=17.8; pct85w4=24.7; pct95w4=26.6; end;
+if age_mw4=202 then do; pct05w4=17.8; pct85w4=24.8; pct95w4=26.6; end;
+if age_mw4=203 then do; pct05w4=17.9; pct85w4=24.8; pct95w4=26.6; end;
+if age_mw4=204 then do; pct05w4=17.9; pct85w4=24.8; pct95w4=26.7; end;
+if age_mw4=205 then do; pct05w4=17.9; pct85w4=24.8; pct95w4=26.7; end;
+if age_mw4=206 then do; pct05w4=18.0; pct85w4=24.9; pct95w4=26.7; end;
+end;
+
+/*여자 186-206 */
+if sexw1=2 then do; 
+
+if age_mw4=186 then do; pct05w4=17.1; pct85w4=23.7; pct95w4=25.5; end;
+if age_mw4=187 then do; pct05w4=17.2; pct85w4=23.7; pct95w4=25.5; end;
+if age_mw4=188 then do; pct05w4=17.2; pct85w4=23.7; pct95w4=25.5; end;
+if age_mw4=189 then do; pct05w4=17.2; pct85w4=23.7; pct95w4=25.5; end;
+if age_mw4=190 then do; pct05w4=17.3; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=191 then do; pct05w4=17.3; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=192 then do; pct05w4=17.3; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=193 then do; pct05w4=17.3; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=194 then do; pct05w4=17.3; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=195 then do; pct05w4=17.4; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=196 then do; pct05w4=17.4; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=197 then do; pct05w4=17.4; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=198 then do; pct05w4=17.4; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=199 then do; pct05w4=17.4; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=200 then do; pct05w4=17.4; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=201 then do; pct05w4=17.4; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=202 then do; pct05w4=17.5; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=203 then do; pct05w4=17.5; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=204 then do; pct05w4=17.5; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=205 then do; pct05w4=17.5; pct85w4=23.8; pct95w4=25.5; end;
+if age_mw4=206 then do; pct05w4=17.5; pct85w4=23.8; pct95w4=25.5; end;
+end;
+
+*BMI 카테고리;
+if bmiw4^=. then do;
+if bmiw4<pct05w4 then bmi_cw4=1;
+else if pct05w4<=bmiw4<pct85w4 then bmi_cw4=2;
+else if pct85w4<=bmiw4<pct95w4 then bmi_cw4=3;
+else bmi_cw4=4;
+end;
+
+*비만;
+if bmi_cw4^=. then do;
+if bmi_cw4 in (1:3) then obesityw4=0;
+else obesityw4=1;
+end;
+
+
+
+/*************/
+/* depression */
+/*************/
+
+/********************************************** w1 (baseline) *************************************************/
+depress1w1=ypsy4e01w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress2w1=ypsy4e02w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress3w1=ypsy4e03w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress4w1=ypsy4e04w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress5w1=ypsy4e05w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress6w1=ypsy4e06w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress7w1=ypsy4e07w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress8w1=ypsy4e08w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress9w1=ypsy4e09w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress10w1=ypsy4e10w1; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+
+depsumw1=sum(depress1w1, depress2w1, depress3w1, depress4w1, depress5w1, depress6w1, depress7w1, depress8w1, depress9w1, depress10w1); *range 10-40;
+
+
+/********************************************** w2 *************************************************/
+depress1w2=ypsy4e01w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress2w2=ypsy4e02w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress3w2=ypsy4e03w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress4w2=ypsy4e04w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress5w2=ypsy4e05w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress6w2=ypsy4e06w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress7w2=ypsy4e07w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress8w2=ypsy4e08w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress9w2=ypsy4e09w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress10w2=ypsy4e10w2; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+
+depsumw2=sum(depress1w2, depress2w2, depress3w2, depress4w2, depress5w2, depress6w2, depress7w2, depress8w2, depress9w2, depress10w2); 
+*range 10-40;
+
+
+/********************************************** w3 *************************************************/
+depress1w3=ypsy4e01w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress2w3=ypsy4e02w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress3w3=ypsy4e03w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress4w3=ypsy4e04w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress5w3=ypsy4e05w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress6w3=ypsy4e06w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress7w3=ypsy4e07w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress8w3=ypsy4e08w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress9w3=ypsy4e09w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress10w3=ypsy4e10w3; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+
+depsumw3=sum(depress1w3, depress2w3, depress3w3, depress4w3, depress5w3, depress6w3, depress7w3, depress8w3, depress9w3, depress10w3); 
+*range 10-40;
+
+
+/********************************************** w4 *************************************************/
+depress1w4=ypsy4e01w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress2w4=ypsy4e02w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress3w4=ypsy4e03w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress4w4=ypsy4e04w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress5w4=ypsy4e05w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress6w4=ypsy4e06w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress7w4=ypsy4e07w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress8w4=ypsy4e08w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress9w4=ypsy4e09w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+depress10w4=ypsy4e10w4; *1-4 categoreis: 전혀 그렇지 않다 - 매우 그렇다;
+
+depsumw4=sum(depress1w4, depress2w4, depress3w4, depress4w4, depress5w4, depress6w4, depress7w4, depress8w4, depress9w4, depress10w4); 
+*range 10-40;
+
+
+run;
+
+
+/***************************/
+/* generating permanent data */
+/***************************/
+data all; set e4 m1; run;
+
+
+
+/*2018년 비만 아니었던 사람만 포함;
+data obe3; set obe2;
+if obesityw2=1 or obesityw3=1 or obesityw4=1 then obe_tot=1;
+else obe_tot=0;
+run;
+* obe_tot: 2019, 2020, 2021 중 한번이라도 비만이었던 사람=1; */
+
+
+
+/******************/
+/* depression data */
+/******************/
+data all; set all;
+if total_new ne . then do;
+if total_new=2 then dep_total_new=1;
+else if total_new=1 then dep_total_new=2;
+else if total_new=3 then dep_total_new=3;
+else if total_new=4 then dep_total_new=4;
+else if total_new=5 then dep_total_new=5;
+end;
+
+if total_60a ne . then do;
+if total_60a=2 then dep_total_60a=1;
+else if total_60a=1 then dep_total_60a=2;
+else if total_60a=3 then dep_total_60a=3;
+else if total_60a=4 then dep_total_60a=4;
+else if total_60a=5 then dep_total_60a=5;
+else if total_60a=6 then dep_total_60a=6;
+end;
+
+if sp_new ne . then do;
+if sp_new=2 then dep_sp_new=1;
+else if sp_new=1 then dep_sp_new=2;
+else if sp_new=3 then dep_sp_new=3;
+else if sp_new=4 then dep_sp_new=4;
+else if sp_new=5 then dep_sp_new=5;
+end;
+
+if com_new ne . then do;
+if com_new=2 then dep_com_new=1;
+else if com_new=1 then dep_com_new=2;
+else if com_new=3 then dep_com_new=3;
+else if com_new=4 then dep_com_new=4;
+end;
+
+if tv_new ne . then do;
+if tv_new=2 then dep_tv_new=1;
+else if tv_new=1 then dep_tv_new=2;
+else if tv_new=3 then dep_tv_new=3;
+else if tv_new=4 then dep_tv_new=4;
+end;
+run;
+
+/*data dep; set all;
+if depsumw1 ne .;
+run;
+
+*2018, 2019 우울 결측 아닌사람만 포함;
+data dep19; set all;
+if depsumw1 ne . and depsumw2 ne .;
+run;*/
+
+
+
+* 2018-2019;
+data base1_e4; set e4; if obesityw1 in (.,1) then delete; if obesityw2 in (0,1); run;
+data base1_m1; set m1; if obesityw1 in (.,1) then delete; if obesityw2 in (0,1); run;
+
+*2019-2020;
+data base2_e4; set e4; if obesityw2 in (.,1) then delete; if obesityw3 in (0,1); run;
+data base2_m1; set m1; if obesityw2 in (.,1) then delete; if obesityw3 in (0,1); run;
+
+*2020-2021;
+data base3_e4; set e4; if obesityw3 in (.,1) then delete; if obesityw4 in (0,1); run;
+data base3_m1; set m1; if obesityw3 in (.,1) then delete; if obesityw4 in (0,1); run;
+
+
+* 2019-2021;
+data base5_e4; set e4; if obesityw2=1 then delete; if obesityw3 in (0,1) and obesityw4 in (0,1); 
+if obesityw3=1 or obesityw4=1 then obesity2021=1; else obesity2021=0;
+run;
+
+data base5_m1; set m1; if obesityw2=1 then delete; if obesityw3 in (0,1) and obesityw4 in (0,1); 
+if obesityw3=1 or obesityw4=1 then obesity2021=1; else obesity2021=0;
+run;
+
+
+
+
+
+/*******/
+/*******/
+/*******/
+
+*2019 base (2018, 2019년에 모두 비만이 아니었고, (1) 2020년 비만X, 2021 비만O 이거나 혹은 (2) 2020년 비만O, 2021년 비만O인 사람이 outcome=1/
+(1) 2020, 2021년 둘 다 비만이 아니었던 사람 혹은 (2) 2020년 비만이었다가 2021년 비만이 아니게 된 사람이 outcome=0);
+data add_e4; set e4;
+if obesityw1=1 then delete;
+if obesityw2=1 then delete;
+if (obesityw3=1 and obesityw4=1) or  (obesityw3=0 and obesityw4=1) then long_obe=1;
+else if (obesityw3=0 and obesityw4=0) or (obesityw3=1 and obesityw4=0) then long_obe=0;
+run;
+
+data e4; set e4;
+* BMI change, 비만 한번이라도 된 사람들 중 비만 이후에 다시 돌아가는 사람 몇 명이나 있는지, 얼마만에 다시 돌아가는지;
+*1년만에 바뀜;
+if (obesityw1=1 and obesityw2=0 and obesityw3=1 and obesityw4=0) or 
+(obesityw1=1 and obesityw2=0 and obesityw3=1 and obesityw4=1) or
+(obesityw1=0 and obesityw2=1 and obesityw3=0 and obesityw4=1) or
+(obesityw1=1 and obesityw2=1 and obesityw3=0 and obesityw4=1) or
+(obesityw1=0 and obesityw2=0 and obesityw3=1 and obesityw4=0) then change_obe=1;
+*2년만에 바뀜;
+else if (obesityw1=1 and obesityw2=0 and obesityw3=0 and obesityw4=1) or
+(obesityw1=0 and obesityw2=1 and obesityw3=1 and obesityw4=0) then change_obe=2;
+*3년만에 바뀜;
+else if (obesityw1=0 and obesityw2=0 and obesityw3=0 and obesityw4=1) or
+(obesityw1=1 and obesityw2=1 and obesityw3=1 and obesityw4=0) or
+(obesityw1=0 and obesityw2=1 and obesityw3=1 and obesityw4=1) or
+(obesityw1=1 and obesityw2=0 and obesityw3=0 and obesityw4=0) then change_obe=3;
+*4년유지;
+else if (obesityw1=1 and obesityw2=1 and obesityw3=1 and obesityw4=1) or
+(obesityw1=0 and obesityw2=0 and obesityw3=0 and obesityw4=0) then change_obe=4;
+
+*BMI category 별 mean BMI change(2018-2021)가 얼마인지, 얼마나 변동이 큰지;
+bmi_change_sq=(bmiw4-bmiw1)**2;
+bmi_change=bmi_change_sq**(1/2);
+run;
+
+data test_e4; set e4;
+*2018 base -> 2019, 2020, 2021 아무때나 obe 발생 vs. 2018 base -> 2021에 obe 발생;
+if obesityw1 in (1,.) then delete;
+if obesityw4=. then delete;
+if obesityw2=1 or obesityw3=1 or obesityw4=1 then obe_any=1; else obe_any=0;
+if obesityw2=0 and obesityw3=0 and obesityw4=1 then obe_2021=1; else obe_2021=0;
+
+if obesityw2 ne . and obesityw3 ne . and obesityw4 ne . then do;
+if (obesityw2=1 and obesityw3=1 and obesityw4=1) then obe_maintain=1;
+else if (obesityw2=0 and obesityw3=1 and obesityw4=1) then obe_maintain=1;
+else if (obesityw2=0 and obesityw3=0 and obesityw4=1) then obe_maintain=1;
+else obe_maintain=0;
+end;
+run;
+
+
+
+
+
+
+
+/*******/
+/*******/
+/*******/
+
+
+data add_m1; set m1;
+if obesityw1=1 then delete;
+if obesityw2=1 then delete;
+if (obesityw3=1 and obesityw4=1) or  (obesityw3=0 and obesityw4=1) then long_obe=1;
+else if (obesityw3=0 and obesityw4=0) or (obesityw3=1 and obesityw4=0) then long_obe=0;
+run;
+
+data m1; set m1;
+
+* BMI change, 비만 한번이라도 된 사람들 중 비만 이후에 다시 돌아가는 사람 몇 명이나 있는지, 얼마만에 다시 돌아가는지;
+*1년만에 바뀜;
+if (obesityw1=1 and obesityw2=0 and obesityw3=1 and obesityw4=0) or 
+(obesityw1=1 and obesityw2=0 and obesityw3=1 and obesityw4=1) or
+(obesityw1=0 and obesityw2=1 and obesityw3=0 and obesityw4=1) or
+(obesityw1=1 and obesityw2=1 and obesityw3=0 and obesityw4=1) or
+(obesityw1=0 and obesityw2=0 and obesityw3=1 and obesityw4=0) then change_obe=1;
+*2년만에 바뀜;
+else if (obesityw1=1 and obesityw2=0 and obesityw3=0 and obesityw4=1) or
+(obesityw1=0 and obesityw2=1 and obesityw3=1 and obesityw4=0) then change_obe=2;
+*3년만에 바뀜;
+else if (obesityw1=0 and obesityw2=0 and obesityw3=0 and obesityw4=1) or
+(obesityw1=1 and obesityw2=1 and obesityw3=1 and obesityw4=0) or
+(obesityw1=0 and obesityw2=1 and obesityw3=1 and obesityw4=1) or
+(obesityw1=1 and obesityw2=0 and obesityw3=0 and obesityw4=0) then change_obe=3;
+*4년유지;
+else if (obesityw1=1 and obesityw2=1 and obesityw3=1 and obesityw4=1) or
+(obesityw1=0 and obesityw2=0 and obesityw3=0 and obesityw4=0) then change_obe=4;
+
+*BMI category 별 mean BMI change(2018-2021)가 얼마인지, 얼마나 변동이 큰지;
+bmi_change_sq=(bmiw4-bmiw1)**2;
+bmi_change=bmi_change_sq**(1/2);
+
+run;
+
+data test_m1; set m1;
+*2018 base -> 2019, 2020, 2021 아무때나 obe 발생 vs. 2018 base -> 2021에 obe 발생;
+if obesityw1 in (1,.) then delete;
+if obesityw4=. then delete;
+if obesityw2=1 or obesityw3=1 or obesityw4=1 then obe_any=1; else obe_any=0;
+if obesityw2=0 and obesityw3=0 and obesityw4=1 then obe_2021=1; else obe_2021=0;
+
+if obesityw2 ne . and obesityw3 ne . and obesityw4 ne . then do;
+if (obesityw2=1 and obesityw3=1 and obesityw4=1) then obe_maintain=1;
+else if (obesityw2=0 and obesityw3=1 and obesityw4=1) then obe_maintain=1;
+else if (obesityw2=0 and obesityw3=0 and obesityw4=1) then obe_maintain=1;
+else obe_maintain=0;
+end;
+run;
+
+
+
+* Ordinal logistic 5 cat, 2018 맨 마지막 카테고리 제외, 2018 5 cat 보정, outcome: 2021 obe 5 cat, combined screentime;
