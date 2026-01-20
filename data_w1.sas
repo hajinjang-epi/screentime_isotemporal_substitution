@@ -62,29 +62,29 @@ merge kcyps18_m1 kcyps18_m1p kcyps19_m1 kcyps19_m1p kcyps20_m1 kcyps20_m1p kcyps
 
 
 /*****/
-/*ÃÊ4*/
+/*ì´ˆ4*/
 /*****/
 
 data e4;
 set element;
 
-/*¿ù¿¬·É*/
-birth_d=15; *»ı³â¿ùÀÏ Áß 'ÀÏ' °íÁ¤;
-surveydayw1=mdy(9,15,2018); *Á¶»ç³¯Â¥ 2018³â 9¿ù 15ÀÏ·Î °£ÁÖ;
-surveydayw4=mdy(9,15,2021); *Á¶»ç³¯Â¥ 2021³â 9¿ù 15ÀÏ·Î °£ÁÖ;
-birth=mdy(ybrt1bw1, birth_d, ybrt1aw1); *Ãâ»ıÀÏ;
-age_mw1=intck('month' , birth, surveydayw1); *1Â÷Á¶»ç ¿ù_¿¬·É. range 113-139;
+/*ì›”ì—°ë ¹*/
+birth_d=15; *ìƒë…„ì›”ì¼ ì¤‘ 'ì¼' ê³ ì •;
+surveydayw1=mdy(9,15,2018); *ì¡°ì‚¬ë‚ ì§œ 2018ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
+surveydayw4=mdy(9,15,2021); *ì¡°ì‚¬ë‚ ì§œ 2021ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
+birth=mdy(ybrt1bw1, birth_d, ybrt1aw1); *ì¶œìƒì¼;
+age_mw1=intck('month' , birth, surveydayw1); *1ì°¨ì¡°ì‚¬ ì›”_ì—°ë ¹. range 113-139;
 age_mw4=intck('month' , birth, surveydayw4);
 
-/*¼ºº°*/
+/*ì„±ë³„*/
 sexw1=ygenderw1;
 
-/*ÇĞ³â*/
+/*í•™ë…„*/
 schoolw1=1;
 
 
-/*½º¸¶Æ®Æù ÀÌ¿ë½Ã°£*/
-*ÆòÀÏ;
+/*ìŠ¤ë§ˆíŠ¸í° ì´ìš©ì‹œê°„*/
+*í‰ì¼;
 if ytim1k01w1=1 then sp_use_wdw1=0;
 else if ytim1k01w1=2 then sp_use_wdw1=15;
 else if ytim1k01w1=3 then sp_use_wdw1=45;
@@ -92,8 +92,8 @@ else if ytim1k01w1=4 then sp_use_wdw1=90;
 else if ytim1k01w1=5 then sp_use_wdw1=150;
 else if ytim1k01w1=6 then sp_use_wdw1=210;
 else if ytim1k01w1=7 then sp_use_wdw1=270;
-sp_use_wdw1h=sp_use_wdw1/60; *´ÜÀ§¸¦ ½Ã°£À¸·Îº¯È¯;
-*ÁÖ¸»;
+sp_use_wdw1h=sp_use_wdw1/60; *ë‹¨ìœ„ë¥¼ ì‹œê°„ìœ¼ë¡œë³€í™˜;
+*ì£¼ë§;
 if ytim1k02w1=1 then sp_use_wkw1=0;
 else if ytim1k02w1=2 then sp_use_wkw1=15;
 else if ytim1k02w1=3 then sp_use_wkw1=45;
@@ -101,14 +101,14 @@ else if ytim1k02w1=4 then sp_use_wkw1=90;
 else if ytim1k02w1=5 then sp_use_wkw1=150;
 else if ytim1k02w1=6 then sp_use_wkw1=210;
 else if ytim1k02w1=7 then sp_use_wkw1=270;
-sp_use_wkw1h=sp_use_wkw1/60; *´ÜÀ§¸¦ ½Ã°£À¸·Îº¯È¯;
-*ÀÏÁÖÀÏÆò±Õ;
+sp_use_wkw1h=sp_use_wkw1/60; *ë‹¨ìœ„ë¥¼ ì‹œê°„ìœ¼ë¡œë³€í™˜;
+*ì¼ì£¼ì¼í‰ê· ;
 sp_usew1=sum(sp_use_wdw1*5, sp_use_wkw1*2)/7;
 sp_usew1h=sp_usew1/60;
 
 
-/*¼ö¸é½Ã°£*/
-*ÆòÀÏ;
+/*ìˆ˜ë©´ì‹œê°„*/
+*í‰ì¼;
 wake_wd=hms(ytim1a01w1, ytim1a02w1, 0);
 bed_wd=hms(ytim1b01w1, ytim1b02w1, 0);
 sleep_wd_raw=intck('second', bed_wd, wake_wd);
@@ -116,7 +116,7 @@ if sleep_wd_raw<0 then sleep_wd=sleep_wd_raw+86400; /*24*60*60=86400 sec*/
 else if sleep_wd_raw>=0 then sleep_wd=sleep_wd_raw;
 sleep_wd_m=sleep_wd/60;
 sleep_wd_h=sleep_wd/3600;
-*ÁÖ¸»;
+*ì£¼ë§;
 wake_wk=hms(ytim1a03w1, ytim1a04w1, 0);
 bed_wk=hms(ytim1b03w1, ytim1b04w1, 0);
 sleep_wk_raw=intck('second', bed_wk, wake_wk);
@@ -124,13 +124,13 @@ if sleep_wk_raw<0 then sleep_wk=sleep_wk_raw+86400;
 else if sleep_wk_raw>=0 then sleep_wk=sleep_wk_raw;
 sleep_wk_m=sleep_wk/60;
 sleep_wk_h=sleep_wk/3600;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 sleep_all_m=((sleep_wd_m*5)+(sleep_wk_m*2))/7;
 sleep_all_h=((sleep_wd_h*5)+(sleep_wk_h*2))/7;
 
 
-/*ºÎ¸ğ´Ô ´ëÈ­½Ã°£*/
-*ÆòÀÏ;
+/*ë¶€ëª¨ë‹˜ ëŒ€í™”ì‹œê°„*/
+*í‰ì¼;
 if ytim1d01w1=1 then dayuse2_wdw1=0;
 else if ytim1d01w1=2 then dayuse2_wdw1=15;
 else if ytim1d01w1=3 then dayuse2_wdw1=45;
@@ -139,7 +139,7 @@ else if ytim1d01w1=5 then dayuse2_wdw1=150;
 else if ytim1d01w1=6 then dayuse2_wdw1=210;
 else if ytim1d01w1=7 then dayuse2_wdw1=270;
 dayuse2_wdw1h=dayuse2_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1d02w1=1 then dayuse2_wkw1=0;
 else if ytim1d02w1=2 then dayuse2_wkw1=15;
 else if ytim1d02w1=3 then dayuse2_wkw1=45;
@@ -148,13 +148,13 @@ else if ytim1d02w1=5 then dayuse2_wkw1=150;
 else if ytim1d02w1=6 then dayuse2_wkw1=210;
 else if ytim1d02w1=7 then dayuse2_wkw1=270;
 dayuse2_wkw1h=dayuse2_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse2w1=sum(dayuse2_wdw1*5, dayuse2_wkw1*2)/7;
 dayuse2w1h=dayuse2w1/60;
 
 
-/*ÇĞ¿ø ¹× °ú¿Ü½Ã°£*/
-*ÆòÀÏ;
+/*í•™ì› ë° ê³¼ì™¸ì‹œê°„*/
+*í‰ì¼;
 if ytim1e01w1=1 then dayuse3_wdw1=0;
 else if ytim1e01w1=2 then dayuse3_wdw1=15;
 else if ytim1e01w1=3 then dayuse3_wdw1=45;
@@ -163,7 +163,7 @@ else if ytim1e01w1=5 then dayuse3_wdw1=150;
 else if ytim1e01w1=6 then dayuse3_wdw1=210;
 else if ytim1e01w1=7 then dayuse3_wdw1=270;
 dayuse3_wdw1h=dayuse3_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1e02w1=1 then dayuse3_wkw1=0;
 else if ytim1e02w1=2 then dayuse3_wkw1=15;
 else if ytim1e02w1=3 then dayuse3_wkw1=45;
@@ -172,13 +172,13 @@ else if ytim1e02w1=5 then dayuse3_wkw1=150;
 else if ytim1e02w1=6 then dayuse3_wkw1=210;
 else if ytim1e02w1=7 then dayuse3_wkw1=270;
 dayuse3_wkw1h=dayuse3_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse3w1=sum(dayuse3_wdw1*5, dayuse3_wkw1*2)/7;
 dayuse3w1h=dayuse3w1/60;
 
 
-/*ÀÎÅÍ³İ ¹× TV°­ÀÇ ½Ã°£*/
-*ÆòÀÏ;
+/*ì¸í„°ë„· ë° TVê°•ì˜ ì‹œê°„*/
+*í‰ì¼;
 if ytim1f01w1=1 then dayuse4_wdw1=0;
 else if ytim1f01w1=2 then dayuse4_wdw1=15;
 else if ytim1f01w1=3 then dayuse4_wdw1=45;
@@ -187,7 +187,7 @@ else if ytim1f01w1=5 then dayuse4_wdw1=150;
 else if ytim1f01w1=6 then dayuse4_wdw1=210;
 else if ytim1f01w1=7 then dayuse4_wdw1=270;
 dayuse4_wdw1h=dayuse4_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1f02w1=1 then dayuse4_wkw1=0;
 else if ytim1f02w1=2 then dayuse4_wkw1=15;
 else if ytim1f02w1=3 then dayuse4_wkw1=45;
@@ -196,13 +196,13 @@ else if ytim1f02w1=5 then dayuse4_wkw1=150;
 else if ytim1f02w1=6 then dayuse4_wkw1=210;
 else if ytim1f02w1=7 then dayuse4_wkw1=270;
 dayuse4_wkw1h=dayuse4_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse4w1=sum(dayuse4_wdw1*5, dayuse4_wkw1*2)/7;
 dayuse4w1h=dayuse4w1/60;
 
 
-/*¹æ°ú ÈÄ ÇĞ±³*/
-*ÆòÀÏ;
+/*ë°©ê³¼ í›„ í•™êµ*/
+*í‰ì¼;
 if ytim1g01w1=1 then dayuse5_wdw1=0;
 else if ytim1g01w1=2 then dayuse5_wdw1=15;
 else if ytim1g01w1=3 then dayuse5_wdw1=45;
@@ -211,7 +211,7 @@ else if ytim1g01w1=5 then dayuse5_wdw1=150;
 else if ytim1g01w1=6 then dayuse5_wdw1=210;
 else if ytim1g01w1=7 then dayuse5_wdw1=270;
 dayuse5_wdw1h=dayuse5_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1g02w1=1 then dayuse5_wkw1=0;
 else if ytim1g02w1=2 then dayuse5_wkw1=15;
 else if ytim1g02w1=3 then dayuse5_wkw1=45;
@@ -220,13 +220,13 @@ else if ytim1g02w1=5 then dayuse5_wkw1=150;
 else if ytim1g02w1=6 then dayuse5_wkw1=210;
 else if ytim1g02w1=7 then dayuse5_wkw1=270;
 dayuse5_wkw1h=dayuse5_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse5w1=sum(dayuse5_wdw1*5, dayuse5_wkw1*2)/7;
 dayuse5w1h=dayuse5w1/60;
 
 
-/*½º½º·Î °øºÎÇÏ´Â ½Ã°£*/
-*ÆòÀÏ;
+/*ìŠ¤ìŠ¤ë¡œ ê³µë¶€í•˜ëŠ” ì‹œê°„*/
+*í‰ì¼;
 if ytim1h01w1=1 then dayuse6_wdw1=0;
 else if ytim1h01w1=2 then dayuse6_wdw1=15;
 else if ytim1h01w1=3 then dayuse6_wdw1=45;
@@ -235,7 +235,7 @@ else if ytim1h01w1=5 then dayuse6_wdw1=150;
 else if ytim1h01w1=6 then dayuse6_wdw1=210;
 else if ytim1h01w1=7 then dayuse6_wdw1=270;
 dayuse6_wdw1h=dayuse6_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1h02w1=1 then dayuse6_wkw1=0;
 else if ytim1h02w1=2 then dayuse6_wkw1=15;
 else if ytim1h02w1=3 then dayuse6_wkw1=45;
@@ -244,13 +244,13 @@ else if ytim1h02w1=5 then dayuse6_wkw1=150;
 else if ytim1h02w1=6 then dayuse6_wkw1=210;
 else if ytim1h02w1=7 then dayuse6_wkw1=270;
 dayuse6_wkw1h=dayuse6_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse6w1=sum(dayuse6_wdw1*5, dayuse6_wkw1*2)/7;
 dayuse6w1h=dayuse6w1/60;
 
 
-/*µ¶¼­½Ã°£*/
-*ÆòÀÏ;
+/*ë…ì„œì‹œê°„*/
+*í‰ì¼;
 if ytim1i01w1=1 then dayuse7_wdw1=0;
 else if ytim1i01w1=2 then dayuse7_wdw1=15;
 else if ytim1i01w1=3 then dayuse7_wdw1=45;
@@ -259,7 +259,7 @@ else if ytim1i01w1=5 then dayuse7_wdw1=150;
 else if ytim1i01w1=6 then dayuse7_wdw1=210;
 else if ytim1i01w1=7 then dayuse7_wdw1=270;
 dayuse7_wdw1h=dayuse7_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1i02w1=1 then dayuse7_wkw1=0;
 else if ytim1i02w1=2 then dayuse7_wkw1=15;
 else if ytim1i02w1=3 then dayuse7_wkw1=45;
@@ -268,13 +268,13 @@ else if ytim1i02w1=5 then dayuse7_wkw1=150;
 else if ytim1i02w1=6 then dayuse7_wkw1=210;
 else if ytim1i02w1=7 then dayuse7_wkw1=270;
 dayuse7_wkw1h=dayuse7_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse7w1=sum(dayuse7_wdw1*5, dayuse7_wkw1*2)/7;
 dayuse7w1h=dayuse7w1/60;
 
 
-/*¿îµ¿ ¹× ½ÅÃ¼È°µ¿½Ã°£*/
-*ÆòÀÏ;
+/*ìš´ë™ ë° ì‹ ì²´í™œë™ì‹œê°„*/
+*í‰ì¼;
 if ytim1j01w1=1 then dayuse8_wdw1=0;
 else if ytim1j01w1=2 then dayuse8_wdw1=15;
 else if ytim1j01w1=3 then dayuse8_wdw1=45;
@@ -283,7 +283,7 @@ else if ytim1j01w1=5 then dayuse8_wdw1=150;
 else if ytim1j01w1=6 then dayuse8_wdw1=210;
 else if ytim1j01w1=7 then dayuse8_wdw1=270;
 dayuse8_wdw1h=dayuse8_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1j02w1=1 then dayuse8_wkw1=0;
 else if ytim1j02w1=2 then dayuse8_wkw1=15;
 else if ytim1j02w1=3 then dayuse8_wkw1=45;
@@ -292,13 +292,13 @@ else if ytim1j02w1=5 then dayuse8_wkw1=150;
 else if ytim1j02w1=6 then dayuse8_wkw1=210;
 else if ytim1j02w1=7 then dayuse8_wkw1=270;
 dayuse8_wkw1h=dayuse8_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse8w1=sum(dayuse8_wdw1*5, dayuse8_wkw1*2)/7;
 dayuse8w1h=dayuse8w1/60;
 
 
-/*ÄÄÇ»ÅÍ¸¦ °¡Áö°í³ë´Â½Ã°£*/
-*ÆòÀÏ;
+/*ì»´í“¨í„°ë¥¼ ê°€ì§€ê³ ë…¸ëŠ”ì‹œê°„*/
+*í‰ì¼;
 if ytim1l01w1=1 then dayuse9_wdw1=0;
 else if ytim1l01w1=2 then dayuse9_wdw1=15;
 else if ytim1l01w1=3 then dayuse9_wdw1=45;
@@ -307,7 +307,7 @@ else if ytim1l01w1=5 then dayuse9_wdw1=150;
 else if ytim1l01w1=6 then dayuse9_wdw1=210;
 else if ytim1l01w1=7 then dayuse9_wdw1=270;
 dayuse9_wdw1h=dayuse9_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1l02w1=1 then dayuse9_wkw1=0;
 else if ytim1l02w1=2 then dayuse9_wkw1=15;
 else if ytim1l02w1=3 then dayuse9_wkw1=45;
@@ -316,13 +316,13 @@ else if ytim1l02w1=5 then dayuse9_wkw1=150;
 else if ytim1l02w1=6 then dayuse9_wkw1=210;
 else if ytim1l02w1=7 then dayuse9_wkw1=270;
 dayuse9_wkw1h=dayuse9_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse9w1=sum(dayuse9_wdw1*5, dayuse9_wkw1*2)/7;
 dayuse9w1h=dayuse9w1/60;
 
 
-/*TV½ÃÃ»*/
-*ÆòÀÏ;
+/*TVì‹œì²­*/
+*í‰ì¼;
 if ytim1m01w1=1 then dayuse10_wdw1=0;
 else if ytim1m01w1=2 then dayuse10_wdw1=15;
 else if ytim1m01w1=3 then dayuse10_wdw1=45;
@@ -331,7 +331,7 @@ else if ytim1m01w1=5 then dayuse10_wdw1=150;
 else if ytim1m01w1=6 then dayuse10_wdw1=210;
 else if ytim1m01w1=7 then dayuse10_wdw1=270;
 dayuse10_wdw1h=dayuse10_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1m02w1=1 then dayuse10_wkw1=0;
 else if ytim1m02w1=2 then dayuse10_wkw1=15;
 else if ytim1m02w1=3 then dayuse10_wkw1=45;
@@ -340,13 +340,13 @@ else if ytim1m02w1=5 then dayuse10_wkw1=150;
 else if ytim1m02w1=6 then dayuse10_wkw1=210;
 else if ytim1m02w1=7 then dayuse10_wkw1=270;
 dayuse10_wkw1h=dayuse10_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse10w1=sum(dayuse10_wdw1*5, dayuse10_wkw1*2)/7;
 dayuse10w1h=dayuse10w1/60;
 
 
-/*Ä£±¸µé°ú ³ë´Â½Ã°£*/
-*ÆòÀÏ;
+/*ì¹œêµ¬ë“¤ê³¼ ë…¸ëŠ”ì‹œê°„*/
+*í‰ì¼;
 if ytim1n01w1=1 then dayuse11_wdw1=0;
 else if ytim1n01w1=2 then dayuse11_wdw1=15;
 else if ytim1n01w1=3 then dayuse11_wdw1=45;
@@ -355,7 +355,7 @@ else if ytim1n01w1=5 then dayuse11_wdw1=150;
 else if ytim1n01w1=6 then dayuse11_wdw1=210;
 else if ytim1n01w1=7 then dayuse11_wdw1=270;
 dayuse11_wdw1h=dayuse11_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1n02w1=1 then dayuse11_wkw1=0;
 else if ytim1n02w1=2 then dayuse11_wkw1=15;
 else if ytim1n02w1=3 then dayuse11_wkw1=45;
@@ -364,39 +364,39 @@ else if ytim1n02w1=5 then dayuse11_wkw1=150;
 else if ytim1n02w1=6 then dayuse11_wkw1=210;
 else if ytim1n02w1=7 then dayuse11_wkw1=270;
 dayuse11_wkw1h=dayuse11_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse11w1=sum(dayuse11_wdw1*5, dayuse11_wkw1*2)/7;
 dayuse11w1h=dayuse11w1/60;
 
 
-/*ÇĞ¾÷¼ºÀû*/
-*1-6 categories: ¸Å¿ì ¸øÇÔ - ¸Å¿ì ÀßÇÔ - Àß ¸ğ¸£°ÚÀ½;
+/*í•™ì—…ì„±ì */
+*1-6 categories: ë§¤ìš° ëª»í•¨ - ë§¤ìš° ì˜í•¨ - ì˜ ëª¨ë¥´ê² ìŒ;
 if yint1a00w1 in (1,2,3) then gradew1=1;
 else if yint1a00w1 in (4,5) then gradew1=2;
 else gradew1=3;
 
 
-/*ºÎ¸ğÀÇ¾çÀ°ÅÂµµ*/
-*°­¿ä;
-parcare1dw1=yfam2d01w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-parcare2dw1=yfam2d02w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-parcare3dw1=yfam2d03w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-parcare4dw1=yfam2d04w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+/*ë¶€ëª¨ì˜ì–‘ìœ¡íƒœë„*/
+*ê°•ìš”;
+parcare1dw1=yfam2d01w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+parcare2dw1=yfam2d02w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+parcare3dw1=yfam2d03w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+parcare4dw1=yfam2d04w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 parcaresumw1=sum(parcare1dw1, parcare2dw1, parcare3dw1, parcare4dw1); *range 4-16;
 
 
-/*ºÎ¸ğ´Ô µ¿°Å¿©ºÎ*/
+/*ë¶€ëª¨ë‹˜ ë™ê±°ì—¬ë¶€*/
 if pfam1a00w1 in(1,4) then famnumw1=2;
 else famnumw1=1;
 
 
-/*ºÎ¸ğ´ÔÇĞ·Â*/
+/*ë¶€ëª¨ë‹˜í•™ë ¥*/
 if pschool1w1 in (5,6,7) or pschool2w1 in (5,6,7) then pschoolw1=2;
 else if pschool1w1 in (1:4) or pschool2w1 in (1:4) then pschoolw1=1;
 else pschoolw1=2;
 
 
-/*¿ùÆò±Õ°¡±¸¼Òµæ*/
+/*ì›”í‰ê· ê°€êµ¬ì†Œë“*/
 if pincomew1 in(1:3) then incomew1=1;
 else if pincomew1 in(4,5) then incomew1=2;
 else if pincomew1 in(6,7) then incomew1=3;
@@ -404,20 +404,20 @@ else if pincomew1=. then incomew1=3;
 else if pincomew1 in(8,9) then incomew1=4;
 else incomew1=5;
 
-/*ÃşÈ­ºĞ¼®¿ë °¡±¸¼Òµæ*/
+/*ì¸µí™”ë¶„ì„ìš© ê°€êµ¬ì†Œë“*/
 if incomew1 in (1,2) then incomew1r=1;
 else if incomew1=3 then incomew1r=2;
 else if incomew1 in (4,5) then incomew1r=3;
 
 
-/*¾Æ¹öÁö Á÷¾÷*/
+/*ì•„ë²„ì§€ ì§ì—…*/
 if pjob1w1 in (1,2,3) then fjobw1=1;
 else if pjob1w1 in (4,5) then fjobw1=2;
 else if pjob1w1 in (6:11) then fjobw1=3;
 else fjobw1=4;
 
 
-/*¾î¸Ó´Ï Á÷¾÷*/
+/*ì–´ë¨¸ë‹ˆ ì§ì—…*/
 if pjob2w1 in (1,2,3) then mjobw1=1;
 else if pjob2w1 in (4,5) then mjobw1=2;
 else if pjob2w1 in (6:11) then mjobw1=3;
@@ -425,13 +425,13 @@ else mjobw1=4;
 
 
 
-/*ÇĞ½À½Ã°£(ÇĞ¿ø ¹× °ú¿Ü, ÀÎÅÍ³İ ¹× TV°­ÀÇ, ¹æ°ú ÈÄ ÇĞ±³, ½º½º·Î °øºÎÇÏ´Â ½Ã°£ÀÇ ÇÕ)*/;
+/*í•™ìŠµì‹œê°„(í•™ì› ë° ê³¼ì™¸, ì¸í„°ë„· ë° TVê°•ì˜, ë°©ê³¼ í›„ í•™êµ, ìŠ¤ìŠ¤ë¡œ ê³µë¶€í•˜ëŠ” ì‹œê°„ì˜ í•©)*/;
 daystudy_wdw1=sum(dayuse3_wdw1h, dayuse4_wdw1h, dayuse5_wdw1h, dayuse6_wdw1h);
 daystudy_wkw1=sum(dayuse3_wkw1h, dayuse4_wkw1h, dayuse5_wkw1h, dayuse6_wkw1h);
 daystudyw1=sum(daystudy_wdw1*5, daystudy_wkw1*2)/7;
 
-/*½Ã°£º¯¼ö 24½Ã°£ ´ÜÀ§·Î º¯È¯*/
-*ÀÏÁÖÀÏÆò±Õ;
+/*ì‹œê°„ë³€ìˆ˜ 24ì‹œê°„ ë‹¨ìœ„ë¡œ ë³€í™˜*/
+*ì¼ì£¼ì¼í‰ê· ;
 atimew1=24-sleep_all_h-25/7;
 btimew1=sum(dayuse2w1h, daystudyw1, dayuse7w1h, dayuse8w1h, dayuse9w1h, dayuse10w1h, dayuse11w1h, sp_usew1h);
 ctime2w1=(dayuse2w1h/btimew1)*atimew1;
@@ -520,9 +520,9 @@ else if tstw1>=240 then total_60a=6;
 /**********/
 /* obesity */
 /**********/
-surveydayw2=mdy(9,15,2019); *Á¶»ç³¯Â¥ 2019³â 9¿ù 15ÀÏ·Î °£ÁÖ;
-surveydayw3=mdy(9,15,2020); *Á¶»ç³¯Â¥ 2020³â 9¿ù 15ÀÏ·Î °£ÁÖ;
-surveydayw4=mdy(9,15,2021); *Á¶»ç³¯Â¥ 2021³â 9¿ù 15ÀÏ·Î °£ÁÖ;
+surveydayw2=mdy(9,15,2019); *ì¡°ì‚¬ë‚ ì§œ 2019ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
+surveydayw3=mdy(9,15,2020); *ì¡°ì‚¬ë‚ ì§œ 2020ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
+surveydayw4=mdy(9,15,2021); *ì¡°ì‚¬ë‚ ì§œ 2021ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
 age_mw2=intck('month' , birth, surveydayw2); 
 age_mw3=intck('month' , birth, surveydayw3);
 age_mw4=intck('month' , birth, surveydayw4);
@@ -534,7 +534,7 @@ heightw1=yphy2a00w1/100;
 weightw1=yphy2b00w1;
 if heightw1^=. and weightw1^=. then bmiw1=weightw1/(heightw1*heightw1);
 
-/*³²ÀÚ*/
+/*ë‚¨ì*/
 if sexw1=1 then do; 
 
 if age_mw1=113 then do; pct05w1=14.6; pct85w1=20.6; pct95w1=22.5; end;
@@ -566,7 +566,7 @@ if age_mw1=138 then do; pct05w1=15.3; pct85w1=22.6; pct95w1=24.7; end;
 if age_mw1=139 then do; pct05w1=15.4; pct85w1=22.7; pct95w1=24.7; end;
 end;
 
-/*¿©ÀÚ*/
+/*ì—¬ì*/
 if sexw1=2 then do; 
 
 if age_mw1=113 then do; pct05w1=14.2; pct85w1=20.1; pct95w1=21.9; end;
@@ -598,7 +598,7 @@ if age_mw1=138 then do; pct05w1=15.0; pct85w1=21.8; pct95w1=23.7; end;
 if age_mw1=139 then do; pct05w1=15.1; pct85w1=21.8; pct95w1=23.8; end;
 end;
 
-*BMI Ä«Å×°í¸®;
+*BMI ì¹´í…Œê³ ë¦¬;
 if bmiw1^=. then do;
 if bmiw1<pct05w1 then bmi_cw1=1;
 else if pct05w1<=bmiw1<pct85w1 then bmi_cw1=2;
@@ -606,7 +606,7 @@ else if pct85w1<=bmiw1<pct95w1 then bmi_cw1=3;
 else bmi_cw1=4;
 end;
 
-*ºñ¸¸;
+*ë¹„ë§Œ;
 if bmi_cw1^=. then do;
 if bmi_cw1 in (1:3) then obesityw1=0;
 else obesityw1=1;
@@ -618,7 +618,7 @@ heightw2=yphy2a00w2/100;
 weightw2=yphy2b00w2;
 if yphy2a00w2^=. and yphy2b00w2^=. then bmiw2=weightw2/(heightw2*heightw2);
 
-/*³²ÀÚ 125-150*/
+/*ë‚¨ì 125-150*/
 if sexw1=1 then do; 
 
 if age_mw2=125 then do; pct05w2=14.9; pct85w2=21.6; pct95w2=23.6; end;
@@ -649,7 +649,7 @@ if age_mw2=149 then do; pct05w2=15.7; pct85w2=23.2; pct95w2=25.3; end;
 if age_mw2=150 then do; pct05w2=15.8; pct85w2=23.3; pct95w2=25.4; end;
 end;
 
-/*¿©ÀÚ 125-150*/
+/*ì—¬ì 125-150*/
 if sexw1=2 then do; 
 
 if age_mw2=125 then do; pct05w2=14.5; pct85w2=20.9; pct95w2=22.8; end;
@@ -680,7 +680,7 @@ if age_mw2=149 then do; pct05w2=15.5; pct85w2=22.4; pct95w2=24.4; end;
 if age_mw2=150 then do; pct05w2=15.6; pct85w2=22.4; pct95w2=24.5; end;
 end;
 
-*BMI Ä«Å×°í¸®;
+*BMI ì¹´í…Œê³ ë¦¬;
 if bmiw2^=. then do;
 if bmiw2<pct05w2 then bmi_cw2=1;
 else if pct05w2<=bmiw2<pct85w2 then bmi_cw2=2;
@@ -688,7 +688,7 @@ else if pct85w2<=bmiw2<pct95w2 then bmi_cw2=3;
 else bmi_cw2=4;
 end;
 
-*ºñ¸¸;
+*ë¹„ë§Œ;
 if bmi_cw2^=. then do;
 if bmi_cw2 in (1:3) then obesityw2=0;
 else obesityw2=1;
@@ -702,7 +702,7 @@ weightw3=yphy2b00w3;
 if yphy2a00w3^=. and yphy2b00w3^=. then bmiw3=weightw3/(heightw3*heightw3);
 
 
-/*³²ÀÚ 137-162*/
+/*ë‚¨ì 137-162*/
 if sexw1=1 then do; 
 
 if age_mw3=137 then do; pct05w3=15.3; pct85w3=22.5; pct95w3=24.6; end;
@@ -733,7 +733,7 @@ if age_mw3=161 then do; pct05w3=16.2; pct85w3=23.7; pct95w3=25.8; end;
 if age_mw3=162 then do; pct05w3=16.3; pct85w3=23.8; pct95w3=25.8; end;
 end;
 
-/*¿©ÀÚ 137-162*/
+/*ì—¬ì 137-162*/
 if sexw1=2 then do; 
 
 if age_mw3=137 then do; pct05w3=15.0; pct85w3=21.7; pct95w3=23.7; end;
@@ -764,7 +764,7 @@ if age_mw3=161 then do; pct05w3=16.1; pct85w3=23.0; pct95w3=25.0; end;
 if age_mw3=162 then do; pct05w3=16.1; pct85w3=23.0; pct95w3=25.0; end;
 end;
 
-*BMI Ä«Å×°í¸®;
+*BMI ì¹´í…Œê³ ë¦¬;
 if bmiw3^=. then do;
 if bmiw3<pct05w3 then bmi_cw3=1;
 else if pct05w3<=bmiw3<pct85w3 then bmi_cw3=2;
@@ -772,7 +772,7 @@ else if pct85w3<=bmiw3<pct95w3 then bmi_cw3=3;
 else bmi_cw3=4;
 end;
 
-*ºñ¸¸;
+*ë¹„ë§Œ;
 if bmi_cw3^=. then do;
 if bmi_cw3 in (1:3) then obesityw3=0;
 else obesityw3=1;
@@ -785,7 +785,7 @@ heightw4=yphy2a00w4/100;
 weightw4=yphy2b00w4;
 if yphy2a00w4^=. and yphy2b00w4^=. then bmiw4=weightw4/(heightw4*heightw4);
 
-/*³²ÀÚ: 149-174*/
+/*ë‚¨ì: 149-174*/
 if sexw1=1 then do; 
 
 if age_mw4=149 then do; pct05w4=15.7; pct85w4=23.2; pct95w4=25.3; end;
@@ -816,7 +816,7 @@ if age_mw4=173 then do; pct05w4=16.7; pct85w4=24.1; pct95w4=26.1; end;
 if age_mw4=174 then do; pct05w4=16.8; pct85w4=24.1; pct95w4=26.1; end;
 end;
 
-/*¿©ÀÚ 149-174*/
+/*ì—¬ì 149-174*/
 if sexw1=2 then do; 
 
 if age_mw4=149 then do; pct05w4=15.5; pct85w4=22.4; pct95w4=24.4; end;
@@ -847,7 +847,7 @@ if age_mw4=173 then do; pct05w4=16.6; pct85w4=23.4; pct95w4=25.3; end;
 if age_mw4=174 then do; pct05w4=16.7; pct85w4=23.4; pct95w4=25.3; end;
 end;
 
-*BMI Ä«Å×°í¸®;
+*BMI ì¹´í…Œê³ ë¦¬;
 if bmiw4^=. then do;
 if bmiw4<pct05w4 then bmi_cw4=1;
 else if pct05w4<=bmiw4<pct85w4 then bmi_cw4=2;
@@ -855,7 +855,7 @@ else if pct85w4<=bmiw4<pct95w4 then bmi_cw4=3;
 else bmi_cw4=4;
 end;
 
-*ºñ¸¸;
+*ë¹„ë§Œ;
 if bmi_cw4^=. then do;
 if bmi_cw4 in (1:3) then obesityw4=0;
 else obesityw4=1;
@@ -868,63 +868,63 @@ end;
 /*************/
 
 /********************************************** w1 (baseline) *************************************************/
-depress1w1=ypsy4e01w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress2w1=ypsy4e02w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress3w1=ypsy4e03w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress4w1=ypsy4e04w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress5w1=ypsy4e05w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress6w1=ypsy4e06w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress7w1=ypsy4e07w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress8w1=ypsy4e08w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress9w1=ypsy4e09w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress10w1=ypsy4e10w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+depress1w1=ypsy4e01w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress2w1=ypsy4e02w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress3w1=ypsy4e03w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress4w1=ypsy4e04w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress5w1=ypsy4e05w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress6w1=ypsy4e06w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress7w1=ypsy4e07w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress8w1=ypsy4e08w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress9w1=ypsy4e09w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress10w1=ypsy4e10w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 
 depsumw1=sum(depress1w1, depress2w1, depress3w1, depress4w1, depress5w1, depress6w1, depress7w1, depress8w1, depress9w1, depress10w1); *range 10-40;
 
 
 /********************************************** w2 *************************************************/
-depress1w2=ypsy4e01w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress2w2=ypsy4e02w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress3w2=ypsy4e03w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress4w2=ypsy4e04w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress5w2=ypsy4e05w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress6w2=ypsy4e06w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress7w2=ypsy4e07w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress8w2=ypsy4e08w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress9w2=ypsy4e09w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress10w2=ypsy4e10w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+depress1w2=ypsy4e01w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress2w2=ypsy4e02w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress3w2=ypsy4e03w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress4w2=ypsy4e04w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress5w2=ypsy4e05w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress6w2=ypsy4e06w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress7w2=ypsy4e07w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress8w2=ypsy4e08w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress9w2=ypsy4e09w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress10w2=ypsy4e10w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 
 depsumw2=sum(depress1w2, depress2w2, depress3w2, depress4w2, depress5w2, depress6w2, depress7w2, depress8w2, depress9w2, depress10w2); 
 *range 10-40;
 
 
 /********************************************** w3 *************************************************/
-depress1w3=ypsy4e01w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress2w3=ypsy4e02w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress3w3=ypsy4e03w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress4w3=ypsy4e04w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress5w3=ypsy4e05w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress6w3=ypsy4e06w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress7w3=ypsy4e07w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress8w3=ypsy4e08w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress9w3=ypsy4e09w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress10w3=ypsy4e10w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+depress1w3=ypsy4e01w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress2w3=ypsy4e02w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress3w3=ypsy4e03w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress4w3=ypsy4e04w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress5w3=ypsy4e05w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress6w3=ypsy4e06w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress7w3=ypsy4e07w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress8w3=ypsy4e08w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress9w3=ypsy4e09w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress10w3=ypsy4e10w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 
 depsumw3=sum(depress1w3, depress2w3, depress3w3, depress4w3, depress5w3, depress6w3, depress7w3, depress8w3, depress9w3, depress10w3); 
 *range 10-40;
 
 
 /********************************************** w4 *************************************************/
-depress1w4=ypsy4e01w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress2w4=ypsy4e02w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress3w4=ypsy4e03w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress4w4=ypsy4e04w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress5w4=ypsy4e05w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress6w4=ypsy4e06w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress7w4=ypsy4e07w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress8w4=ypsy4e08w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress9w4=ypsy4e09w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress10w4=ypsy4e10w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+depress1w4=ypsy4e01w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress2w4=ypsy4e02w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress3w4=ypsy4e03w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress4w4=ypsy4e04w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress5w4=ypsy4e05w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress6w4=ypsy4e06w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress7w4=ypsy4e07w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress8w4=ypsy4e08w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress9w4=ypsy4e09w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress10w4=ypsy4e10w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 
 depsumw4=sum(depress1w4, depress2w4, depress3w4, depress4w4, depress5w4, depress6w4, depress7w4, depress8w4, depress9w4, depress10w4); 
 *range 10-40;
@@ -944,28 +944,28 @@ run;
 
 
 
-/*Áß1*/
+/*ì¤‘1*/
 data m1;
 set middle;
 
-*¿ù¿¬·É;
-birth_d=15; *»ı³â¿ùÀÏ Áß 'ÀÏ' °íÁ¤;
-surveydayw1=mdy(9,15,2018); *Á¶»ç³¯Â¥ 2018³â 9¿ù 15ÀÏ·Î °£ÁÖ;
-surveydayw4=mdy(9,15,2021); *Á¶»ç³¯Â¥ 2021³â 9¿ù 15ÀÏ·Î °£ÁÖ;
-birth=mdy(ybrt1bw1, birth_d, ybrt1aw1); *Ãâ»ıÀÏ;
-age_mw1=intck('month' , birth, surveydayw1); *1Â÷Á¶»ç ¿ù_¿¬·É. range 150-170;
+*ì›”ì—°ë ¹;
+birth_d=15; *ìƒë…„ì›”ì¼ ì¤‘ 'ì¼' ê³ ì •;
+surveydayw1=mdy(9,15,2018); *ì¡°ì‚¬ë‚ ì§œ 2018ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
+surveydayw4=mdy(9,15,2021); *ì¡°ì‚¬ë‚ ì§œ 2021ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
+birth=mdy(ybrt1bw1, birth_d, ybrt1aw1); *ì¶œìƒì¼;
+age_mw1=intck('month' , birth, surveydayw1); *1ì°¨ì¡°ì‚¬ ì›”_ì—°ë ¹. range 150-170;
 age_mw4=intck('month' , birth, surveydayw4);
 
 
-*¼ºº°;
+*ì„±ë³„;
 sexw1=ygenderw1; *M=1405 F=1185, no missing;
 
-*ÇĞ³â;
+*í•™ë…„;
 schoolw1=2;
 
 
-/*½º¸¶Æ®Æù ÀÌ¿ë½Ã°£*/
-*ÆòÀÏ;
+/*ìŠ¤ë§ˆíŠ¸í° ì´ìš©ì‹œê°„*/
+*í‰ì¼;
 if ytim1k01w1=1 then sp_use_wdw1=0;
 else if ytim1k01w1=2 then sp_use_wdw1=15;
 else if ytim1k01w1=3 then sp_use_wdw1=45;
@@ -973,8 +973,8 @@ else if ytim1k01w1=4 then sp_use_wdw1=90;
 else if ytim1k01w1=5 then sp_use_wdw1=150;
 else if ytim1k01w1=6 then sp_use_wdw1=210;
 else if ytim1k01w1=7 then sp_use_wdw1=270;
-sp_use_wdw1h=sp_use_wdw1/60; *´ÜÀ§¸¦ ½Ã°£À¸·Îº¯È¯;
-*ÁÖ¸»;
+sp_use_wdw1h=sp_use_wdw1/60; *ë‹¨ìœ„ë¥¼ ì‹œê°„ìœ¼ë¡œë³€í™˜;
+*ì£¼ë§;
 if ytim1k02w1=1 then sp_use_wkw1=0;
 else if ytim1k02w1=2 then sp_use_wkw1=15;
 else if ytim1k02w1=3 then sp_use_wkw1=45;
@@ -982,16 +982,16 @@ else if ytim1k02w1=4 then sp_use_wkw1=90;
 else if ytim1k02w1=5 then sp_use_wkw1=150;
 else if ytim1k02w1=6 then sp_use_wkw1=210;
 else if ytim1k02w1=7 then sp_use_wkw1=270;
-sp_use_wkw1h=sp_use_wkw1/60; *´ÜÀ§¸¦ ½Ã°£À¸·Îº¯È¯;
-*ÀÏÁÖÀÏÆò±Õ;
+sp_use_wkw1h=sp_use_wkw1/60; *ë‹¨ìœ„ë¥¼ ì‹œê°„ìœ¼ë¡œë³€í™˜;
+*ì¼ì£¼ì¼í‰ê· ;
 sp_usew1=sum(sp_use_wdw1*5, sp_use_wkw1*2)/7;
 sp_usew1h=sp_usew1/60;
 
 
 
 
-/*¼ö¸é½Ã°£*/
-*ÆòÀÏ;
+/*ìˆ˜ë©´ì‹œê°„*/
+*í‰ì¼;
 wake_wd=hms(ytim1a01w1, ytim1a02w1, 0);
 bed_wd=hms(ytim1b01w1, ytim1b02w1, 0);
 sleep_wd_raw=intck('second', bed_wd, wake_wd);
@@ -999,7 +999,7 @@ if sleep_wd_raw<0 then sleep_wd=sleep_wd_raw+86400; /*24*60*60=86400 sec*/
 else if sleep_wd_raw>=0 then sleep_wd=sleep_wd_raw;
 sleep_wd_m=sleep_wd/60;
 sleep_wd_h=sleep_wd/3600;
-*ÁÖ¸»;
+*ì£¼ë§;
 wake_wk=hms(ytim1a03w1, ytim1a04w1, 0);
 bed_wk=hms(ytim1b03w1, ytim1b04w1, 0);
 sleep_wk_raw=intck('second', bed_wk, wake_wk);
@@ -1007,13 +1007,13 @@ if sleep_wk_raw<0 then sleep_wk=sleep_wk_raw+86400;
 else if sleep_wk_raw>=0 then sleep_wk=sleep_wk_raw;
 sleep_wk_m=sleep_wk/60;
 sleep_wk_h=sleep_wk/3600;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 sleep_all_m=((sleep_wd_m*5)+(sleep_wk_m*2))/7;
 sleep_all_h=((sleep_wd_h*5)+(sleep_wk_h*2))/7;
 
 
-/*ºÎ¸ğ´Ô ´ëÈ­½Ã°£*/
-*ÆòÀÏ;
+/*ë¶€ëª¨ë‹˜ ëŒ€í™”ì‹œê°„*/
+*í‰ì¼;
 if ytim1d01w1=1 then dayuse2_wdw1=0;
 else if ytim1d01w1=2 then dayuse2_wdw1=15;
 else if ytim1d01w1=3 then dayuse2_wdw1=45;
@@ -1022,7 +1022,7 @@ else if ytim1d01w1=5 then dayuse2_wdw1=150;
 else if ytim1d01w1=6 then dayuse2_wdw1=210;
 else if ytim1d01w1=7 then dayuse2_wdw1=270;
 dayuse2_wdw1h=dayuse2_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1d02w1=1 then dayuse2_wkw1=0;
 else if ytim1d02w1=2 then dayuse2_wkw1=15;
 else if ytim1d02w1=3 then dayuse2_wkw1=45;
@@ -1031,13 +1031,13 @@ else if ytim1d02w1=5 then dayuse2_wkw1=150;
 else if ytim1d02w1=6 then dayuse2_wkw1=210;
 else if ytim1d02w1=7 then dayuse2_wkw1=270;
 dayuse2_wkw1h=dayuse2_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse2w1=sum(dayuse2_wdw1*5, dayuse2_wkw1*2)/7;
 dayuse2w1h=dayuse2w1/60;
 
 
-/*ÇĞ¿ø ¹× °ú¿Ü½Ã°£*/
-*ÆòÀÏ;
+/*í•™ì› ë° ê³¼ì™¸ì‹œê°„*/
+*í‰ì¼;
 if ytim1e01w1=1 then dayuse3_wdw1=0;
 else if ytim1e01w1=2 then dayuse3_wdw1=15;
 else if ytim1e01w1=3 then dayuse3_wdw1=45;
@@ -1046,7 +1046,7 @@ else if ytim1e01w1=5 then dayuse3_wdw1=150;
 else if ytim1e01w1=6 then dayuse3_wdw1=210;
 else if ytim1e01w1=7 then dayuse3_wdw1=270;
 dayuse3_wdw1h=dayuse3_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1e02w1=1 then dayuse3_wkw1=0;
 else if ytim1e02w1=2 then dayuse3_wkw1=15;
 else if ytim1e02w1=3 then dayuse3_wkw1=45;
@@ -1055,13 +1055,13 @@ else if ytim1e02w1=5 then dayuse3_wkw1=150;
 else if ytim1e02w1=6 then dayuse3_wkw1=210;
 else if ytim1e02w1=7 then dayuse3_wkw1=270;
 dayuse3_wkw1h=dayuse3_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse3w1=sum(dayuse3_wdw1*5, dayuse3_wkw1*2)/7;
 dayuse3w1h=dayuse3w1/60;
 
 
-/*ÀÎÅÍ³İ ¹× TV°­ÀÇ ½Ã°£*/
-*ÆòÀÏ;
+/*ì¸í„°ë„· ë° TVê°•ì˜ ì‹œê°„*/
+*í‰ì¼;
 if ytim1f01w1=1 then dayuse4_wdw1=0;
 else if ytim1f01w1=2 then dayuse4_wdw1=15;
 else if ytim1f01w1=3 then dayuse4_wdw1=45;
@@ -1070,7 +1070,7 @@ else if ytim1f01w1=5 then dayuse4_wdw1=150;
 else if ytim1f01w1=6 then dayuse4_wdw1=210;
 else if ytim1f01w1=7 then dayuse4_wdw1=270;
 dayuse4_wdw1h=dayuse4_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1f02w1=1 then dayuse4_wkw1=0;
 else if ytim1f02w1=2 then dayuse4_wkw1=15;
 else if ytim1f02w1=3 then dayuse4_wkw1=45;
@@ -1079,13 +1079,13 @@ else if ytim1f02w1=5 then dayuse4_wkw1=150;
 else if ytim1f02w1=6 then dayuse4_wkw1=210;
 else if ytim1f02w1=7 then dayuse4_wkw1=270;
 dayuse4_wkw1h=dayuse4_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse4w1=sum(dayuse4_wdw1*5, dayuse4_wkw1*2)/7;
 dayuse4w1h=dayuse4w1/60;
 
 
-/*¹æ°ú ÈÄ ÇĞ±³*/
-*ÆòÀÏ;
+/*ë°©ê³¼ í›„ í•™êµ*/
+*í‰ì¼;
 if ytim1g01w1=1 then dayuse5_wdw1=0;
 else if ytim1g01w1=2 then dayuse5_wdw1=15;
 else if ytim1g01w1=3 then dayuse5_wdw1=45;
@@ -1094,7 +1094,7 @@ else if ytim1g01w1=5 then dayuse5_wdw1=150;
 else if ytim1g01w1=6 then dayuse5_wdw1=210;
 else if ytim1g01w1=7 then dayuse5_wdw1=270;
 dayuse5_wdw1h=dayuse5_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1g02w1=1 then dayuse5_wkw1=0;
 else if ytim1g02w1=2 then dayuse5_wkw1=15;
 else if ytim1g02w1=3 then dayuse5_wkw1=45;
@@ -1103,13 +1103,13 @@ else if ytim1g02w1=5 then dayuse5_wkw1=150;
 else if ytim1g02w1=6 then dayuse5_wkw1=210;
 else if ytim1g02w1=7 then dayuse5_wkw1=270;
 dayuse5_wkw1h=dayuse5_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse5w1=sum(dayuse5_wdw1*5, dayuse5_wkw1*2)/7;
 dayuse5w1h=dayuse5w1/60;
 
 
-/*½º½º·Î °øºÎÇÏ´Â ½Ã°£*/
-*ÆòÀÏ;
+/*ìŠ¤ìŠ¤ë¡œ ê³µë¶€í•˜ëŠ” ì‹œê°„*/
+*í‰ì¼;
 if ytim1h01w1=1 then dayuse6_wdw1=0;
 else if ytim1h01w1=2 then dayuse6_wdw1=15;
 else if ytim1h01w1=3 then dayuse6_wdw1=45;
@@ -1118,7 +1118,7 @@ else if ytim1h01w1=5 then dayuse6_wdw1=150;
 else if ytim1h01w1=6 then dayuse6_wdw1=210;
 else if ytim1h01w1=7 then dayuse6_wdw1=270;
 dayuse6_wdw1h=dayuse6_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1h02w1=1 then dayuse6_wkw1=0;
 else if ytim1h02w1=2 then dayuse6_wkw1=15;
 else if ytim1h02w1=3 then dayuse6_wkw1=45;
@@ -1127,13 +1127,13 @@ else if ytim1h02w1=5 then dayuse6_wkw1=150;
 else if ytim1h02w1=6 then dayuse6_wkw1=210;
 else if ytim1h02w1=7 then dayuse6_wkw1=270;
 dayuse6_wkw1h=dayuse6_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse6w1=sum(dayuse6_wdw1*5, dayuse6_wkw1*2)/7;
 dayuse6w1h=dayuse6w1/60;
 
 
-/*µ¶¼­½Ã°£*/
-*ÆòÀÏ;
+/*ë…ì„œì‹œê°„*/
+*í‰ì¼;
 if ytim1i01w1=1 then dayuse7_wdw1=0;
 else if ytim1i01w1=2 then dayuse7_wdw1=15;
 else if ytim1i01w1=3 then dayuse7_wdw1=45;
@@ -1142,7 +1142,7 @@ else if ytim1i01w1=5 then dayuse7_wdw1=150;
 else if ytim1i01w1=6 then dayuse7_wdw1=210;
 else if ytim1i01w1=7 then dayuse7_wdw1=270;
 dayuse7_wdw1h=dayuse7_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1i02w1=1 then dayuse7_wkw1=0;
 else if ytim1i02w1=2 then dayuse7_wkw1=15;
 else if ytim1i02w1=3 then dayuse7_wkw1=45;
@@ -1151,13 +1151,13 @@ else if ytim1i02w1=5 then dayuse7_wkw1=150;
 else if ytim1i02w1=6 then dayuse7_wkw1=210;
 else if ytim1i02w1=7 then dayuse7_wkw1=270;
 dayuse7_wkw1h=dayuse7_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse7w1=sum(dayuse7_wdw1*5, dayuse7_wkw1*2)/7;
 dayuse7w1h=dayuse7w1/60;
 
 
-/*¿îµ¿ ¹× ½ÅÃ¼È°µ¿½Ã°£*/
-*ÆòÀÏ;
+/*ìš´ë™ ë° ì‹ ì²´í™œë™ì‹œê°„*/
+*í‰ì¼;
 if ytim1j01w1=1 then dayuse8_wdw1=0;
 else if ytim1j01w1=2 then dayuse8_wdw1=15;
 else if ytim1j01w1=3 then dayuse8_wdw1=45;
@@ -1166,7 +1166,7 @@ else if ytim1j01w1=5 then dayuse8_wdw1=150;
 else if ytim1j01w1=6 then dayuse8_wdw1=210;
 else if ytim1j01w1=7 then dayuse8_wdw1=270;
 dayuse8_wdw1h=dayuse8_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1j02w1=1 then dayuse8_wkw1=0;
 else if ytim1j02w1=2 then dayuse8_wkw1=15;
 else if ytim1j02w1=3 then dayuse8_wkw1=45;
@@ -1175,13 +1175,13 @@ else if ytim1j02w1=5 then dayuse8_wkw1=150;
 else if ytim1j02w1=6 then dayuse8_wkw1=210;
 else if ytim1j02w1=7 then dayuse8_wkw1=270;
 dayuse8_wkw1h=dayuse8_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse8w1=sum(dayuse8_wdw1*5, dayuse8_wkw1*2)/7;
 dayuse8w1h=dayuse8w1/60;
 
 
-/*ÄÄÇ»ÅÍ¸¦ °¡Áö°í³ë´Â½Ã°£*/
-*ÆòÀÏ;
+/*ì»´í“¨í„°ë¥¼ ê°€ì§€ê³ ë…¸ëŠ”ì‹œê°„*/
+*í‰ì¼;
 if ytim1l01w1=1 then dayuse9_wdw1=0;
 else if ytim1l01w1=2 then dayuse9_wdw1=15;
 else if ytim1l01w1=3 then dayuse9_wdw1=45;
@@ -1190,7 +1190,7 @@ else if ytim1l01w1=5 then dayuse9_wdw1=150;
 else if ytim1l01w1=6 then dayuse9_wdw1=210;
 else if ytim1l01w1=7 then dayuse9_wdw1=270;
 dayuse9_wdw1h=dayuse9_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1l02w1=1 then dayuse9_wkw1=0;
 else if ytim1l02w1=2 then dayuse9_wkw1=15;
 else if ytim1l02w1=3 then dayuse9_wkw1=45;
@@ -1199,13 +1199,13 @@ else if ytim1l02w1=5 then dayuse9_wkw1=150;
 else if ytim1l02w1=6 then dayuse9_wkw1=210;
 else if ytim1l02w1=7 then dayuse9_wkw1=270;
 dayuse9_wkw1h=dayuse9_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse9w1=sum(dayuse9_wdw1*5, dayuse9_wkw1*2)/7;
 dayuse9w1h=dayuse9w1/60;
 
 
-/*TV½ÃÃ»*/
-*ÆòÀÏ;
+/*TVì‹œì²­*/
+*í‰ì¼;
 if ytim1m01w1=1 then dayuse10_wdw1=0;
 else if ytim1m01w1=2 then dayuse10_wdw1=15;
 else if ytim1m01w1=3 then dayuse10_wdw1=45;
@@ -1214,7 +1214,7 @@ else if ytim1m01w1=5 then dayuse10_wdw1=150;
 else if ytim1m01w1=6 then dayuse10_wdw1=210;
 else if ytim1m01w1=7 then dayuse10_wdw1=270;
 dayuse10_wdw1h=dayuse10_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1m02w1=1 then dayuse10_wkw1=0;
 else if ytim1m02w1=2 then dayuse10_wkw1=15;
 else if ytim1m02w1=3 then dayuse10_wkw1=45;
@@ -1223,13 +1223,13 @@ else if ytim1m02w1=5 then dayuse10_wkw1=150;
 else if ytim1m02w1=6 then dayuse10_wkw1=210;
 else if ytim1m02w1=7 then dayuse10_wkw1=270;
 dayuse10_wkw1h=dayuse10_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse10w1=sum(dayuse10_wdw1*5, dayuse10_wkw1*2)/7;
 dayuse10w1h=dayuse10w1/60;
 
 
-/*Ä£±¸µé°ú ³ë´Â½Ã°£*/
-*ÆòÀÏ;
+/*ì¹œêµ¬ë“¤ê³¼ ë…¸ëŠ”ì‹œê°„*/
+*í‰ì¼;
 if ytim1n01w1=1 then dayuse11_wdw1=0;
 else if ytim1n01w1=2 then dayuse11_wdw1=15;
 else if ytim1n01w1=3 then dayuse11_wdw1=45;
@@ -1238,7 +1238,7 @@ else if ytim1n01w1=5 then dayuse11_wdw1=150;
 else if ytim1n01w1=6 then dayuse11_wdw1=210;
 else if ytim1n01w1=7 then dayuse11_wdw1=270;
 dayuse11_wdw1h=dayuse11_wdw1/60;
-*ÁÖ¸»;
+*ì£¼ë§;
 if ytim1n02w1=1 then dayuse11_wkw1=0;
 else if ytim1n02w1=2 then dayuse11_wkw1=15;
 else if ytim1n02w1=3 then dayuse11_wkw1=45;
@@ -1247,39 +1247,39 @@ else if ytim1n02w1=5 then dayuse11_wkw1=150;
 else if ytim1n02w1=6 then dayuse11_wkw1=210;
 else if ytim1n02w1=7 then dayuse11_wkw1=270;
 dayuse11_wkw1h=dayuse11_wkw1/60;
-*ÀÏÁÖÀÏÆò±Õ;
+*ì¼ì£¼ì¼í‰ê· ;
 dayuse11w1=sum(dayuse11_wdw1*5, dayuse11_wkw1*2)/7;
 dayuse11w1h=dayuse11w1/60;
 
 
-/*ÇĞ¾÷¼ºÀû*/
-*1-6 categories: ¸Å¿ì ¸øÇÔ - ¸Å¿ì ÀßÇÔ - Àß ¸ğ¸£°ÚÀ½;
+/*í•™ì—…ì„±ì */
+*1-6 categories: ë§¤ìš° ëª»í•¨ - ë§¤ìš° ì˜í•¨ - ì˜ ëª¨ë¥´ê² ìŒ;
 if yint1a00w1 in (1,2,3) then gradew1=1;
 else if yint1a00w1 in (4,5) then gradew1=2;
 else gradew1=3;
 
 
-/*ºÎ¸ğÀÇ¾çÀ°ÅÂµµ*/
-*°­¿ä;
-parcare1dw1=yfam2d01w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-parcare2dw1=yfam2d02w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-parcare3dw1=yfam2d03w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-parcare4dw1=yfam2d04w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+/*ë¶€ëª¨ì˜ì–‘ìœ¡íƒœë„*/
+*ê°•ìš”;
+parcare1dw1=yfam2d01w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+parcare2dw1=yfam2d02w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+parcare3dw1=yfam2d03w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+parcare4dw1=yfam2d04w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 parcaresumw1=sum(parcare1dw1, parcare2dw1, parcare3dw1, parcare4dw1); *range 4-16;
 
 
-/*ºÎ¸ğ´Ô µ¿°Å¿©ºÎ*/
+/*ë¶€ëª¨ë‹˜ ë™ê±°ì—¬ë¶€*/
 if pfam1a00w1 in(1,4) then famnumw1=2;
 else famnumw1=1;
 
 
-/*ºÎ¸ğ´ÔÇĞ·Â*/
+/*ë¶€ëª¨ë‹˜í•™ë ¥*/
 if pschool1w1 in (5,6,7) or pschool2w1 in (5,6,7) then pschoolw1=2;
 else if pschool1w1 in (1:4) or pschool2w1 in (1:4) then pschoolw1=1;
 else pschoolw1=2;
 
 
-/*¿ùÆò±Õ°¡±¸¼Òµæ*/
+/*ì›”í‰ê· ê°€êµ¬ì†Œë“*/
 if pincomew1 in(1:3) then incomew1=1;
 else if pincomew1 in(4,5) then incomew1=2;
 else if pincomew1 in(6,7) then incomew1=3;
@@ -1287,20 +1287,20 @@ else if pincomew1=. then incomew1=3;
 else if pincomew1 in(8,9) then incomew1=4;
 else incomew1=5;
 
-/*ÃşÈ­ºĞ¼®¿ë °¡±¸¼Òµæ*/
+/*ì¸µí™”ë¶„ì„ìš© ê°€êµ¬ì†Œë“*/
 if incomew1 in (1,2) then incomew1r=1;
 else if incomew1=3 then incomew1r=2;
 else if incomew1 in (4,5) then incomew1r=3;
 
 
-/*¾Æ¹öÁö Á÷¾÷*/
+/*ì•„ë²„ì§€ ì§ì—…*/
 if pjob1w1 in (1,2,3) then fjobw1=1;
 else if pjob1w1 in (4,5) then fjobw1=2;
 else if pjob1w1 in (6:11) then fjobw1=3;
 else fjobw1=4;
 
 
-/*¾î¸Ó´Ï Á÷¾÷*/
+/*ì–´ë¨¸ë‹ˆ ì§ì—…*/
 if pjob2w1 in (1,2,3) then mjobw1=1;
 else if pjob2w1 in (4,5) then mjobw1=2;
 else if pjob2w1 in (6:11) then mjobw1=3;
@@ -1308,13 +1308,13 @@ else mjobw1=4;
 
 
 
-/*ÇĞ½À½Ã°£(ÇĞ¿ø ¹× °ú¿Ü, ÀÎÅÍ³İ ¹× TV°­ÀÇ, ¹æ°ú ÈÄ ÇĞ±³, ½º½º·Î °øºÎÇÏ´Â ½Ã°£ÀÇ ÇÕ)*/;
+/*í•™ìŠµì‹œê°„(í•™ì› ë° ê³¼ì™¸, ì¸í„°ë„· ë° TVê°•ì˜, ë°©ê³¼ í›„ í•™êµ, ìŠ¤ìŠ¤ë¡œ ê³µë¶€í•˜ëŠ” ì‹œê°„ì˜ í•©)*/;
 daystudy_wdw1=sum(dayuse3_wdw1h, dayuse4_wdw1h, dayuse5_wdw1h, dayuse6_wdw1h);
 daystudy_wkw1=sum(dayuse3_wkw1h, dayuse4_wkw1h, dayuse5_wkw1h, dayuse6_wkw1h);
 daystudyw1=sum(daystudy_wdw1*5, daystudy_wkw1*2)/7;
 
-/*½Ã°£º¯¼ö 24½Ã°£ ´ÜÀ§·Î º¯È¯*/
-*ÀÏÁÖÀÏÆò±Õ;
+/*ì‹œê°„ë³€ìˆ˜ 24ì‹œê°„ ë‹¨ìœ„ë¡œ ë³€í™˜*/
+*ì¼ì£¼ì¼í‰ê· ;
 atimew1=24-sleep_all_h-5;
 btimew1=sum(dayuse2w1h, daystudyw1, dayuse7w1h, dayuse8w1h, dayuse9w1h, dayuse10w1h, dayuse11w1h, sp_usew1h);
 ctime2w1=(dayuse2w1h/btimew1)*atimew1;
@@ -1402,9 +1402,9 @@ else if tstw1>=240 then total_60a=6;
 /**********/
 /* obesity */
 /**********/
-surveydayw2=mdy(9,15,2019); *Á¶»ç³¯Â¥ 2019³â 9¿ù 15ÀÏ·Î °£ÁÖ;
-surveydayw3=mdy(9,15,2020); *Á¶»ç³¯Â¥ 2020³â 9¿ù 15ÀÏ·Î °£ÁÖ;
-surveydayw4=mdy(9,15,2021); *Á¶»ç³¯Â¥ 2021³â 9¿ù 15ÀÏ·Î °£ÁÖ;
+surveydayw2=mdy(9,15,2019); *ì¡°ì‚¬ë‚ ì§œ 2019ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
+surveydayw3=mdy(9,15,2020); *ì¡°ì‚¬ë‚ ì§œ 2020ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
+surveydayw4=mdy(9,15,2021); *ì¡°ì‚¬ë‚ ì§œ 2021ë…„ 9ì›” 15ì¼ë¡œ ê°„ì£¼;
 age_mw2=intck('month' , birth, surveydayw2); 
 age_mw3=intck('month' , birth, surveydayw3);
 age_mw4=intck('month' , birth, surveydayw4);
@@ -1415,7 +1415,7 @@ heightw1=yphy2a00w1/100;
 weightw1=yphy2b00w1;
 if yphy2a00w1^=. and yphy2b00w1^=. then bmiw1=weightw1/(heightw1*heightw1);
 
-/*³²ÀÚ*/
+/*ë‚¨ì*/
 
 if sexw1=1 then do; 
 
@@ -1440,7 +1440,7 @@ if age_mw1=169 then do; pct05w1=16.6; pct85w1=24.0; pct95w1=26.0; end;
 if age_mw1=170 then do; pct05w1=16.6; pct85w1=24.0; pct95w1=26.1; end;
 end;
 
-/*¿©ÀÚ*/
+/*ì—¬ì*/
 if sexw1=2 then do; 
 
 if age_mw1=150 then do; pct05w1=15.6; pct85w1=22.4; pct95w1=24.5; end;
@@ -1464,7 +1464,7 @@ if age_mw1=169 then do; pct05w1=16.5; pct85w1=23.3; pct95w1=25.2; end;
 if age_mw1=170 then do; pct05w1=16.5; pct85w1=23.3; pct95w1=25.2; end;
 end;
 
-*BMI Ä«Å×°í¸®;
+*BMI ì¹´í…Œê³ ë¦¬;
 if bmiw1^=. then do;
 if bmiw1<pct05w1 then bmi_cw1=1;
 else if pct05w1<=bmiw1<pct85w1 then bmi_cw1=2;
@@ -1472,7 +1472,7 @@ else if pct85w1<=bmiw1<pct95w1 then bmi_cw1=3;
 else bmi_cw1=4;
 end;
 
-*ºñ¸¸;
+*ë¹„ë§Œ;
 if bmi_cw1^=. then do;
 if bmi_cw1 in (1:3) then obesityw1=0;
 else obesityw1=1;
@@ -1484,7 +1484,7 @@ heightw2=yphy2a00w2/100;
 weightw2=yphy2b00w2;
 if yphy2a00w2^=. and yphy2b00w2^=. then bmiw2=weightw2/(heightw2*heightw2);
 
-/*³²ÀÚ 162-182*/
+/*ë‚¨ì 162-182*/
 
 if sexw1=1 then do; 
 
@@ -1511,7 +1511,7 @@ if age_mw2=181 then do; pct05w2=17.1; pct85w2=24.3; pct95w2=26.2; end;
 if age_mw2=182 then do; pct05w2=17.1; pct85w2=24.3; pct95w2=26.3; end;
 end;
 
-/*¿©ÀÚ 162-182*/
+/*ì—¬ì 162-182*/
 if sexw1=2 then do; 
 
 if age_mw2=162 then do; pct05w2=16.1; pct85w2=23.0; pct95w2=25.0; end;
@@ -1537,7 +1537,7 @@ if age_mw2=181 then do; pct05w2=17.0; pct85w2=23.6; pct95w2=25.4; end;
 if age_mw2=182 then do; pct05w2=17.0; pct85w2=23.6; pct95w2=25.5; end;
 end;
 
-*BMI Ä«Å×°í¸®;
+*BMI ì¹´í…Œê³ ë¦¬;
 if bmiw2^=. then do;
 if bmiw2<pct05w2 then bmi_cw2=1;
 else if pct05w2<=bmiw2<pct85w2 then bmi_cw2=2;
@@ -1545,7 +1545,7 @@ else if pct85w2<=bmiw2<pct95w2 then bmi_cw2=3;
 else bmi_cw2=4;
 end;
 
-*ºñ¸¸;
+*ë¹„ë§Œ;
 if bmi_cw2^=. then do;
 if bmi_cw2 in (1:3) then obesityw2=0;
 else obesityw2=1;
@@ -1558,7 +1558,7 @@ heightw3=yphy2a00w3/100;
 weightw3=yphy2b00w3;
 if yphy2a00w3^=. and yphy2b00w3^=. then bmiw3=weightw3/(heightw3*heightw3);
 
-/*³²ÀÚ 174-194*/
+/*ë‚¨ì 174-194*/
 
 if sexw1=1 then do; 
 
@@ -1585,7 +1585,7 @@ if age_mw3=193 then do; pct05w3=17.5; pct85w3=24.6; pct95w3=26.4; end;
 if age_mw3=194 then do; pct05w3=17.6; pct85w3=24.6; pct95w3=26.5; end;
 end;
 
-/*¿©ÀÚ 174-194*/
+/*ì—¬ì 174-194*/
 if sexw1=2 then do; 
 
 if age_mw3=174 then do; pct05w3=16.7; pct85w3=23.4; pct95w3=25.3; end;
@@ -1611,7 +1611,7 @@ if age_mw3=193 then do; pct05w3=17.3; pct85w3=23.8; pct95w3=25.5; end;
 if age_mw3=194 then do; pct05w3=17.3; pct85w3=23.8; pct95w3=25.5; end;
 end;
 
-*BMI Ä«Å×°í¸®;
+*BMI ì¹´í…Œê³ ë¦¬;
 if bmiw3^=. then do;
 if bmiw3<pct05w3 then bmi_cw3=1;
 else if pct05w3<=bmiw3<pct85w3 then bmi_cw3=2;
@@ -1619,7 +1619,7 @@ else if pct85w3<=bmiw3<pct95w3 then bmi_cw3=3;
 else bmi_cw3=4;
 end;
 
-*ºñ¸¸;
+*ë¹„ë§Œ;
 if bmi_cw3^=. then do;
 if bmi_cw3 in (1:3) then obesityw3=0;
 else obesityw3=1;
@@ -1632,7 +1632,7 @@ heightw4=yphy2a00w4/100;
 weightw4=yphy2b00w4;
 if yphy2a00w4^=. and yphy2b00w4^=. then bmiw4=weightw4/(heightw4*heightw4);
 
-/*³²ÀÚ 186-206 */
+/*ë‚¨ì 186-206 */
 
 if sexw1=1 then do; 
 
@@ -1659,7 +1659,7 @@ if age_mw4=205 then do; pct05w4=17.9; pct85w4=24.8; pct95w4=26.7; end;
 if age_mw4=206 then do; pct05w4=18.0; pct85w4=24.9; pct95w4=26.7; end;
 end;
 
-/*¿©ÀÚ 186-206 */
+/*ì—¬ì 186-206 */
 if sexw1=2 then do; 
 
 if age_mw4=186 then do; pct05w4=17.1; pct85w4=23.7; pct95w4=25.5; end;
@@ -1685,7 +1685,7 @@ if age_mw4=205 then do; pct05w4=17.5; pct85w4=23.8; pct95w4=25.5; end;
 if age_mw4=206 then do; pct05w4=17.5; pct85w4=23.8; pct95w4=25.5; end;
 end;
 
-*BMI Ä«Å×°í¸®;
+*BMI ì¹´í…Œê³ ë¦¬;
 if bmiw4^=. then do;
 if bmiw4<pct05w4 then bmi_cw4=1;
 else if pct05w4<=bmiw4<pct85w4 then bmi_cw4=2;
@@ -1693,7 +1693,7 @@ else if pct85w4<=bmiw4<pct95w4 then bmi_cw4=3;
 else bmi_cw4=4;
 end;
 
-*ºñ¸¸;
+*ë¹„ë§Œ;
 if bmi_cw4^=. then do;
 if bmi_cw4 in (1:3) then obesityw4=0;
 else obesityw4=1;
@@ -1706,63 +1706,63 @@ end;
 /*************/
 
 /********************************************** w1 (baseline) *************************************************/
-depress1w1=ypsy4e01w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress2w1=ypsy4e02w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress3w1=ypsy4e03w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress4w1=ypsy4e04w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress5w1=ypsy4e05w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress6w1=ypsy4e06w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress7w1=ypsy4e07w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress8w1=ypsy4e08w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress9w1=ypsy4e09w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress10w1=ypsy4e10w1; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+depress1w1=ypsy4e01w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress2w1=ypsy4e02w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress3w1=ypsy4e03w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress4w1=ypsy4e04w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress5w1=ypsy4e05w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress6w1=ypsy4e06w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress7w1=ypsy4e07w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress8w1=ypsy4e08w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress9w1=ypsy4e09w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress10w1=ypsy4e10w1; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 
 depsumw1=sum(depress1w1, depress2w1, depress3w1, depress4w1, depress5w1, depress6w1, depress7w1, depress8w1, depress9w1, depress10w1); *range 10-40;
 
 
 /********************************************** w2 *************************************************/
-depress1w2=ypsy4e01w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress2w2=ypsy4e02w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress3w2=ypsy4e03w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress4w2=ypsy4e04w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress5w2=ypsy4e05w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress6w2=ypsy4e06w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress7w2=ypsy4e07w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress8w2=ypsy4e08w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress9w2=ypsy4e09w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress10w2=ypsy4e10w2; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+depress1w2=ypsy4e01w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress2w2=ypsy4e02w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress3w2=ypsy4e03w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress4w2=ypsy4e04w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress5w2=ypsy4e05w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress6w2=ypsy4e06w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress7w2=ypsy4e07w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress8w2=ypsy4e08w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress9w2=ypsy4e09w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress10w2=ypsy4e10w2; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 
 depsumw2=sum(depress1w2, depress2w2, depress3w2, depress4w2, depress5w2, depress6w2, depress7w2, depress8w2, depress9w2, depress10w2); 
 *range 10-40;
 
 
 /********************************************** w3 *************************************************/
-depress1w3=ypsy4e01w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress2w3=ypsy4e02w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress3w3=ypsy4e03w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress4w3=ypsy4e04w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress5w3=ypsy4e05w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress6w3=ypsy4e06w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress7w3=ypsy4e07w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress8w3=ypsy4e08w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress9w3=ypsy4e09w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress10w3=ypsy4e10w3; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+depress1w3=ypsy4e01w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress2w3=ypsy4e02w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress3w3=ypsy4e03w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress4w3=ypsy4e04w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress5w3=ypsy4e05w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress6w3=ypsy4e06w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress7w3=ypsy4e07w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress8w3=ypsy4e08w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress9w3=ypsy4e09w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress10w3=ypsy4e10w3; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 
 depsumw3=sum(depress1w3, depress2w3, depress3w3, depress4w3, depress5w3, depress6w3, depress7w3, depress8w3, depress9w3, depress10w3); 
 *range 10-40;
 
 
 /********************************************** w4 *************************************************/
-depress1w4=ypsy4e01w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress2w4=ypsy4e02w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress3w4=ypsy4e03w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress4w4=ypsy4e04w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress5w4=ypsy4e05w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress6w4=ypsy4e06w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress7w4=ypsy4e07w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress8w4=ypsy4e08w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress9w4=ypsy4e09w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
-depress10w4=ypsy4e10w4; *1-4 categoreis: ÀüÇô ±×·¸Áö ¾Ê´Ù - ¸Å¿ì ±×·¸´Ù;
+depress1w4=ypsy4e01w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress2w4=ypsy4e02w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress3w4=ypsy4e03w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress4w4=ypsy4e04w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress5w4=ypsy4e05w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress6w4=ypsy4e06w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress7w4=ypsy4e07w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress8w4=ypsy4e08w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress9w4=ypsy4e09w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
+depress10w4=ypsy4e10w4; *1-4 categoreis: ì „í˜€ ê·¸ë ‡ì§€ ì•Šë‹¤ - ë§¤ìš° ê·¸ë ‡ë‹¤;
 
 depsumw4=sum(depress1w4, depress2w4, depress3w4, depress4w4, depress5w4, depress6w4, depress7w4, depress8w4, depress9w4, depress10w4); 
 *range 10-40;
@@ -1785,16 +1785,16 @@ data all; set e4 m1; run;
 data obe; set all;
 if obesityw1 in (0,1) and obesityw4 in (0,1);
 run;
-*2018³â, 2021³â ºñ¸¸ °áÃø ¾Æ´Ñ»ç¶÷¸¸ Æ÷ÇÔ;
+*2018ë…„, 2021ë…„ ë¹„ë§Œ ê²°ì¸¡ ì•„ë‹Œì‚¬ëŒë§Œ í¬í•¨;
 data obe2; set obe;
 if obesityw1=0;
 run;
-*2018³â ºñ¸¸ ¾Æ´Ï¾ú´ø »ç¶÷¸¸ Æ÷ÇÔ;
+*2018ë…„ ë¹„ë§Œ ì•„ë‹ˆì—ˆë˜ ì‚¬ëŒë§Œ í¬í•¨;
 data obe3; set obe2;
 if obesityw2=1 or obesityw3=1 or obesityw4=1 then obe_tot=1;
 else obe_tot=0;
 run;
-* obe_tot: 2019, 2020, 2021 Áß ÇÑ¹øÀÌ¶óµµ ºñ¸¸ÀÌ¾ú´ø »ç¶÷=1 ;
+* obe_tot: 2019, 2020, 2021 ì¤‘ í•œë²ˆì´ë¼ë„ ë¹„ë§Œì´ì—ˆë˜ ì‚¬ëŒ=1 ;
 /*obe_all*/
 data obe_all; set obe3; run;
 /*obe_e4*/
@@ -1862,7 +1862,7 @@ data dep_m1; set dep;
 if schoolw1=2;
 run;
 
-*2018, 2019 ¿ì¿ï °áÃø ¾Æ´Ñ»ç¶÷¸¸ Æ÷ÇÔ;
+*2018, 2019 ìš°ìš¸ ê²°ì¸¡ ì•„ë‹Œì‚¬ëŒë§Œ í¬í•¨;
 data dep19; set all;
 if depsumw1 ne . and depsumw2 ne .;
 run;
@@ -1914,8 +1914,8 @@ run;
 /*******/
 /*******/
 
-*2019 base (2018, 2019³â¿¡ ¸ğµÎ ºñ¸¸ÀÌ ¾Æ´Ï¾ú°í, (1) 2020³â ºñ¸¸X, 2021 ºñ¸¸O ÀÌ°Å³ª È¤Àº (2) 2020³â ºñ¸¸O, 2021³â ºñ¸¸OÀÎ »ç¶÷ÀÌ outcome=1/
-(1) 2020, 2021³â µÑ ´Ù ºñ¸¸ÀÌ ¾Æ´Ï¾ú´ø »ç¶÷ È¤Àº (2) 2020³â ºñ¸¸ÀÌ¾ú´Ù°¡ 2021³â ºñ¸¸ÀÌ ¾Æ´Ï°Ô µÈ »ç¶÷ÀÌ outcome=0);
+*2019 base (2018, 2019ë…„ì— ëª¨ë‘ ë¹„ë§Œì´ ì•„ë‹ˆì—ˆê³ , (1) 2020ë…„ ë¹„ë§ŒX, 2021 ë¹„ë§ŒO ì´ê±°ë‚˜ í˜¹ì€ (2) 2020ë…„ ë¹„ë§ŒO, 2021ë…„ ë¹„ë§ŒOì¸ ì‚¬ëŒì´ outcome=1/
+(1) 2020, 2021ë…„ ë‘˜ ë‹¤ ë¹„ë§Œì´ ì•„ë‹ˆì—ˆë˜ ì‚¬ëŒ í˜¹ì€ (2) 2020ë…„ ë¹„ë§Œì´ì—ˆë‹¤ê°€ 2021ë…„ ë¹„ë§Œì´ ì•„ë‹ˆê²Œ ëœ ì‚¬ëŒì´ outcome=0);
 data add_e4; set e4;
 if obesityw1=1 then delete;
 if obesityw2=1 then delete;
@@ -1924,32 +1924,32 @@ else if (obesityw3=0 and obesityw4=0) or (obesityw3=1 and obesityw4=0) then long
 run;
 
 data e4; set e4;
-* BMI change, ºñ¸¸ ÇÑ¹øÀÌ¶óµµ µÈ »ç¶÷µé Áß ºñ¸¸ ÀÌÈÄ¿¡ ´Ù½Ã µ¹¾Æ°¡´Â »ç¶÷ ¸î ¸íÀÌ³ª ÀÖ´ÂÁö, ¾ó¸¶¸¸¿¡ ´Ù½Ã µ¹¾Æ°¡´ÂÁö;
-*1³â¸¸¿¡ ¹Ù²ñ;
+* BMI change, ë¹„ë§Œ í•œë²ˆì´ë¼ë„ ëœ ì‚¬ëŒë“¤ ì¤‘ ë¹„ë§Œ ì´í›„ì— ë‹¤ì‹œ ëŒì•„ê°€ëŠ” ì‚¬ëŒ ëª‡ ëª…ì´ë‚˜ ìˆëŠ”ì§€, ì–¼ë§ˆë§Œì— ë‹¤ì‹œ ëŒì•„ê°€ëŠ”ì§€;
+*1ë…„ë§Œì— ë°”ë€œ;
 if (obesityw1=1 and obesityw2=0 and obesityw3=1 and obesityw4=0) or 
 (obesityw1=1 and obesityw2=0 and obesityw3=1 and obesityw4=1) or
 (obesityw1=0 and obesityw2=1 and obesityw3=0 and obesityw4=1) or
 (obesityw1=1 and obesityw2=1 and obesityw3=0 and obesityw4=1) or
 (obesityw1=0 and obesityw2=0 and obesityw3=1 and obesityw4=0) then change_obe=1;
-*2³â¸¸¿¡ ¹Ù²ñ;
+*2ë…„ë§Œì— ë°”ë€œ;
 else if (obesityw1=1 and obesityw2=0 and obesityw3=0 and obesityw4=1) or
 (obesityw1=0 and obesityw2=1 and obesityw3=1 and obesityw4=0) then change_obe=2;
-*3³â¸¸¿¡ ¹Ù²ñ;
+*3ë…„ë§Œì— ë°”ë€œ;
 else if (obesityw1=0 and obesityw2=0 and obesityw3=0 and obesityw4=1) or
 (obesityw1=1 and obesityw2=1 and obesityw3=1 and obesityw4=0) or
 (obesityw1=0 and obesityw2=1 and obesityw3=1 and obesityw4=1) or
 (obesityw1=1 and obesityw2=0 and obesityw3=0 and obesityw4=0) then change_obe=3;
-*4³âÀ¯Áö;
+*4ë…„ìœ ì§€;
 else if (obesityw1=1 and obesityw2=1 and obesityw3=1 and obesityw4=1) or
 (obesityw1=0 and obesityw2=0 and obesityw3=0 and obesityw4=0) then change_obe=4;
 
-*BMI category º° mean BMI change(2018-2021)°¡ ¾ó¸¶ÀÎÁö, ¾ó¸¶³ª º¯µ¿ÀÌ Å«Áö;
+*BMI category ë³„ mean BMI change(2018-2021)ê°€ ì–¼ë§ˆì¸ì§€, ì–¼ë§ˆë‚˜ ë³€ë™ì´ í°ì§€;
 bmi_change_sq=(bmiw4-bmiw1)**2;
 bmi_change=bmi_change_sq**(1/2);
 run;
 
 data test_e4; set e4;
-*2018 base -> 2019, 2020, 2021 ¾Æ¹«¶§³ª obe ¹ß»ı vs. 2018 base -> 2021¿¡ obe ¹ß»ı;
+*2018 base -> 2019, 2020, 2021 ì•„ë¬´ë•Œë‚˜ obe ë°œìƒ vs. 2018 base -> 2021ì— obe ë°œìƒ;
 if obesityw1 in (1,.) then delete;
 if obesityw4=. then delete;
 if obesityw2=1 or obesityw3=1 or obesityw4=1 then obe_any=1; else obe_any=0;
@@ -1983,33 +1983,33 @@ run;
 
 data m1; set m1;
 
-* BMI change, ºñ¸¸ ÇÑ¹øÀÌ¶óµµ µÈ »ç¶÷µé Áß ºñ¸¸ ÀÌÈÄ¿¡ ´Ù½Ã µ¹¾Æ°¡´Â »ç¶÷ ¸î ¸íÀÌ³ª ÀÖ´ÂÁö, ¾ó¸¶¸¸¿¡ ´Ù½Ã µ¹¾Æ°¡´ÂÁö;
-*1³â¸¸¿¡ ¹Ù²ñ;
+* BMI change, ë¹„ë§Œ í•œë²ˆì´ë¼ë„ ëœ ì‚¬ëŒë“¤ ì¤‘ ë¹„ë§Œ ì´í›„ì— ë‹¤ì‹œ ëŒì•„ê°€ëŠ” ì‚¬ëŒ ëª‡ ëª…ì´ë‚˜ ìˆëŠ”ì§€, ì–¼ë§ˆë§Œì— ë‹¤ì‹œ ëŒì•„ê°€ëŠ”ì§€;
+*1ë…„ë§Œì— ë°”ë€œ;
 if (obesityw1=1 and obesityw2=0 and obesityw3=1 and obesityw4=0) or 
 (obesityw1=1 and obesityw2=0 and obesityw3=1 and obesityw4=1) or
 (obesityw1=0 and obesityw2=1 and obesityw3=0 and obesityw4=1) or
 (obesityw1=1 and obesityw2=1 and obesityw3=0 and obesityw4=1) or
 (obesityw1=0 and obesityw2=0 and obesityw3=1 and obesityw4=0) then change_obe=1;
-*2³â¸¸¿¡ ¹Ù²ñ;
+*2ë…„ë§Œì— ë°”ë€œ;
 else if (obesityw1=1 and obesityw2=0 and obesityw3=0 and obesityw4=1) or
 (obesityw1=0 and obesityw2=1 and obesityw3=1 and obesityw4=0) then change_obe=2;
-*3³â¸¸¿¡ ¹Ù²ñ;
+*3ë…„ë§Œì— ë°”ë€œ;
 else if (obesityw1=0 and obesityw2=0 and obesityw3=0 and obesityw4=1) or
 (obesityw1=1 and obesityw2=1 and obesityw3=1 and obesityw4=0) or
 (obesityw1=0 and obesityw2=1 and obesityw3=1 and obesityw4=1) or
 (obesityw1=1 and obesityw2=0 and obesityw3=0 and obesityw4=0) then change_obe=3;
-*4³âÀ¯Áö;
+*4ë…„ìœ ì§€;
 else if (obesityw1=1 and obesityw2=1 and obesityw3=1 and obesityw4=1) or
 (obesityw1=0 and obesityw2=0 and obesityw3=0 and obesityw4=0) then change_obe=4;
 
-*BMI category º° mean BMI change(2018-2021)°¡ ¾ó¸¶ÀÎÁö, ¾ó¸¶³ª º¯µ¿ÀÌ Å«Áö;
+*BMI category ë³„ mean BMI change(2018-2021)ê°€ ì–¼ë§ˆì¸ì§€, ì–¼ë§ˆë‚˜ ë³€ë™ì´ í°ì§€;
 bmi_change_sq=(bmiw4-bmiw1)**2;
 bmi_change=bmi_change_sq**(1/2);
 
 run;
 
 data test_m1; set m1;
-*2018 base -> 2019, 2020, 2021 ¾Æ¹«¶§³ª obe ¹ß»ı vs. 2018 base -> 2021¿¡ obe ¹ß»ı;
+*2018 base -> 2019, 2020, 2021 ì•„ë¬´ë•Œë‚˜ obe ë°œìƒ vs. 2018 base -> 2021ì— obe ë°œìƒ;
 if obesityw1 in (1,.) then delete;
 if obesityw4=. then delete;
 if obesityw2=1 or obesityw3=1 or obesityw4=1 then obe_any=1; else obe_any=0;
@@ -2025,7 +2025,7 @@ run;
 
 
 
-* Ordinal logistic 5 cat, 2018 ¸Ç ¸¶Áö¸· Ä«Å×°í¸® Á¦¿Ü, 2018 5 cat º¸Á¤, outcome: 2021 obe 5 cat, combined screentime;
+* Ordinal logistic 5 cat, 2018 ë§¨ ë§ˆì§€ë§‰ ì¹´í…Œê³ ë¦¬ ì œì™¸, 2018 5 cat ë³´ì •, outcome: 2021 obe 5 cat, combined screentime;
 data e4; set e4;
 if bmi_cw1 ne . then do;
 if bmi_cw1=4 then bmicatw1=1;
