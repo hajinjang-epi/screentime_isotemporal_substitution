@@ -25,7 +25,7 @@ var bmi_change; run;
 
 
 
-*2018 base, ��;
+*2018 base, ºñ±³;
 
 /* OR */
 %macro or(data,ex,out,cov);
@@ -90,7 +90,7 @@ data test_all; set test_e4 test_m1; run;
 
 
 
-/** 2021�� �Ǿ obe**/
+/** 2021ÀÌ µÇ¾î¼­ obe**/
 * e4;
 %or(test_e4,total_re,obe_2021,);
 %or(test_e4,sp_re,obe_2021,);
