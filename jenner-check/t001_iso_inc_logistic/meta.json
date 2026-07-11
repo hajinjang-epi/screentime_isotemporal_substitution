@@ -1,0 +1,7 @@
+{
+  "bundle": "t001_iso_inc_logistic",
+  "source_file": "analysis_prospective.sas",
+  "source_blob_sha": "e122b12c3f63d1023302b8d7d458c10d7bf35919",
+  "source_commit": "91f06cc2754855261ae1c6eb68330a9fc0ef5087",
+  "notes": "The %iso_inc macro implements the isotemporal-substitution logistic model for prospective obesity incidence (proc logistic, unweighted). Model spec, class refs, and macro body kept verbatim; the KCYPS2018 survey extract (read via a local OneDrive libname) was replaced with 60 rows of synthetic time-use panel data matching the same 34 columns the script expects."
+}

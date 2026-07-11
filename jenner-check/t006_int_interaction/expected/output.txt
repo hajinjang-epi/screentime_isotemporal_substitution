@@ -1,0 +1,90 @@
+                                     
+---------------------------  --------
+Number of Observations Read        60
+Number of Observations Used        60
+
+            Response Profile             
+  Probability modeled is obesityw1='0'   
+
+Ordered Value  obesityw1  Total Frequency
+-------------  ---------  ---------------
+            1  0                       50
+            2  1                       10
+
+   Class Level Information   
+
+Class        Levels  Values  
+---------  --------  --------
+obesityw1         2  0 1     
+total_re          4  1 2 3 4 
+schoolw1          2  1 2     
+sexw1             2  1 2     
+famnumw1          3  1 2 3   
+pschoolw1         3  1 2 3   
+incomew1          4  1 2 3 4 
+gradew1           3  1 2 3   
+
+                                             
+---------------------------------------------
+Convergence criterion (GCONV=1E-8) satisfied.
+
+                                                                                                                     
+---------------------------------------------------------------------------------------------------------------------
+WARNING: There is possibly a quasi-complete separation of data points. The maximum likelihood estimate may not exist.
+
+The LOGISTIC Procedure
+Response Variable: obesityw1
+
+Criterion     Value
+---------  --------
+AIC          74.710
+-2 Log L     36.710
+SC          114.503
+
+                Analysis of Maximum Likelihood Estimates                
+
+Parameter          Estimate  Standard Error  Wald Chi-Square  Pr > ChiSq
+-----------------  --------  --------------  ---------------  ----------
+Intercept            3.7413          2.3446           2.5462      0.1106
+total_re*schoolw1    0.3954          2.8335           0.0195      0.8890
+total_re*schoolw1    0.6436          2.1693           0.0880      0.7667
+total_re*schoolw1    1.4246          2.1427           0.4420      0.5061
+total_re             0.2402          2.2737           0.0112      0.9159
+total_re            -1.2243          1.6831           0.5292      0.4670
+total_re            -0.9899          1.6330           0.3675      0.5444
+schoolw1             0.0029          1.7204           0.0000      0.9987
+sexw1                1.3863          0.9645           2.0659      0.1506
+famnumw1            -1.0211          1.1213           0.8292      0.3625
+famnumw1            -2.1329          1.1916           3.2041      0.0735
+pschoolw1            0.1847          0.9823           0.0354      0.8509
+pschoolw1           -0.3699          1.0859           0.1161      0.7333
+incomew1             0.4651          1.3896           0.1120      0.7379
+incomew1            -0.5782          1.2547           0.2124      0.6449
+incomew1            -0.9086          1.1640           0.6094      0.4350
+gradew1             -0.8671          1.0834           0.6405      0.4235
+gradew1              0.6191          0.9366           0.4369      0.5086
+parcaresumw1        -0.3805          0.3861           0.9711      0.3244
+
+                         Odds Ratio Estimates                          
+
+Effect             Point Estimate  95% Wald CL Lower  95% Wald CL Upper
+-----------------  --------------  -----------------  -----------------
+total_re                    1.271              0.015            109.579
+total_re                    0.294              0.011              7.960
+total_re                    0.372              0.015              9.121
+schoolw1                    1.003              0.034             29.217
+sexw1                       4.000              0.604             26.486
+famnumw1                    0.360              0.040              3.244
+famnumw1                    0.118              0.011              1.224
+pschoolw1                   1.203              0.175              8.248
+pschoolw1                   0.691              0.082              5.803
+incomew1                    1.592              0.105             24.258
+incomew1                    0.561              0.048              6.559
+incomew1                    0.403              0.041              3.946
+gradew1                     0.420              0.050              3.513
+gradew1                     1.857              0.296             11.643
+total_re*schoolw1           1.485              0.006            383.376
+total_re*schoolw1           1.903              0.027            133.660
+total_re*schoolw1           4.156              0.062            277.034
+parcaresumw1                0.684              0.321              1.457
+

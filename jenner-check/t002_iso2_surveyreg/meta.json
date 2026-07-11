@@ -1,0 +1,7 @@
+{
+  "bundle": "t002_iso2_surveyreg",
+  "source_file": "data_w4.sas",
+  "source_blob_sha": "05aadd02583708f3c9a0bd43bfcc87569872bbb0",
+  "source_commit": "91f06cc2754855261ae1c6eb68330a9fc0ef5087",
+  "notes": "The %iso2 macro is the continuous-outcome (depression score) counterpart to the paper's isotemporal substitution logistic models: a survey-weighted proc surveyreg regression on the same daily time-use covariate set. Model spec, class list, and macro body kept verbatim; the KCYPS2018 survey extract was replaced with 60 rows of synthetic time-use + weight data matching the 20 columns the script expects."
+}

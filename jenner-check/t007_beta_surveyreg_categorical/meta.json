@@ -1,0 +1,7 @@
+{
+  "bundle": "t007_beta_surveyreg_categorical",
+  "source_file": "data_w4.sas",
+  "source_blob_sha": "05aadd02583708f3c9a0bd43bfcc87569872bbb0",
+  "source_commit": "91f06cc2754855261ae1c6eb68330a9fc0ef5087",
+  "notes": "The %beta macro is the paper's categorical-exposure counterpart to %iso2: a survey-weighted proc surveyreg regression of the continuous depression score on total screen-time exposure as a CLASS'd categorical predictor (quartile groups), with clparm/solution requested. Model spec and macro body kept verbatim; the 60 mock exposure/demographic/weight rows replace the KCYPS2018 survey extract."
+}

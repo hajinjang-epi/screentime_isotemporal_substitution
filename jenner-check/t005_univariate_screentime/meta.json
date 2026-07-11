@@ -1,0 +1,7 @@
+{
+  "bundle": "t005_univariate_screentime",
+  "source_file": "analysis_cross-sectional.sas",
+  "source_blob_sha": "179cdc513e7b8f1b340f34caa00bbaf52ea3c8ab",
+  "source_commit": "91f06cc2754855261ae1c6eb68330a9fc0ef5087",
+  "notes": "proc univariate distribution profile (moments, quantiles, extreme obs) on the three daily screen-time components -- TV, computer, smartphone minutes -- that the script runs before deriving the categorical exposure cut-points used in later tables. Unmodified call kept for one representative cohort; the 60 mock daily-minutes rows replace the KCYPS2018 survey extract."
+}
