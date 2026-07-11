@@ -1,0 +1,7 @@
+{
+  "bundle": "t004_char_surveyfreq",
+  "source_file": "screentime_table.sas",
+  "source_blob_sha": "4ba8684cbd5634ff96a5b9e9d5518bd171db97c0",
+  "source_commit": "91f06cc2754855261ae1c6eb68330a9fc0ef5087",
+  "notes": "The %char macro builds the paper's Table 1 population-characteristics summary: proc surveyfreq (weighted cross-tabs of exposure vs demographics) followed by proc surveymeans (weighted mean/std of time-use covariates, by exposure group). Macro body and variable lists kept verbatim; the 60 mock demographic + time-use + weight rows replace the KCYPS2018 survey extract."
+}

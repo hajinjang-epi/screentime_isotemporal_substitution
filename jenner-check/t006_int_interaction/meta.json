@@ -1,0 +1,7 @@
+{
+  "bundle": "t006_int_interaction",
+  "source_file": "analysis_cross-sectional.sas",
+  "source_blob_sha": "179cdc513e7b8f1b340f34caa00bbaf52ea3c8ab",
+  "source_commit": "91f06cc2754855261ae1c6eb68330a9fc0ef5087",
+  "notes": "The %int macro tests a screen-time-exposure x school-level interaction on obesity (proc logistic with an explicit total_re*schoolw1 interaction term). Model spec, class refs, and macro body kept verbatim; the 60 mock exposure/demographic rows replace the KCYPS2018 survey extract. Note: with the small mock sample the model log carries SAS's own quasi-complete-separation WARNING (a real, expected diagnostic given the 4x2 interaction cell sparsity) -- Jenner surfaces it correctly rather than silently fitting."
+}

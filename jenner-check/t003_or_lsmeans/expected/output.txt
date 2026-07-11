@@ -1,0 +1,198 @@
+                                                   The FREQ Procedure
+
+Table of total_re by obesityw1
+
+total_re |         0 |         1 |      Total
+---------+-----------+-----------+-----------
+1        |        11 |         1 |         12
+         |     18.33 |      1.67 |      20.00
+         |     91.67 |      8.33 |     100.00
+         |     22.00 |     10.00 |      20.00
+---------+-----------+-----------+-----------
+2        |         9 |         3 |         12
+         |     15.00 |      5.00 |      20.00
+         |     75.00 |     25.00 |     100.00
+         |     18.00 |     30.00 |      20.00
+---------+-----------+-----------+-----------
+3        |        15 |         3 |         18
+         |     25.00 |      5.00 |      30.00
+         |     83.33 |     16.67 |     100.00
+         |     30.00 |     30.00 |      30.00
+---------+-----------+-----------+-----------
+4        |        15 |         3 |         18
+         |     25.00 |      5.00 |      30.00
+         |     83.33 |     16.67 |     100.00
+         |     30.00 |     30.00 |      30.00
+---------+-----------+-----------+-----------
+Total    |        50 |        10 |         60
+
+                                     
+---------------------------  --------
+Number of Observations Read        60
+Number of Observations Used        60
+
+            Response Profile             
+  Probability modeled is obesityw1='0'   
+
+Ordered Value  obesityw1  Total Frequency
+-------------  ---------  ---------------
+            1  0                       50
+            2  1                       10
+
+   Class Level Information   
+
+Class        Levels  Values  
+---------  --------  --------
+obesityw1         2  0 1     
+total_re          4  1 2 3 4 
+sexw1             2  1 2     
+famnumw1          3  1 2 3   
+schoolw1          2  1 2     
+pschoolw1         3  1 2 3   
+incomew1          4  1 2 3 4 
+gradew1           3  1 2 3   
+
+                                             
+---------------------------------------------
+Convergence criterion (GCONV=1E-8) satisfied.
+
+The LOGISTIC Procedure
+Response Variable: obesityw1
+
+Criterion     Value
+---------  --------
+AIC          62.618
+-2 Log L     30.618
+SC           96.128
+
+             Analysis of Maximum Likelihood Estimates              
+
+Parameter     Estimate  Standard Error  Wald Chi-Square  Pr > ChiSq
+------------  --------  --------------  ---------------  ----------
+Intercept       7.8441          3.8316           4.1911      0.0406
+total_re        1.4609          1.9486           0.5621      0.4534
+total_re       -2.8262          2.0781           1.8495      0.1738
+total_re       -0.6551          1.7612           0.1384      0.7099
+total_re        0.0000          0.0000                .           .
+sexw1           3.6114          1.9753           3.3425      0.0675
+sexw1           0.0000          0.0000                .           .
+famnumw1       -2.3588          1.8105           1.6974      0.1926
+famnumw1       -5.6875          2.5328           5.0426      0.0247
+famnumw1        0.0000          0.0000                .           .
+pschoolw1       0.5082          1.6394           0.0961      0.7566
+pschoolw1      -1.1662          1.6351           0.5087      0.4757
+pschoolw1       0.0000          0.0000                .           .
+incomew1        0.8451          2.2535           0.1406      0.7076
+incomew1       -1.3685          2.0247           0.4569      0.4991
+incomew1       -2.1461          1.6869           1.6187      0.2033
+incomew1        0.0000          0.0000                .           .
+gradew1        -1.2296          1.3896           0.7830      0.3762
+gradew1         2.2417          1.6940           1.7512      0.1857
+gradew1         0.0000          0.0000                .           .
+parcaresumw1   -0.8437          0.6959           1.4696      0.2254
+schoolw1        0.9959          1.3513           0.5431      0.4611
+schoolw1        0.0000          0.0000                .           .
+
+                       Odds Ratio Estimates                       
+
+Effect        Point Estimate  95% Wald CL Lower  95% Wald CL Upper
+------------  --------------  -----------------  -----------------
+total_re               4.310              0.095            196.370
+total_re               0.059              0.001              3.479
+total_re               0.519              0.016             16.391
+sexw1                 37.019              0.771           1777.629
+famnumw1               0.095              0.003              3.286
+famnumw1               0.003              0.000              0.485
+pschoolw1              1.662              0.067             41.322
+pschoolw1              0.312              0.013              7.680
+incomew1               2.328              0.028            192.838
+incomew1               0.254              0.005             13.460
+incomew1               0.117              0.004              3.190
+gradew1                0.292              0.019              4.455
+gradew1                9.409              0.340            260.282
+parcaresumw1           0.430              0.110              1.683
+schoolw1               2.707              0.192             38.259
+
+                Least Squares Means for total_re                
+
+Effect    Level     Estimate  Standard Error   LowerCL   UpperCL
+--------  --------  --------  --------------  --------  --------
+total_re  1           5.8214          2.5723    0.7798   10.8630
+total_re  2           4.3605          1.9690    0.5014    8.2197
+total_re  3           1.5344          0.9703   -0.3674    3.4362
+total_re  4           3.7054          1.8502    0.0791    7.3317
+
+                                     
+---------------------------  --------
+Number of Observations Read        60
+Number of Observations Used        60
+
+            Response Profile             
+  Probability modeled is obesityw1='0'   
+
+Ordered Value  obesityw1  Total Frequency
+-------------  ---------  ---------------
+            1  0                       50
+            2  1                       10
+
+   Class Level Information   
+
+Class        Levels  Values  
+---------  --------  --------
+obesityw1         2  0 1     
+sexw1             2  1 2     
+famnumw1          3  1 2 3   
+pschoolw1         3  1 2 3   
+incomew1          4  1 2 3 4 
+gradew1           3  1 2 3   
+
+                                             
+---------------------------------------------
+Convergence criterion (GCONV=1E-8) satisfied.
+
+The LOGISTIC Procedure
+Response Variable: obesityw1
+
+Criterion     Value
+---------  --------
+AIC          61.509
+-2 Log L     33.509
+SC           90.830
+
+             Analysis of Maximum Likelihood Estimates              
+
+Parameter     Estimate  Standard Error  Wald Chi-Square  Pr > ChiSq
+------------  --------  --------------  ---------------  ----------
+Intercept       5.1308          3.8272           1.7972      0.1800
+total_re       -0.5647          0.6323           0.7977      0.3718
+sexw1           2.8660          1.4896           3.7017      0.0544
+famnumw1       -1.5750          1.4493           1.1810      0.2772
+famnumw1       -3.8778          1.7589           4.8606      0.0275
+pschoolw1       0.9062          1.5083           0.3610      0.5480
+pschoolw1      -0.3230          1.4201           0.0517      0.8201
+incomew1        0.1744          1.9237           0.0082      0.9278
+incomew1       -1.3225          1.8616           0.5047      0.4774
+incomew1       -1.6248          1.4683           1.2245      0.2685
+gradew1        -2.1261          1.3609           2.4407      0.1182
+gradew1         0.9173          1.2404           0.5469      0.4596
+parcaresumw1   -0.4520          0.5291           0.7298      0.3929
+schoolw1        1.1782          1.2203           0.9321      0.3343
+
+                       Odds Ratio Estimates                       
+
+Effect        Point Estimate  95% Wald CL Lower  95% Wald CL Upper
+------------  --------------  -----------------  -----------------
+total_re               0.569              0.165              1.963
+sexw1                 17.566              0.948            325.572
+famnumw1               0.207              0.012              3.545
+famnumw1               0.021              0.001              0.650
+pschoolw1              2.475              0.129             47.577
+pschoolw1              0.724              0.045             11.708
+incomew1               1.191              0.027             51.665
+incomew1               0.266              0.007             10.238
+incomew1               0.197              0.011              3.501
+gradew1                0.119              0.008              1.718
+gradew1                2.503              0.220             28.457
+parcaresumw1           0.636              0.226              1.795
+schoolw1               3.249              0.297             35.517
+

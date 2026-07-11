@@ -1,0 +1,24 @@
+NOTE: Option OBS changed to 100.
+NOTE: DATA pros_e4
+
+NOTE: Processing inline DATALINES (60 lines)
+
+NOTE: Read 60 rows from DATALINES.
+NOTE: Wrote pros_e4 (60 rows, 34 columns).
+NOTE: DATA elapsed:
+  wall  0.00 seconds
+  cpu   0.00 seconds
+NOTE: PROC LOGISTIC data=pros_e4
+
+NOTE: Using Python statsmodels.api.Logit version 0.14.6
+NOTE: ODS plot written: logistic_oddsratio.spec.json
+NOTE: ODS plot written: logistic_roc.spec.json
+NOTE: PROC LOGISTIC ODS Graphics generated.
+NOTE: PROC LOGISTIC completed. Results written to: ./ods_output/logistic_results.spec.json
+NOTE: PROC LOGISTIC data=pros_e4
+
+NOTE: Using Python statsmodels.api.Logit version 0.14.6
+NOTE: ODS plot written: logistic_oddsratio.spec.json
+NOTE: ODS plot written: logistic_roc.spec.json
+NOTE: PROC LOGISTIC ODS Graphics generated.
+NOTE: PROC LOGISTIC completed. Results written to: ./ods_output/logistic_results.spec.json

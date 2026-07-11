@@ -1,0 +1,173 @@
+                                                The UNIVARIATE Procedure
+                                                 Variable:  dayuse10w1
+
+                                                        Moments
+
+N                                 60    Sum Weights                       60
+Mean                      114.233333    Sum Observations         6854.000000
+Std Deviation              69.506641    Variance                 4831.173107
+Skewness                   -0.104205    Kurtosis                   -1.093825
+Uncorrected SS        1067994.480000    Corrected SS           285039.213333
+Coeff Variation            60.846198    Std Error Mean              8.973269
+
+           Basic Statistical Measures           
+
+Location              Variability               
+--------  ----------  -------------  -----------
+Mean      114.233333  Std Deviation    69.506641
+Median    123.600000  Variance       4831.173107
+Mode               .  Range           237.200000
+
+Quantiles (Definition 5)
+
+Quantile      Estimate
+----------  ----------
+0% Min        2.500000
+1%            2.500000
+5%            5.700000
+10%          14.250000
+25% Q1       54.350000
+50% Median  123.600000
+75% Q3      168.600000
+90%         201.900000
+95%         225.650000
+99%         239.700000
+100% Max    239.700000
+
+          Extreme Observations           
+
+Lowest               Highest             
+--------  ---------  --------  ----------
+Value      2.500000  Value     213.800000
+Value      3.300000  Value     219.500000
+Value      5.400000  Value     231.800000
+Value      6.000000  Value     235.000000
+Value     12.600000  Value     239.700000
+
+
+
+
+         Tests for Location          
+
+Test                Statistic   p Value
+------------------  ---------  --------
+Student's t         12.730403681         0
+Sign                       30         0
+Signed Rank              1830         0
+
+
+                                                The UNIVARIATE Procedure
+                                                  Variable:  dayuse9w1
+
+                                                        Moments
+
+N                                 60    Sum Weights                       60
+Mean                       91.488333    Sum Observations         5489.300000
+Std Deviation              49.173381    Variance                 2418.021387
+Skewness                    0.242242    Kurtosis                   -1.089956
+Uncorrected SS         644870.170000    Corrected SS           142663.261833
+Coeff Variation            53.748253    Std Error Mean              6.348256
+
+          Basic Statistical Measures           
+
+Location             Variability               
+--------  ---------  -------------  -----------
+Mean      91.488333  Std Deviation    49.173381
+Median    78.450000  Variance       2418.021387
+Mode      45.800000  Range           171.100000
+
+Quantiles (Definition 5)
+
+Quantile      Estimate
+----------  ----------
+0% Min        7.400000
+1%            7.400000
+5%           16.800000
+10%          35.550000
+25% Q1       50.300000
+50% Median   78.450000
+75% Q3      132.250000
+90%         166.450000
+95%         172.300000
+99%         178.500000
+100% Max    178.500000
+
+          Extreme Observations           
+
+Lowest               Highest             
+--------  ---------  --------  ----------
+Value      7.400000  Value     170.900000
+Value     11.300000  Value     171.100000
+Value     14.300000  Value     173.500000
+Value     19.300000  Value     177.300000
+Value     31.400000  Value     178.500000
+
+
+
+
+         Tests for Location          
+
+Test                Statistic   p Value
+------------------  ---------  --------
+Student's t         14.411569229         0
+Sign                       30         0
+Signed Rank              1830         0
+
+
+                                                The UNIVARIATE Procedure
+                                                  Variable:  sp_usew1
+
+                                                        Moments
+
+N                                 60    Sum Weights                       60
+Mean                      155.603333    Sum Observations         9336.200000
+Std Deviation              76.030152    Variance                 5780.584056
+Skewness                   -0.114638    Kurtosis                   -0.905823
+Uncorrected SS        1793798.300000    Corrected SS           341054.459333
+Coeff Variation            48.861519    Std Error Mean              9.815450
+
+           Basic Statistical Measures           
+
+Location              Variability               
+--------  ----------  -------------  -----------
+Mean      155.603333  Std Deviation    76.030152
+Median    153.350000  Variance       5780.584056
+Mode               .  Range           286.300000
+
+Quantiles (Definition 5)
+
+Quantile      Estimate
+----------  ----------
+0% Min       10.700000
+1%           10.700000
+5%           29.050000
+10%          42.850000
+25% Q1       95.400000
+50% Median  153.350000
+75% Q3      217.200000
+90%         250.100000
+95%         278.400000
+99%         297.000000
+100% Max    297.000000
+
+          Extreme Observations           
+
+Lowest               Highest             
+--------  ---------  --------  ----------
+Value     10.700000  Value     257.700000
+Value     12.100000  Value     274.900000
+Value     21.600000  Value     281.900000
+Value     36.500000  Value     284.100000
+Value     39.100000  Value     297.000000
+
+
+
+
+         Tests for Location          
+
+Test                Statistic   p Value
+------------------  ---------  --------
+Student's t         15.852897844         0
+Sign                       30         0
+Signed Rank              1830         0
+
